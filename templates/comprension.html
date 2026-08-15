@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Leo | Comprensión lectora</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #eef5ff 0%,
+                    #f8fbff 50%,
+                    #edf4ff 100%
+                );
+
+            color: #1e293b;
+
+        }
+
+
+        /* =====================================================
+           CONTENEDOR PRINCIPAL
+        ===================================================== */
+
+        .contenedor {
+
+            width: 100%;
+
+            max-width: 1000px;
+
+            margin: auto;
+
+            padding: 22px 20px 45px;
+
+        }
+
+
+        /* =====================================================
+           BARRA SUPERIOR
+        ===================================================== */
+
+        .barra-superior {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .volver {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            text-decoration: none;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+
+        }
+
+
+        .volver:hover {
+
+            color: #2563eb;
+
+        }
+
+
+        .etapa {
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            color: #64748b;
+
+            background: white;
+
+            border: 1px solid #e2e8f0;
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+        }
+
+
+        /* =====================================================
+           CABECERA
+        ===================================================== */
+
+        .cabecera {
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #3b82f6
+                );
+
+            color: white;
+
+            border-radius: 28px;
+
+            padding: 30px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 15px 35px rgba(37, 99, 235, 0.18);
+
+        }
+
+
+        .cabecera::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 190px;
+
+            height: 190px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            right: -60px;
+
+            top: -90px;
+
+        }
+
+
+        .cabecera-contenido {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+        }
+
+
+        .logo {
+
+            width: 65px;
+
+            height: 65px;
+
+            border-radius: 20px;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 34px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .cabecera h1 {
+
+            font-size: 27px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .cabecera p {
+
+            font-size: 14px;
+
+            opacity: 0.92;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =====================================================
+           PROGRESO
+        ===================================================== */
+
+        .progreso-contenedor {
+
+            background: white;
+
+            padding: 16px 18px;
+
+            border-radius: 18px;
+
+            margin-bottom: 22px;
+
+            border: 1px solid #e5edf7;
+
+            box-shadow:
+                0 5px 18px rgba(31,65,114,0.05);
+
+        }
+
+
+        .progreso-superior {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .progreso-superior span {
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            color: #64748b;
+
+        }
+
+
+        .barra-progreso {
+
+            width: 100%;
+
+            height: 8px;
+
+            background: #e8eef7;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+        }
+
+
+        .barra-progreso-interna {
+
+            width: 0%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #6366f1,
+                    #3b82f6
+                );
+
+            border-radius: 20px;
+
+            transition: width 0.25s ease;
+
+        }
+
+
+        /* =====================================================
+           INSTRUCCIONES
+        ===================================================== */
+
+        .instrucciones {
+
+            background: #eff6ff;
+
+            border: 1px solid #dbeafe;
+
+            border-radius: 20px;
+
+            padding: 21px;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .instrucciones-titulo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            color: #1e40af;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .instrucciones p {
+
+            color: #475569;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =====================================================
+           TEXTO
+        ===================================================== */
+
+        .texto {
+
+            background: white;
+
+            border-radius: 24px;
+
+            padding: 30px;
+
+            margin-bottom: 25px;
+
+            border: 1px solid #e5edf7;
+
+            box-shadow:
+                0 7px 22px rgba(31,65,114,0.06);
+
+        }
+
+
+        .etiqueta-texto {
+
+            display: inline-block;
+
+            color: #4f46e5;
+
+            background: #eef2ff;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            margin-bottom: 13px;
+
+        }
+
+
+        .texto h2 {
+
+            font-size: 24px;
+
+            color: #1e293b;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .texto p {
+
+            color: #475569;
+
+            font-size: 15px;
+
+            line-height: 1.8;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .texto p:last-child {
+
+            margin-bottom: 0;
+
+        }
+
+
+        /* =====================================================
+           PREGUNTAS
+        ===================================================== */
+
+        .preguntas-titulo {
+
+            margin: 25px 0 14px;
+
+        }
+
+
+        .preguntas-titulo h2 {
+
+            font-size: 21px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .preguntas-titulo p {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+        }
+
+
+        .pregunta {
+
+            background: white;
+
+            border-radius: 22px;
+
+            padding: 24px;
+
+            margin-bottom: 17px;
+
+            border: 1px solid #e5edf7;
+
+            box-shadow:
+                0 6px 20px rgba(31,65,114,0.05);
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s;
+
+        }
+
+
+        .pregunta.respondida {
+
+            border-color: #a5b4fc;
+
+            box-shadow:
+                0 7px 22px rgba(99,102,241,0.09);
+
+        }
+
+
+        .numero-pregunta {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 32px;
+
+            height: 32px;
+
+            border-radius: 10px;
+
+            background: #eef2ff;
+
+            color: #4f46e5;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .pregunta h3 {
+
+            color: #1e293b;
+
+            font-size: 16px;
+
+            line-height: 1.5;
+
+            margin-bottom: 16px;
+
+        }
+
+
+        /* =====================================================
+           OPCIONES
+        ===================================================== */
+
+        .opciones {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+
+        }
+
+
+        .opcion {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 11px;
+
+            padding: 13px 14px;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 13px;
+
+            cursor: pointer;
+
+            color: #475569;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            transition:
+                background 0.2s,
+                border-color 0.2s,
+                transform 0.15s;
+
+        }
+
+
+        .opcion:hover {
+
+            background: #f8faff;
+
+            border-color: #a5b4fc;
+
+            transform: translateX(2px);
+
+        }
+
+
+        .opcion input {
+
+            margin-top: 3px;
+
+            accent-color: #6366f1;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .opcion:has(input:checked) {
+
+            background: #eef2ff;
+
+            border-color: #818cf8;
+
+            color: #3730a3;
+
+            font-weight: 600;
+
+        }
+
+
+        /* =====================================================
+           BOTÓN
+        ===================================================== */
+
+        .boton-contenedor {
+
+            margin-top: 25px;
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 20px;
+
+            border: 1px solid #e5edf7;
+
+        }
+
+
+        .boton {
+
+            width: 100%;
+
+            padding: 15px 20px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6366f1,
+                    #3b82f6
+                );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+
+        }
+
+
+        .boton:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 22px rgba(59,130,246,0.22);
+
+        }
+
+
+        .boton:active {
+
+            transform: translateY(0);
+
+        }
+
+
+        /* =====================================================
+           ADVERTENCIA
+        ===================================================== */
+
+        .advertencia {
+
+            margin-top: 17px;
+
+            padding: 17px;
+
+            background: #fffbeb;
+
+            border: 1px solid #fde68a;
+
+            border-radius: 16px;
+
+            color: #92400e;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+        }
+
+
+        .advertencia strong {
+
+            display: block;
+
+            margin-bottom: 3px;
+
+        }
+
+
+        /* =====================================================
+           PIE
+        ===================================================== */
+
+        .pie {
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+
+            margin-top: 25px;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .contenedor {
+
+                padding:
+                    14px
+                    12px
+                    35px;
+
+            }
+
+
+            .cabecera {
+
+                padding: 24px 20px;
+
+                border-radius: 22px;
+
+            }
+
+
+            .logo {
+
+                width: 55px;
+
+                height: 55px;
+
+                font-size: 29px;
+
+                border-radius: 17px;
+
+            }
+
+
+            .cabecera h1 {
+
+                font-size: 22px;
+
+            }
+
+
+            .cabecera p {
+
+                font-size: 12px;
+
+            }
+
+
+            .texto {
+
+                padding: 22px;
+
+            }
+
+
+            .texto h2 {
+
+                font-size: 21px;
+
+            }
+
+
+            .texto p {
+
+                font-size: 14px;
+
+            }
+
+
+            .pregunta {
+
+                padding: 19px;
+
+                border-radius: 19px;
+
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .barra-superior {
+
+                align-items: flex-start;
+
+            }
+
+
+            .etapa {
+
+                font-size: 10px;
+
+            }
+
+
+            .cabecera-contenido {
+
+                gap: 13px;
+
+            }
+
+
+            .cabecera h1 {
+
+                font-size: 20px;
+
+            }
+
+
+            .instrucciones {
+
+                padding: 17px;
+
+            }
+
+
+            .texto {
+
+                padding: 18px;
+
+            }
+
+
+            .opcion {
+
+                font-size: 12px;
+
+                padding: 12px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="contenedor">
+
+
+    <!-- =================================================
+         BARRA SUPERIOR
+    ================================================== -->
+
+    <div class="barra-superior">
+
+        <a
+            href="/tamizaje"
+            class="volver"
+        >
+
+            ← Volver a áreas de evaluación
+
+        </a>
+
+
+        <div class="etapa">
+
+            Evaluación de comprensión
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         CABECERA
+    ================================================== -->
+
+    <header class="cabecera">
+
+        <div class="cabecera-contenido">
+
+            <div class="logo">
+
+                🤖
+
+            </div>
+
+
+            <div>
+
+                <h1>
+                    Comprensión lectora
+                </h1>
+
+                <p>
+                    Lee cuidadosamente el texto y responde
+                    las preguntas según lo que comprendiste.
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         PROGRESO
+    ================================================== -->
+
+    <div class="progreso-contenedor">
+
+        <div class="progreso-superior">
+
+            <span>
+                Progreso de la evaluación
+            </span>
+
+            <span id="contador">
+                0 de 5 respondidas
+            </span>
+
+        </div>
+
+
+        <div class="barra-progreso">
+
+            <div
+                class="barra-progreso-interna"
+                id="barraProgreso"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         INSTRUCCIONES
+    ================================================== -->
+
+    <div class="instrucciones">
+
+        <div class="instrucciones-titulo">
+
+            📋
+
+            <span>
+                Antes de comenzar
+            </span>
+
+        </div>
+
+
+        <p>
+
+            Lee atentamente el siguiente texto y responde
+            las cinco preguntas. Selecciona una sola respuesta
+            para cada pregunta. Tómate el tiempo necesario
+            para comprender la información.
+
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         FORMULARIO
+    ================================================== -->
+
+    <form
+    id="formularioEvaluacion"
+    action="/resultado-comprension"
+    method="POST"
+>
+
+    <input
+        type="hidden"
+        name="codigo"
+        value="{{ codigo }}"
+    >
+
+
+        <!-- =================================================
+             TEXTO
+        ================================================== -->
+
+        <section class="texto">
+
+            <span class="etiqueta-texto">
+                📖 Texto de lectura
+            </span>
+
+
+            <h2>
+                El sueño y el aprendizaje
+            </h2>
+
+
+            <p>
+                Dormir no es simplemente una pausa entre las
+                actividades de un día y las del siguiente.
+                Durante el sueño, el cerebro continúa realizando
+                procesos importantes relacionados con el aprendizaje
+                y la memoria.
+            </p>
+
+
+            <p>
+                Cuando una persona estudia, adquiere nueva información
+                que inicialmente puede ser difícil de recordar.
+                Durante el descanso, el cerebro participa en procesos
+                que ayudan a organizar y consolidar parte de esa
+                información. Por esta razón, dormir adecuadamente
+                puede favorecer la capacidad de recordar lo aprendido.
+            </p>
+
+
+            <p>
+                Sin embargo, dormir más horas no significa necesariamente
+                aprender mejor. También son importantes la calidad del
+                sueño, los hábitos de estudio, la atención durante el
+                aprendizaje y las condiciones en las que se realiza
+                el descanso.
+            </p>
+
+
+            <p>
+                Por ello, mantener horarios de sueño relativamente
+                regulares y evitar hábitos que dificulten el descanso
+                puede contribuir a un mejor rendimiento académico.
+                El sueño no reemplaza el estudio, pero puede formar
+                parte de las condiciones que favorecen el aprendizaje.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             TÍTULO PREGUNTAS
+        ================================================== -->
+
+        <div class="preguntas-titulo">
+
+            <h2>
+                Preguntas de comprensión
+            </h2>
+
+            <p>
+                Selecciona la respuesta que consideres correcta.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             PREGUNTA 1
+        ================================================== -->
+
+        <div
+            class="pregunta"
+            data-habilidad="idea_principal"
+        >
+
+            <div class="numero-pregunta">
+                1
+            </div>
+
+
+            <h3>
+                ¿Cuál es la idea principal del texto?
+            </h3>
+
+
+            <div class="opciones">
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q1"
+                        value="A"
+                    >
+
+                    <span>
+                        A. Dormir muchas horas garantiza obtener
+                        buenas calificaciones.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q1"
+                        value="B"
+                    >
+
+                    <span>
+                        B. El sueño puede contribuir a los procesos
+                        relacionados con el aprendizaje y la memoria.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q1"
+                        value="C"
+                    >
+
+                    <span>
+                        C. Estudiar antes de dormir es la única forma
+                        de recordar información.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q1"
+                        value="D"
+                    >
+
+                    <span>
+                        D. Las personas que duermen poco siempre tienen
+                        problemas académicos.
+                    </span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PREGUNTA 2
+        ================================================== -->
+
+        <div
+            class="pregunta"
+            data-habilidad="informacion_explicita"
+        >
+
+            <div class="numero-pregunta">
+                2
+            </div>
+
+
+            <h3>
+                Según el texto, ¿qué ocurre durante el sueño?
+            </h3>
+
+
+            <div class="opciones">
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q2"
+                        value="A"
+                    >
+
+                    <span>
+                        A. El cerebro deja completamente de procesar
+                        información.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q2"
+                        value="B"
+                    >
+
+                    <span>
+                        B. El cerebro solamente descansa y no realiza
+                        ningún proceso relacionado con la memoria.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q2"
+                        value="C"
+                    >
+
+                    <span>
+                        C. El cerebro participa en procesos que pueden
+                        ayudar a organizar y consolidar información.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q2"
+                        value="D"
+                    >
+
+                    <span>
+                        D. El cerebro aprende automáticamente cualquier
+                        información nueva.
+                    </span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PREGUNTA 3
+        ================================================== -->
+
+        <div
+            class="pregunta"
+            data-habilidad="inferencia"
+        >
+
+            <div class="numero-pregunta">
+                3
+            </div>
+
+
+            <h3>
+                ¿Qué se puede inferir del texto?
+            </h3>
+
+
+            <div class="opciones">
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q3"
+                        value="A"
+                    >
+
+                    <span>
+                        A. Una buena noche de sueño puede complementar,
+                        pero no sustituir, los hábitos adecuados de estudio.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q3"
+                        value="B"
+                    >
+
+                    <span>
+                        B. Dormir permite aprender sin necesidad de estudiar.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q3"
+                        value="C"
+                    >
+
+                    <span>
+                        C. Todas las personas necesitan exactamente la misma
+                        cantidad de horas de sueño.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q3"
+                        value="D"
+                    >
+
+                    <span>
+                        D. El rendimiento académico depende únicamente de
+                        la cantidad de horas dormidas.
+                    </span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PREGUNTA 4
+        ================================================== -->
+
+        <div
+            class="pregunta"
+            data-habilidad="relacion_informacion"
+        >
+
+            <div class="numero-pregunta">
+                4
+            </div>
+
+
+            <h3>
+                ¿Por qué el texto afirma que dormir más horas no
+                necesariamente significa aprender mejor?
+            </h3>
+
+
+            <div class="opciones">
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q4"
+                        value="A"
+                    >
+
+                    <span>
+                        A. Porque dormir impide que el cerebro recuerde
+                        información.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q4"
+                        value="B"
+                    >
+
+                    <span>
+                        B. Porque solamente importa estudiar durante
+                        la noche.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q4"
+                        value="C"
+                    >
+
+                    <span>
+                        C. Porque también influyen factores como la calidad
+                        del sueño, los hábitos de estudio y la atención.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q4"
+                        value="D"
+                    >
+
+                    <span>
+                        D. Porque dormir siempre reduce el rendimiento
+                        académico.
+                    </span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PREGUNTA 5
+        ================================================== -->
+
+        <div
+            class="pregunta"
+            data-habilidad="conclusion"
+        >
+
+            <div class="numero-pregunta">
+                5
+            </div>
+
+
+            <h3>
+                ¿Cuál de las siguientes afirmaciones coincide con
+                la conclusión del texto?
+            </h3>
+
+
+            <div class="opciones">
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q5"
+                        value="A"
+                    >
+
+                    <span>
+                        A. El sueño reemplaza las horas de estudio.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q5"
+                        value="B"
+                    >
+
+                    <span>
+                        B. Dormir bien puede formar parte de las condiciones
+                        que favorecen el aprendizaje.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q5"
+                        value="C"
+                    >
+
+                    <span>
+                        C. La mejor estrategia académica es dormir durante
+                        todo el día.
+                    </span>
+
+                </label>
+
+
+                <label class="opcion">
+
+                    <input
+                        type="radio"
+                        name="q5"
+                        value="D"
+                    >
+
+                    <span>
+                        D. Los hábitos de sueño no tienen relación
+                        con el aprendizaje.
+                    </span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             BOTÓN
+        ================================================== -->
+
+        <div class="boton-contenedor">
+
+            <button
+                class="boton"
+                type="submit"
+            >
+
+                Finalizar evaluación
+                &nbsp; →
+
+            </button>
+
+
+            <div class="advertencia">
+
+                <strong>
+                    ℹ️ Importante
+                </strong>
+
+                Esta evaluación constituye una herramienta de
+                orientación educativa inicial. Sus resultados no
+                representan un diagnóstico clínico.
+
+            </div>
+
+        </div>
+
+
+    </form>
+
+
+    <!-- =================================================
+         PIE
+    ================================================== -->
+
+    <footer class="pie">
+
+        Leo · Herramienta de orientación educativa
+
+        <br>
+
+        Los resultados deben interpretarse dentro del contexto
+        de una valoración profesional.
+
+    </footer>
+
+
+</div>
+
+
+<script>
+
+    /*
+       ======================================================
+       ACTUALIZAR PROGRESO
+       ======================================================
+    */
+
+    const preguntas = document.querySelectorAll(".pregunta");
+
+    const contador = document.getElementById("contador");
+
+    const barraProgreso =
+        document.getElementById("barraProgreso");
+
+
+    function actualizarProgreso() {
+
+        let respondidas = 0;
+
+
+        preguntas.forEach(function(pregunta) {
+
+            const seleccionada =
+                pregunta.querySelector(
+                    'input[type="radio"]:checked'
+                );
+
+
+            if (seleccionada) {
+
+                respondidas++;
+
+                pregunta.classList.add("respondida");
+
+            } else {
+
+                pregunta.classList.remove("respondida");
+
+            }
+
+        });
+
+
+        contador.textContent =
+            respondidas + " de 5 respondidas";
+
+
+        const porcentaje =
+            (respondidas / 5) * 100;
+
+
+        barraProgreso.style.width =
+            porcentaje + "%";
+
+    }
+
+
+    /*
+       ======================================================
+       ESCUCHAR RESPUESTAS
+       ======================================================
+    */
+
+    const radios =
+        document.querySelectorAll(
+            'input[type="radio"]'
+        );
+
+
+    radios.forEach(function(radio) {
+
+        radio.addEventListener(
+            "change",
+            actualizarProgreso
+        );
+
+    });
+
+
+    /*
+       ======================================================
+       INICIO
+       ======================================================
+    */
+
+    actualizarProgreso();
+
+
+    /*
+       ======================================================
+       EVITAR ENVÍO INCOMPLETO
+       ======================================================
+    */
+
+    const formulario =
+        document.getElementById(
+            "formularioEvaluacion"
+        );
+
+
+    formulario.addEventListener(
+        "submit",
+        function(event) {
+
+            let completas = 0;
+
+
+            preguntas.forEach(function(pregunta) {
+
+                const seleccionada =
+                    pregunta.querySelector(
+                        'input[type="radio"]:checked'
+                    );
+
+
+                if (seleccionada) {
+
+                    completas++;
+
+                }
+
+            });
+
+
+            if (completas < 5) {
+
+                event.preventDefault();
+
+
+                alert(
+                    "Antes de finalizar la evaluación, " +
+                    "selecciona una respuesta para cada pregunta."
+                );
+
+
+                const primeraSinResponder =
+                    Array.from(preguntas).find(
+                        function(pregunta) {
+
+                            return !pregunta.querySelector(
+                                'input[type="radio"]:checked'
+                            );
+
+                        }
+                    );
+
+
+                if (primeraSinResponder) {
+
+                    primeraSinResponder.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+
+                }
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

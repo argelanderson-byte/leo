@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Leo | Inicio</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #eef5ff 0%,
+                    #f8fbff 50%,
+                    #edf4ff 100%
+                );
+
+            color: #1e293b;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        .contenedor {
+
+            width: 100%;
+
+            max-width: 1000px;
+
+            padding: 30px 20px 45px;
+
+        }
+
+
+        /* =========================================
+           CABECERA
+        ========================================= */
+
+        .cabecera {
+
+            text-align: center;
+
+            margin-bottom: 38px;
+
+        }
+
+
+        .logo {
+
+            width: 82px;
+
+            height: 82px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #4f46e5
+                );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 42px;
+
+            box-shadow:
+                0 14px 30px rgba(37,99,235,0.20);
+
+        }
+
+
+        .cabecera h1 {
+
+            font-size: 38px;
+
+            color: #1e293b;
+
+            margin-bottom: 9px;
+
+        }
+
+
+        .cabecera h1 span {
+
+            color: #2563eb;
+
+        }
+
+
+        .cabecera p {
+
+            color: #64748b;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+
+            max-width: 650px;
+
+            margin: auto;
+
+        }
+
+
+        /* =========================================
+           SELECCIÓN
+        ========================================= */
+
+        .titulo-seccion {
+
+            text-align: center;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .titulo-seccion h2 {
+
+            font-size: 22px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .titulo-seccion p {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================================
+           TARJETAS
+        ========================================= */
+
+        .opciones {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 20px;
+
+        }
+
+
+        .tarjeta {
+
+            background: white;
+
+            border-radius: 25px;
+
+            padding: 30px;
+
+            border: 1px solid #e5edf7;
+
+            box-shadow:
+                0 9px 28px rgba(31,65,114,0.07);
+
+            text-decoration: none;
+
+            color: inherit;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+
+        }
+
+
+        .tarjeta:hover {
+
+            transform: translateY(-5px);
+
+            border-color: #c7d2fe;
+
+            box-shadow:
+                0 17px 35px rgba(31,65,114,0.13);
+
+        }
+
+
+        .icono {
+
+            width: 65px;
+
+            height: 65px;
+
+            border-radius: 20px;
+
+            background: #eef2ff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 32px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .tarjeta h3 {
+
+            font-size: 21px;
+
+            margin-bottom: 9px;
+
+        }
+
+
+        .tarjeta p {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.65;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .enlace {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #4f46e5;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =========================================
+           INFORMACIÓN
+        ========================================= */
+
+        .informacion {
+
+            margin-top: 25px;
+
+            background:
+                rgba(255,255,255,0.75);
+
+            border: 1px solid #e3eaf2;
+
+            border-radius: 19px;
+
+            padding: 18px 20px;
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =========================================
+           PIE
+        ========================================= */
+
+        .pie {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            .contenedor {
+
+                padding:
+                    25px
+                    15px
+                    35px;
+
+            }
+
+
+            .cabecera h1 {
+
+                font-size: 31px;
+
+            }
+
+
+            .opciones {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .tarjeta {
+
+                padding: 25px;
+
+            }
+
+        }
+
+
+        @media (max-width: 420px) {
+
+            .logo {
+
+                width: 70px;
+
+                height: 70px;
+
+                font-size: 36px;
+
+            }
+
+
+            .cabecera h1 {
+
+                font-size: 27px;
+
+            }
+
+
+            .cabecera p {
+
+                font-size: 13px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="contenedor">
+
+
+    <!-- =========================================
+         CABECERA
+    ========================================== -->
+
+    <header class="cabecera">
+
+
+        <div class="logo">
+
+            🤖
+
+        </div>
+
+
+        <h1>
+
+            Bienvenido a <span>Leo</span>
+
+        </h1>
+
+
+        <p>
+
+            Herramienta de orientación educativa para
+            la exploración inicial del desempeño y el
+            acompañamiento de los procesos de aprendizaje.
+
+        </p>
+
+
+    </header>
+
+
+    <!-- =========================================
+         SELECCIÓN
+    ========================================== -->
+
+    <section class="titulo-seccion">
+
+        <h2>
+            ¿Cómo deseas ingresar?
+        </h2>
+
+        <p>
+            Selecciona el espacio correspondiente.
+        </p>
+
+    </section>
+
+
+    <!-- =========================================
+         OPCIONES
+    ========================================== -->
+
+    <main class="opciones">
+
+
+        <!-- ÁREA PROFESIONAL -->
+
+        <a
+            href="/profesional"
+            class="tarjeta"
+        >
+
+            <div class="icono">
+
+                👨‍⚕️
+
+            </div>
+
+
+            <h3>
+                Área profesional
+            </h3>
+
+
+            <p>
+
+                Espacio para profesionales responsables
+                del acompañamiento educativo. Permite
+                iniciar evaluaciones y gestionar las
+                herramientas disponibles en Leo.
+
+            </p>
+
+
+            <div class="enlace">
+
+                Ingresar al área profesional →
+
+            </div>
+
+        </a>
+
+
+        <!-- ÁREA DEL ESTUDIANTE -->
+
+<a
+    href="/acceso-estudiante"
+    class="tarjeta"
+>
+
+            <div class="icono">
+
+                🎓
+
+            </div>
+
+
+            <h3>
+                Área del estudiante
+            </h3>
+
+
+            <p>
+
+                Espacio destinado a los estudiantes para
+                consultar su perfil, realizar las
+                evaluaciones asignadas y participar en
+                su proceso de orientación educativa.
+
+            </p>
+
+
+            <div class="enlace">
+
+                Ingresar como estudiante →
+
+            </div>
+
+        </a>
+
+
+    </main>
+
+
+    <!-- =========================================
+         INFORMACIÓN
+    ========================================== -->
+
+    <section class="informacion">
+
+        <strong>
+            ℹ️ Sobre Leo
+        </strong>
+
+        <br>
+
+        Leo es una herramienta de orientación educativa.
+        Sus evaluaciones permiten realizar una exploración
+        inicial y no constituyen un diagnóstico clínico.
+
+    </section>
+
+
+    <!-- =========================================
+         PIE
+    ========================================== -->
+
+    <footer class="pie">
+
+        Leo · Herramienta de orientación educativa
+
+    </footer>
+
+
+</div>
+
+
+</body>
+
+</html>
