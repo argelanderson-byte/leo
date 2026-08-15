@@ -1,5 +1,3 @@
-from turtle import width
-
 from flask import Flask, render_template, request, jsonify
 from google import genai
 from dotenv import load_dotenv
@@ -2420,7 +2418,4 @@ anteriores.
 # =========================================================
 
 if __name__ == "__main__":
-
-    app.run(
-        debug=True
-    )
+    app.run()
