@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Leo | Dimensión cognitiva</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --rojo-leo: #c8102e;
+            --rojo-oscuro: #a50d25;
+            --rojo-claro: #fff1f3;
+            --rojo-suave: #fde7eb;
+            --rojo-borde: #f3c5cd;
+
+            --texto: #263238;
+            --texto-secundario: #64748b;
+
+            --fondo: #f8f9fb;
+            --blanco: #ffffff;
+
+            --borde: #e7edf5;
+        }
+
+
+        body {
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff7f8 0%,
+                    #f9fafb 50%,
+                    #fff1f3 100%
+                );
+
+            min-height: 100vh;
+
+            color: var(--texto);
+
+            padding: 25px 15px;
+        }
+
+
+        .contenedor {
+
+            width: 100%;
+
+            max-width: 900px;
+
+            margin: auto;
+        }
+
+
+        /* =====================================================
+           ENCABEZADO
+        ===================================================== */
+
+        .header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .logo {
+
+            width: 52px;
+
+            height: 52px;
+
+            border-radius: 15px;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 5px 18px
+                rgba(200, 16, 46, 0.15);
+
+            border: 1px solid var(--rojo-borde);
+        }
+
+
+        .logo img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+
+            padding: 5px;
+        }
+
+
+        .logo-texto h1 {
+
+            color: var(--rojo-leo);
+
+            font-size: 23px;
+
+            font-weight: 800;
+        }
+
+
+        .logo-texto p {
+
+            color: #718096;
+
+            font-size: 13px;
+
+            margin-top: 2px;
+        }
+
+
+        /* =====================================================
+           ENCABEZADO DE PROGRESO
+        ===================================================== */
+
+        .progreso {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 17px 20px;
+
+            margin-bottom: 22px;
+
+            border: 1px solid var(--borde);
+
+            box-shadow:
+                0 6px 20px
+                rgba(80, 20, 30, 0.05);
+        }
+
+
+        .progreso-contenido {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        .paso {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #a0aec0;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+        }
+
+
+        .circulo {
+
+            width: 29px;
+
+            height: 29px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #edf2f7;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .paso.activo {
+
+            color: var(--rojo-leo);
+
+            font-weight: 700;
+        }
+
+
+        .paso.activo .circulo {
+
+            background: var(--rojo-leo);
+
+            color: white;
+        }
+
+
+        .linea {
+
+            height: 2px;
+
+            width: 55px;
+
+            background: #e2e8f0;
+
+            margin: 0 9px;
+        }
+
+
+        .linea.activa {
+
+            background: var(--rojo-leo);
+        }
+
+
+        /* =====================================================
+           INTRODUCCIÓN
+        ===================================================== */
+
+        .intro {
+
+            background: white;
+
+            border-radius: 23px;
+
+            padding: 31px;
+
+            margin-bottom: 23px;
+
+            border: 1px solid var(--borde);
+
+            box-shadow:
+                0 10px 30px
+                rgba(80, 20, 30, 0.06);
+        }
+
+
+        .intro-titulo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .intro-icono {
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 13px;
+
+            background: var(--rojo-claro);
+
+            border: 1px solid var(--rojo-borde);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 23px;
+        }
+
+
+        .intro h2 {
+
+            color: #1e293b;
+
+            font-size: 25px;
+        }
+
+
+        .intro-texto {
+
+            color: var(--texto-secundario);
+
+            line-height: 1.65;
+
+            font-size: 14px;
+        }
+
+
+        .estudiante {
+
+            margin-top: 19px;
+
+            padding: 14px 17px;
+
+            background: var(--rojo-claro);
+
+            border: 1px solid var(--rojo-borde);
+
+            border-radius: 12px;
+
+            color: var(--rojo-oscuro);
+
+            font-size: 14px;
+        }
+
+
+        .estudiante strong {
+
+            color: var(--rojo-leo);
+        }
+
+
+        .aviso {
+
+            margin-top: 16px;
+
+            padding: 15px 17px;
+
+            border-radius: 12px;
+
+            background: #fffaf0;
+
+            border: 1px solid #f6dfae;
+
+            color: #76551a;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           SECCIONES
+        ===================================================== */
+
+        .seccion {
+
+            margin-top: 28px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .seccion-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .seccion-numero {
+
+            width: 34px;
+
+            height: 34px;
+
+            border-radius: 10px;
+
+            background: var(--rojo-leo);
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: 800;
+
+            font-size: 13px;
+        }
+
+
+        .seccion-header h2 {
+
+            color: #1e293b;
+
+            font-size: 19px;
+        }
+
+
+        .seccion-header span {
+
+            color: #94a3b8;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           PREGUNTAS
+        ===================================================== */
+
+        .pregunta {
+
+            background: white;
+
+            border-radius: 19px;
+
+            padding: 24px;
+
+            margin-bottom: 17px;
+
+            border: 1px solid var(--borde);
+
+            box-shadow:
+                0 6px 20px
+                rgba(80, 20, 30, 0.045);
+
+            transition: .2s;
+        }
+
+
+        .pregunta:hover {
+
+            border-color: var(--rojo-borde);
+
+            box-shadow:
+                0 8px 24px
+                rgba(200, 16, 46, 0.07);
+        }
+
+
+        .numero-pregunta {
+
+            color: var(--rojo-leo);
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+
+        .pregunta h3 {
+
+            color: #1e293b;
+
+            font-size: 16px;
+
+            font-weight: 650;
+
+            line-height: 1.55;
+
+            margin-bottom: 18px;
+        }
+
+
+        /* =====================================================
+           OPCIONES
+        ===================================================== */
+
+        .opciones {
+
+            display: grid;
+
+            gap: 9px;
+        }
+
+
+        .opcion {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 10px;
+
+            padding: 13px 14px;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 11px;
+
+            cursor: pointer;
+
+            color: #475569;
+
+            font-size: 14px;
+
+            line-height: 1.45;
+
+            transition: .18s;
+
+            background: white;
+        }
+
+
+        .opcion:hover {
+
+            background: var(--rojo-claro);
+
+            border-color: var(--rojo-borde);
+
+            color: var(--rojo-oscuro);
+        }
+
+
+        .opcion input {
+
+            margin-top: 3px;
+
+            accent-color: var(--rojo-leo);
+
+            flex-shrink: 0;
+        }
+
+
+        .opcion:has(input:checked) {
+
+            background: var(--rojo-claro);
+
+            border-color: var(--rojo-leo);
+
+            color: var(--rojo-oscuro);
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           ESCALA
+        ===================================================== */
+
+        .escala {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 8px;
+
+            margin-top: 5px;
+        }
+
+
+        .escala-opcion {
+
+            position: relative;
+        }
+
+
+        .escala-opcion input {
+
+            position: absolute;
+
+            opacity: 0;
+        }
+
+
+        .escala-opcion label {
+
+            min-height: 70px;
+
+            padding: 10px 6px;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            background: white;
+
+            transition: .18s;
+        }
+
+
+        .escala-opcion label strong {
+
+            font-size: 19px;
+
+            color: var(--rojo-leo);
+
+            margin-bottom: 3px;
+        }
+
+
+        .escala-opcion label span {
+
+            color: #718096;
+
+            font-size: 10px;
+
+            line-height: 1.3;
+        }
+
+
+        .escala-opcion label:hover {
+
+            background: var(--rojo-claro);
+
+            border-color: var(--rojo-borde);
+        }
+
+
+        .escala-opcion input:checked + label {
+
+            background: var(--rojo-leo);
+
+            border-color: var(--rojo-leo);
+        }
+
+
+        .escala-opcion input:checked + label strong,
+
+        .escala-opcion input:checked + label span {
+
+            color: white;
+        }
+
+
+        /* =====================================================
+           BOTÓN
+        ===================================================== */
+
+        .boton-contenedor {
+
+            margin-top: 30px;
+
+            margin-bottom: 35px;
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 18px;
+
+            border: 1px solid var(--borde);
+        }
+
+
+        .boton {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 16px;
+
+            border-radius: 13px;
+
+            background: var(--rojo-leo);
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 750;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+            box-shadow:
+                0 7px 18px
+                rgba(200, 16, 46, 0.20);
+        }
+
+
+        .boton:hover {
+
+            background: var(--rojo-oscuro);
+
+            transform: translateY(-1px);
+        }
+
+
+        .boton:active {
+
+            transform: translateY(0);
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 650px) {
+
+            body {
+
+                padding: 15px 10px;
+            }
+
+
+            .header {
+
+                margin-bottom: 17px;
+            }
+
+
+            .logo {
+
+                width: 45px;
+
+                height: 45px;
+            }
+
+
+            .logo-texto h1 {
+
+                font-size: 21px;
+            }
+
+
+            .progreso {
+
+                overflow-x: auto;
+
+                padding: 14px 10px;
+            }
+
+
+            .progreso-contenido {
+
+                min-width: 420px;
+
+                justify-content: flex-start;
+            }
+
+
+            .linea {
+
+                width: 35px;
+
+                margin: 0 5px;
+            }
+
+
+            .intro {
+
+                padding: 23px 18px;
+
+                border-radius: 19px;
+            }
+
+
+            .intro h2 {
+
+                font-size: 21px;
+            }
+
+
+            .pregunta {
+
+                padding: 19px;
+
+                border-radius: 17px;
+            }
+
+
+            .pregunta h3 {
+
+                font-size: 15px;
+            }
+
+
+            .escala {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .escala-opcion label {
+
+                min-height: 64px;
+            }
+
+        }
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="contenedor">
+
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            <img
+                src="{{ url_for('static', filename='images/logo-leo.png') }}"
+                alt="Logo de Leo"
+            >
+
+        </div>
+
+
+        <div class="logo-texto">
+
+            <h1>
+                Leo
+            </h1>
+
+            <p>
+                Tu asistente de aprendizaje
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         PROGRESO
+    ===================================================== -->
+
+    <div class="progreso">
+
+        <div class="progreso-contenido">
+
+            <div class="paso activo">
+
+                <div class="circulo">
+                    ✓
+                </div>
+
+                <span>
+                    Tamizaje
+                </span>
+
+            </div>
+
+
+            <div class="linea activa"></div>
+
+
+            <div class="paso activo">
+
+                <div class="circulo">
+                    2
+                </div>
+
+                <span>
+                    Cognitiva
+                </span>
+
+            </div>
+
+
+            <div class="linea"></div>
+
+
+            <div class="paso">
+
+                <div class="circulo">
+                    3
+                </div>
+
+                <span>
+                    Resultados
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         INTRODUCCIÓN
+    ===================================================== -->
+
+    <section class="intro">
+
+        <div class="intro-titulo">
+
+            <div class="intro-icono">
+                🧠
+            </div>
+
+            <h2>
+                Dimensión cognitiva
+            </h2>
+
+        </div>
+
+
+        <p class="intro-texto">
+
+            A continuación encontrarás una serie de afirmaciones
+            relacionadas con diferentes procesos cognitivos que
+            participan en el aprendizaje.
+
+            <br><br>
+
+            Lee cada afirmación cuidadosamente y selecciona la
+            opción que mejor describa tu experiencia habitual.
+
+        </p>
+
+
+        <div class="estudiante">
+
+            👤 Estudiante:
+
+            <strong>
+                {{ estudiante["nombre"] }}
+            </strong>
+
+        </div>
+
+
+        <div class="aviso">
+
+            ℹ️ Esta actividad tiene una finalidad educativa
+            y exploratoria. Sus resultados constituyen
+            indicadores iniciales y no representan un
+            diagnóstico clínico.
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         FORMULARIO
+    ===================================================== -->
+
+    <form
+        action="/resultado-cognitiva"
+        method="POST"
+    >
+
+
+        <input
+            type="hidden"
+            name="codigo"
+            value="{{ codigo }}"
+        >
+
+
+        <!-- =================================================
+             MEMORIA DE TRABAJO
+        ================================================= -->
+
+        <section class="seccion">
+
+            <div class="seccion-header">
+
+                <div class="seccion-numero">
+                    01
+                </div>
+
+                <div>
+
+                    <h2>
+                        Memoria de trabajo
+                    </h2>
+
+                    <span>
+                        Preguntas C1 – C5
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- C1 -->
+
+        <div class="pregunta">
+
+            <div class="numero-pregunta">
+                C1
+            </div>
+
+            <h3>
+                Olvido las instrucciones o los pasos de una tarea
+                mientras la estoy realizando.
+            </h3>
+
+            <div class="escala">
+
+                <div class="escala-opcion">
+
+                    <input
+                        type="radio"
+                        id="c1_0"
+                        name="c1"
+                        value="0"
+                        required
+                    >
+
+                    <label for="c1_0">
+                        <strong>0</strong>
+                        <span>Nunca/rara vez</span>
+                    </label>
+
+                </div>
+
+
+                <div class="escala-opcion">
+
+                    <input
+                        type="radio"
+                        id="c1_1"
+                        name="c1"
+                        value="1"
+                    >
+
+                    <label for="c1_1">
+                        <strong>1</strong>
+                        <span>A veces</span>
+                    </label>
+
+                </div>
+
+
+                <div class="escala-opcion">
+
+                    <input
+                        type="radio"
+                        id="c1_2"
+                        name="c1"
+                        value="2"
+                    >
+
+                    <label for="c1_2">
+                        <strong>2</strong>
+                        <span>Frecuentemente</span>
+                    </label>
+
+                </div>
+
+
+                <div class="escala-opcion">
+
+                    <input
+                        type="radio"
+                        id="c1_3"
+                        name="c1"
+                        value="3"
+                    >
+
+                    <label for="c1_3">
+                        <strong>3</strong>
+                        <span>Casi siempre</span>
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- C2 -->
+
+        <div class="pregunta">
+
+            <div class="numero-pregunta">
+                C2
+            </div>
+
+            <h3>
+                Mi mente se satura con facilidad si me dan más de
+                dos instrucciones juntas.
+            </h3>
+
+            <div class="escala">
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c2_0" name="c2" value="0" required>
+                    <label for="c2_0"><strong>0</strong><span>Nunca/rara vez</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c2_1" name="c2" value="1">
+                    <label for="c2_1"><strong>1</strong><span>A veces</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c2_2" name="c2" value="2">
+                    <label for="c2_2"><strong>2</strong><span>Frecuentemente</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c2_3" name="c2" value="3">
+                    <label for="c2_3"><strong>3</strong><span>Casi siempre</span></label>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- C3 -->
+
+        <div class="pregunta">
+
+            <div class="numero-pregunta">
+                C3
+            </div>
+
+            <h3>
+                Tengo que releer el mismo párrafo varias veces
+                porque olvido lo que acabo de leer.
+            </h3>
+
+            <div class="escala">
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c3_0" name="c3" value="0" required>
+                    <label for="c3_0"><strong>0</strong><span>Nunca/rara vez</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c3_1" name="c3" value="1">
+                    <label for="c3_1"><strong>1</strong><span>A veces</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c3_2" name="c3" value="2">
+                    <label for="c3_2"><strong>2</strong><span>Frecuentemente</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c3_3" name="c3" value="3">
+                    <label for="c3_3"><strong>3</strong><span>Casi siempre</span></label>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- C4 -->
+
+        <div class="pregunta">
+
+            <div class="numero-pregunta">
+                C4
+            </div>
+
+            <h3>
+                Me resulta difícil hacer operaciones matemáticas
+                mentales sencillas sin anotarlas.
+            </h3>
+
+            <div class="escala">
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c4_0" name="c4" value="0" required>
+                    <label for="c4_0"><strong>0</strong><span>Nunca/rara vez</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c4_1" name="c4" value="1">
+                    <label for="c4_1"><strong>1</strong><span>A veces</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c4_2" name="c4" value="2">
+                    <label for="c4_2"><strong>2</strong><span>Frecuentemente</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c4_3" name="c4" value="3">
+                    <label for="c4_3"><strong>3</strong><span>Casi siempre</span></label>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- C5 -->
+
+        <div class="pregunta">
+
+            <div class="numero-pregunta">
+                C5
+            </div>
+
+            <h3>
+                Me cuesta retener una dirección o un mensaje corto
+                durante un tiempo antes de escribirlo.
+            </h3>
+
+            <div class="escala">
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c5_0" name="c5" value="0" required>
+                    <label for="c5_0"><strong>0</strong><span>Nunca/rara vez</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c5_1" name="c5" value="1">
+                    <label for="c5_1"><strong>1</strong><span>A veces</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c5_2" name="c5" value="2">
+                    <label for="c5_2"><strong>2</strong><span>Frecuentemente</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c5_3" name="c5" value="3">
+                    <label for="c5_3"><strong>3</strong><span>Casi siempre</span></label>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ATENCIÓN Y CONCENTRACIÓN
+        ================================================= -->
+
+        <section class="seccion">
+
+            <div class="seccion-header">
+
+                <div class="seccion-numero">
+                    02
+                </div>
+
+                <div>
+
+                    <h2>
+                        Atención y concentración
+                    </h2>
+
+                    <span>
+                        Preguntas C6 – C10
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- C6 -->
+
+        <div class="pregunta">
+
+            <div class="numero-pregunta">C6</div>
+
+            <h3>
+                Me distraigo con facilidad durante las clases o al estudiar.
+            </h3>
+
+            <div class="escala">
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c6_0" name="c6" value="0" required>
+                    <label for="c6_0"><strong>0</strong><span>Nunca/rara vez</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c6_1" name="c6" value="1">
+                    <label for="c6_1"><strong>1</strong><span>A veces</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c6_2" name="c6" value="2">
+                    <label for="c6_2"><strong>2</strong><span>Frecuentemente</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c6_3" name="c6" value="3">
+                    <label for="c6_3"><strong>3</strong><span>Casi siempre</span></label>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- C7 -->
+
+        <div class="pregunta">
+
+            <div class="numero-pregunta">C7</div>
+
+            <h3>
+                Me cuesta mantener la atención en conversaciones
+                largas incluso cuando son de mi interés.
+            </h3>
+
+            <div class="escala">
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c7_0" name="c7" value="0" required>
+                    <label for="c7_0"><strong>0</strong><span>Nunca/rara vez</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c7_1" name="c7" value="1">
+                    <label for="c7_1"><strong>1</strong><span>A veces</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c7_2" name="c7" value="2">
+                    <label for="c7_2"><strong>2</strong><span>Frecuentemente</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c7_3" name="c7" value="3">
+                    <label for="c7_3"><strong>3</strong><span>Casi siempre</span></label>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- C8 -->
+
+        <div class="pregunta">
+
+            <div class="numero-pregunta">C8</div>
+
+            <h3>
+                Se me dificulta dividir mi atención entre varias
+                cosas a mi alrededor.
+            </h3>
+
+            <div class="escala">
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c8_0" name="c8" value="0" required>
+                    <label for="c8_0"><strong>0</strong><span>Nunca/rara vez</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c8_1" name="c8" value="1">
+                    <label for="c8_1"><strong>1</strong><span>A veces</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c8_2" name="c8" value="2">
+                    <label for="c8_2"><strong>2</strong><span>Frecuentemente</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c8_3" name="c8" value="3">
+                    <label for="c8_3"><strong>3</strong><span>Casi siempre</span></label>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- C9 -->
+
+        <div class="pregunta">
+
+            <div class="numero-pregunta">C9</div>
+
+            <h3>
+                Evito o procrastino las actividades que requieren
+                más esfuerzo mental de mi parte.
+            </h3>
+
+            <div class="escala">
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c9_0" name="c9" value="0" required>
+                    <label for="c9_0"><strong>0</strong><span>Nunca/rara vez</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c9_1" name="c9" value="1">
+                    <label for="c9_1"><strong>1</strong><span>A veces</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c9_2" name="c9" value="2">
+                    <label for="c9_2"><strong>2</strong><span>Frecuentemente</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c9_3" name="c9" value="3">
+                    <label for="c9_3"><strong>3</strong><span>Casi siempre</span></label>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- C10 -->
+
+        <div class="pregunta">
+
+            <div class="numero-pregunta">C10</div>
+
+            <h3>
+                Tengo pensamientos irrelevantes que me interrumpen
+                mientras intento enfocarme en algo.
+            </h3>
+
+            <div class="escala">
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c10_0" name="c10" value="0" required>
+                    <label for="c10_0"><strong>0</strong><span>Nunca/rara vez</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c10_1" name="c10" value="1">
+                    <label for="c10_1"><strong>1</strong><span>A veces</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c10_2" name="c10" value="2">
+                    <label for="c10_2"><strong>2</strong><span>Frecuentemente</span></label>
+                </div>
+
+                <div class="escala-opcion">
+                    <input type="radio" id="c10_3" name="c10" value="3">
+                    <label for="c10_3"><strong>3</strong><span>Casi siempre</span></label>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PLANIFICACIÓN
+        ================================================= -->
+
+        <section class="seccion">
+
+            <div class="seccion-header">
+
+                <div class="seccion-numero">
+                    03
+                </div>
+
+                <div>
+
+                    <h2>
+                        Planificación
+                    </h2>
+
+                    <span>
+                        Preguntas C11 – C15
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        {% set preguntas = [
+
+            ("c11", "Me cuesta organizar los pasos necesarios para completar un trabajo o proyecto."),
+            ("c12", "Me cuesta dividir mis proyectos en objetivos concretos."),
+            ("c13", "Dejo la preparación de eventos importantes para el día antes de la fecha límite."),
+            ("c14", "Suelo darme cuenta de que me hacen falta herramientas o materiales justo cuando ya empecé mi actividad."),
+            ("c15", "Me cuesta prever las consecuencias o los posibles obstáculos antes de tomar una decisión."),
+
+            ("c16", "Subestimo el tiempo que necesito para las tareas y entrego tarde."),
+            ("c17", "Siento que 24 horas son demasiado poco tiempo para mí."),
+            ("c18", "Nunca termino una actividad con tiempo límite o contrarreloj."),
+            ("c19", "Me estresa cuando me piden entregar un avance de un proyecto antes de determinada hora."),
+            ("c20", "Nunca calculo bien cuánto me voy a demorar haciendo algo."),
+
+            ("c21", "Me cuesta adaptarme cuando cambian instrucciones o metodologías de forma inesperada."),
+            ("c22", "Me frustra y me enoja cuando cambian algo a último minuto."),
+            ("c23", "Me siento incómodo(a) cuando tengo que romper con algo de mi rutina por alguna novedad."),
+            ("c24", "Prefiero lo predecible, el orden y un esquema fijo en mis rutinas."),
+            ("c25", "Prefiero rodearme y conversar con personas que piensen igual a mí."),
+
+            ("c26", "Necesito más tiempo que mis compañeros para leer, comprender o responder."),
+            ("c27", "Necesito más tiempo que mis pares para responder ante cualquier novedad."),
+            ("c28", "Siento que pienso más despacio que las personas de mi entorno."),
+            ("c29", "No capto con facilidad ideas que se expresan rápidamente; suelo necesitar una segunda explicación."),
+            ("c30", "Me cuesta responder de inmediato cuando me piden analizar algo."),
+
+            ("c31", "Pierdo u olvido materiales, plazos o información académica importante."),
+            ("c32", "Me considero una persona con poca organización."),
+            ("c33", "El orden nunca ha sido mi fuerte respecto a mi rutina."),
+            ("c34", "Se me ha dificultado llevar un orden cuando desarrollo una actividad."),
+            ("c35", "Se me hace difícil trabajar bajo un esquema rígido de paso a paso.")
+
+        ] %}
+
+
+        {% for codigo_pregunta, texto in preguntas %}
+
+            {% if codigo_pregunta == "c16" %}
+
+                <section class="seccion">
+
+                    <div class="seccion-header">
+
+                        <div class="seccion-numero">
+                            04
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Gestión del tiempo
+                            </h2>
+
+                            <span>
+                                Preguntas C16 – C20
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            {% elif codigo_pregunta == "c21" %}
+
+                <section class="seccion">
+
+                    <div class="seccion-header">
+
+                        <div class="seccion-numero">
+                            05
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Flexibilidad cognitiva
+                            </h2>
+
+                            <span>
+                                Preguntas C21 – C25
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            {% elif codigo_pregunta == "c26" %}
+
+                <section class="seccion">
+
+                    <div class="seccion-header">
+
+                        <div class="seccion-numero">
+                            06
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Velocidad de procesamiento
+                            </h2>
+
+                            <span>
+                                Preguntas C26 – C30
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            {% elif codigo_pregunta == "c31" %}
+
+                <section class="seccion">
+
+                    <div class="seccion-header">
+
+                        <div class="seccion-numero">
+                            07
+                        </div>
+
+                        <div>
+
+                            <h2>
+                                Organización
+                            </h2>
+
+                            <span>
+                                Preguntas C31 – C35
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            {% endif %}
+
+
+            <div class="pregunta">
+
+                <div class="numero-pregunta">
+                    {{ codigo_pregunta|upper }}
+                </div>
+
+                <h3>
+                    {{ texto }}
+                </h3>
+
+
+                <div class="escala">
+
+
+                    <div class="escala-opcion">
+
+                        <input
+                            type="radio"
+                            id="{{ codigo_pregunta }}_0"
+                            name="{{ codigo_pregunta }}"
+                            value="0"
+                            required
+                        >
+
+                        <label
+                            for="{{ codigo_pregunta }}_0"
+                        >
+
+                            <strong>0</strong>
+
+                            <span>
+                                Nunca/rara vez
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="escala-opcion">
+
+                        <input
+                            type="radio"
+                            id="{{ codigo_pregunta }}_1"
+                            name="{{ codigo_pregunta }}"
+                            value="1"
+                        >
+
+                        <label
+                            for="{{ codigo_pregunta }}_1"
+                        >
+
+                            <strong>1</strong>
+
+                            <span>
+                                A veces
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="escala-opcion">
+
+                        <input
+                            type="radio"
+                            id="{{ codigo_pregunta }}_2"
+                            name="{{ codigo_pregunta }}"
+                            value="2"
+                        >
+
+                        <label
+                            for="{{ codigo_pregunta }}_2"
+                        >
+
+                            <strong>2</strong>
+
+                            <span>
+                                Frecuentemente
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="escala-opcion">
+
+                        <input
+                            type="radio"
+                            id="{{ codigo_pregunta }}_3"
+                            name="{{ codigo_pregunta }}"
+                            value="3"
+                        >
+
+                        <label
+                            for="{{ codigo_pregunta }}_3"
+                        >
+
+                            <strong>3</strong>
+
+                            <span>
+                                Casi siempre
+                            </span>
+
+                        </label>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+
+        <!-- =================================================
+             BOTÓN FINAL
+        ================================================= -->
+
+        <div class="boton-contenedor">
+
+            <button
+                class="boton"
+                type="submit"
+            >
+
+                🧠 Finalizar evaluación cognitiva
+
+            </button>
+
+        </div>
+
+
+    </form>
+
+
+</div>
+
+
+</body>
+
+</html>

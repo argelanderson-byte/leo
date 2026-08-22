@@ -2,19 +2,30 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Leo | Detalle de evaluación</title>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Leo | Detalle de evaluación
+    </title>
+
 
     <style>
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
+
         body {
-            margin: 0;
+
             font-family:
                 -apple-system,
                 BlinkMacSystemFont,
@@ -22,234 +33,406 @@
                 Arial,
                 sans-serif;
 
+            min-height: 100vh;
+
             background:
                 linear-gradient(
                     145deg,
-                    #eef5ff,
-                    #f8fbff,
-                    #edf4ff
+                    #f8f1f2 0%,
+                    #ffffff 48%,
+                    #f5e9eb 100%
                 );
 
-            min-height: 100vh;
-            color: #1e293b;
+            color: #302629;
+
         }
+
 
         .contenedor {
+
             width: 100%;
-            max-width: 1000px;
+
+            max-width: 1050px;
+
             margin: auto;
+
             padding: 25px 20px 50px;
+
         }
 
-        /* =====================================================
+
+        /* =========================================
            VOLVER
-        ===================================================== */
+        ========================================= */
 
         .volver {
-            display: inline-block;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
             margin-bottom: 20px;
-            color: #64748b;
+
+            color: #75696c;
+
             text-decoration: none;
+
+            font-size: 14px;
+
             font-weight: 700;
+
+            transition: 0.2s;
+
         }
+
 
         .volver:hover {
-            color: #2563eb;
+
+            color: #8f1d2c;
+
+            transform: translateX(-2px);
+
         }
 
-        /* =====================================================
+
+        /* =========================================
            CABECERA
-        ===================================================== */
+        ========================================= */
 
         .cabecera {
+
+            position: relative;
+
+            overflow: hidden;
+
             background:
                 linear-gradient(
                     135deg,
-                    #2563eb,
-                    #4f46e5
+                    #7d1725,
+                    #a92d3d
                 );
 
             color: white;
-            border-radius: 25px;
-            padding: 30px;
+
+            border-radius: 27px;
+
+            padding: 31px;
+
             margin-bottom: 20px;
 
             box-shadow:
-                0 12px 30px rgba(37, 99, 235, 0.18);
+                0 15px 35px rgba(92,34,43,0.20);
+
         }
+
+
+        .cabecera::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 260px;
+
+            height: 260px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            right: -90px;
+
+            top: -130px;
+
+        }
+
 
         .cabecera-superior {
+
+            position: relative;
+
+            z-index: 2;
+
             display: flex;
+
             align-items: center;
+
             gap: 18px;
+
         }
+
 
         .avatar {
-            width: 68px;
-            height: 68px;
-            border-radius: 20px;
+
+            width: 70px;
+
+            height: 70px;
+
+            border-radius: 21px;
 
             background: white;
-            color: #2563eb;
+
+            color: #8f1d2c;
 
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
-            font-size: 29px;
-            font-weight: 800;
+            font-size: 30px;
+
+            font-weight: 850;
 
             flex-shrink: 0;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.12);
+
         }
+
 
         .cabecera h1 {
+
             margin: 0 0 6px;
+
             font-size: 28px;
+
+            font-weight: 800;
+
         }
+
 
         .cabecera p {
+
             margin: 4px 0;
-            opacity: 0.9;
+
+            opacity: 0.92;
+
+            font-size: 14px;
+
         }
+
 
         .codigo {
+
             font-size: 13px;
-            opacity: 0.85;
+
+            opacity: 0.84;
+
         }
 
-        /* =====================================================
+
+        /* =========================================
            INFORMACIÓN
-        ===================================================== */
+        ========================================= */
 
         .info-evaluacion {
+
             background: white;
-            border-radius: 20px;
+
+            border-radius: 21px;
+
             padding: 22px;
 
             display: grid;
+
             grid-template-columns:
-                repeat(3, minmax(0, 1fr));
+                repeat(3, minmax(0,1fr));
 
             gap: 15px;
 
             margin-bottom: 20px;
 
-            border: 1px solid #e5edf7;
+            border: 1px solid #eadcdf;
 
             box-shadow:
-                0 7px 22px rgba(31, 65, 114, 0.06);
+                0 7px 22px rgba(70,35,40,0.06);
+
         }
+
 
         .dato {
+
             padding: 15px;
-            background: #f8fbff;
+
+            background: #fbf5f6;
+
             border-radius: 13px;
+
+            border: 1px solid #f0e5e7;
+
         }
+
 
         .etiqueta {
+
             display: block;
-            color: #64748b;
+
+            color: #8a7c80;
+
             font-size: 12px;
+
             margin-bottom: 5px;
+
         }
+
 
         .valor {
+
             font-weight: 800;
-            color: #1e293b;
+
+            color: #3b3134;
+
         }
 
-        /* =====================================================
-           RESULTADO
-        ===================================================== */
+
+        /* =========================================
+           RESULTADO GENERAL
+        ========================================= */
 
         .resultado {
+
             background: white;
-            border-radius: 22px;
+
+            border-radius: 23px;
+
             padding: 30px;
 
             display: grid;
+
             grid-template-columns: 210px 1fr;
 
             gap: 35px;
+
             align-items: center;
 
             margin-bottom: 20px;
 
-            border: 1px solid #e5edf7;
+            border: 1px solid #eadcdf;
 
             box-shadow:
-                0 8px 25px rgba(31, 65, 114, 0.07);
+                0 8px 25px rgba(70,35,40,0.07);
+
         }
 
+
+        /* =========================================
+           CÍRCULO
+        ========================================= */
+
         .circulo {
+
             width: 180px;
+
             height: 180px;
 
             margin: auto;
 
             border-radius: 50%;
 
+            background:
+                conic-gradient(
+                    #8f1d2c 0 var(--porcentaje),
+                    #f1e4e7 var(--porcentaje) 100%
+                );
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
             position: relative;
+
         }
 
+
         .circulo::before {
+
             content: "";
 
             position: absolute;
 
             width: 140px;
+
             height: 140px;
 
             background: white;
 
             border-radius: 50%;
+
         }
 
+
         .numero {
+
             position: relative;
+
             z-index: 1;
 
             text-align: center;
+
         }
 
+
         .numero strong {
+
             display: block;
 
             font-size: 42px;
-            color: #2563eb;
+
+            color: #8f1d2c;
 
             line-height: 1;
+
         }
 
+
         .numero span {
+
             display: block;
 
             margin-top: 7px;
 
-            color: #718096;
+            color: #8a7c80;
 
             font-size: 12px;
+
         }
+
 
         .resultado-texto .subtitulo {
-            color: #718096;
+
+            color: #8a7c80;
+
             font-size: 13px;
+
             margin-bottom: 6px;
+
         }
 
+
         .resultado-texto h2 {
+
             margin: 0 0 15px;
 
             font-size: 28px;
 
-            color: #1e293b;
+            color: #302629;
+
         }
 
+
+        /* =========================================
+           BADGES
+        ========================================= */
+
         .badge {
+
             display: inline-block;
 
             padding: 9px 14px;
@@ -257,87 +440,125 @@
             border-radius: 999px;
 
             font-size: 13px;
+
             font-weight: 800;
+
         }
+
 
         .nivel-adecuado {
-            background: #e9f8ef;
-            color: #16803c;
+
+            background: #e9f5ee;
+
+            color: #217344;
+
         }
+
 
         .nivel-observar {
-            background: #fff5df;
-            color: #b76e00;
+
+            background: #f8eddf;
+
+            color: #966316;
+
         }
 
+
         .resultado-texto p {
-            color: #64748b;
+
+            color: #75696c;
+
             line-height: 1.6;
 
             margin-top: 15px;
+
+            font-size: 14px;
+
         }
 
-        /* =====================================================
+
+        /* =========================================
            SECCIONES
-        ===================================================== */
+        ========================================= */
 
         .seccion {
+
             margin-top: 22px;
+
         }
+
 
         .titulo-seccion {
+
             margin-bottom: 14px;
+
         }
 
+
         .titulo-seccion h2 {
+
             margin: 0;
 
             font-size: 21px;
 
-            color: #1e293b;
+            color: #302629;
+
         }
+
 
         .titulo-seccion p {
+
             margin-top: 5px;
 
-            color: #718096;
+            color: #8a7c80;
+
             font-size: 13px;
+
         }
 
-        /* =====================================================
+
+        /* =========================================
            HABILIDADES
-        ===================================================== */
+        ========================================= */
 
         .habilidades {
+
             display: grid;
 
             grid-template-columns:
-                repeat(2, minmax(0, 1fr));
+                repeat(2, minmax(0,1fr));
 
             gap: 14px;
+
         }
 
+
         .habilidad {
+
             background: white;
 
-            border-radius: 17px;
+            border-radius: 18px;
 
             padding: 19px;
 
-            border: 1px solid #e5edf7;
+            border: 1px solid #eadcdf;
 
             box-shadow:
-                0 6px 18px rgba(31, 65, 114, 0.05);
+                0 6px 18px rgba(70,35,40,0.05);
 
             display: flex;
 
             gap: 14px;
 
             align-items: flex-start;
+
         }
 
+
         .icono {
+
             width: 36px;
+
             height: 36px;
 
             border-radius: 11px;
@@ -345,99 +566,109 @@
             display: flex;
 
             align-items: center;
+
             justify-content: center;
 
             font-weight: 900;
 
             flex-shrink: 0;
+
         }
+
 
         .fortaleza .icono {
-            background: #e9f8ef;
-            color: #16803c;
+
+            background: #e9f5ee;
+
+            color: #217344;
+
         }
+
 
         .observar .icono {
-            background: #fff5df;
-            color: #b76e00;
+
+            background: #f8eddf;
+
+            color: #966316;
+
         }
 
+
         .habilidad strong {
+
             display: block;
 
-            color: #26364a;
+            color: #3b3134;
 
             font-size: 15px;
 
             margin-bottom: 5px;
+
         }
 
+
         .habilidad p {
+
             margin: 0;
 
-            color: #718096;
+            color: #75696c;
 
             font-size: 13px;
 
             line-height: 1.5;
+
         }
 
-        .vacio {
-            background: white;
 
-            border: 1px dashed #cbd5e0;
-
-            padding: 20px;
-
-            border-radius: 15px;
-
-            color: #718096;
-
-            line-height: 1.5;
-        }
-
-        /* =====================================================
+        /* =========================================
            RESUMEN
-        ===================================================== */
+        ========================================= */
 
         .resumen {
+
             margin-top: 15px;
 
             padding: 17px 18px;
 
-            background: #f8fbff;
+            background: #fbf5f6;
 
-            border: 1px solid #dbeafe;
+            border: 1px solid #eadcdf;
 
             border-radius: 14px;
 
-            color: #52657a;
+            color: #675a5e;
 
             font-size: 13px;
 
             line-height: 1.6;
+
         }
 
-        /* =====================================================
+
+        /* =========================================
            PLAN
-        ===================================================== */
+        ========================================= */
 
         .plan {
+
             background: white;
 
-            border-radius: 20px;
+            border-radius: 21px;
 
             margin-bottom: 16px;
 
-            border: 1px solid #e5edf7;
+            border: 1px solid #eadcdf;
 
             overflow: hidden;
 
             box-shadow:
-                0 7px 22px rgba(31, 65, 114, 0.06);
+                0 7px 22px rgba(70,35,40,0.06);
+
         }
 
+
         .plan-header {
+
             padding: 20px;
 
             display: flex;
@@ -446,91 +677,120 @@
 
             gap: 14px;
 
-            border-bottom: 1px solid #edf2f7;
+            border-bottom: 1px solid #f0e7e9;
+
         }
 
+
         .plan-numero {
+
             width: 42px;
+
             height: 42px;
 
             border-radius: 12px;
 
-            background: #eaf2ff;
+            background: #f7e9eb;
 
-            color: #2563eb;
+            color: #8f1d2c;
 
             display: flex;
 
             align-items: center;
+
             justify-content: center;
 
             font-weight: 800;
 
             flex-shrink: 0;
+
         }
 
+
         .plan-header span {
+
             display: block;
 
-            color: #718096;
+            color: #8a7c80;
 
             font-size: 10px;
 
             font-weight: 800;
 
             letter-spacing: 0.8px;
+
         }
+
 
         .plan-header h3 {
+
             margin: 4px 0 0;
 
-            color: #1e293b;
+            color: #302629;
 
             font-size: 17px;
+
         }
+
 
         .plan-contenido {
+
             padding: 20px;
+
         }
+
 
         .bloque {
+
             margin-bottom: 17px;
+
         }
+
 
         .bloque:last-child {
+
             margin-bottom: 0;
+
         }
+
 
         .bloque-titulo {
+
             font-weight: 800;
 
-            color: #334155;
+            color: #3b3134;
 
             font-size: 13px;
+
         }
 
+
         .bloque p {
+
             margin: 6px 0 0;
 
-            color: #64748b;
+            color: #75696c;
 
             font-size: 14px;
 
             line-height: 1.6;
+
         }
 
-        /* =====================================================
+
+        /* =========================================
            IMPORTANTE
-        ===================================================== */
+        ========================================= */
 
         .importante {
+
             margin-top: 25px;
 
             padding: 20px;
 
-            background: #fffaf0;
+            background: #fff8ec;
 
-            border: 1px solid #f6dfae;
+            border: 1px solid #f0dfbd;
 
             border-radius: 17px;
 
@@ -539,17 +799,23 @@
             font-size: 13px;
 
             line-height: 1.6;
+
         }
+
 
         .importante strong {
-            color: #9a6700;
+
+            color: #936300;
+
         }
 
-        /* =====================================================
+
+        /* =========================================
            BOTONES
-        ===================================================== */
+        ========================================= */
 
         .botones {
+
             display: flex;
 
             justify-content: center;
@@ -557,12 +823,16 @@
             gap: 12px;
 
             margin-top: 25px;
+
         }
 
+
         .boton {
+
             display: inline-flex;
 
             align-items: center;
+
             justify-content: center;
 
             padding: 13px 20px;
@@ -573,140 +843,234 @@
 
             font-size: 14px;
 
-            font-weight: 700;
+            font-weight: 750;
+
+            transition: 0.2s;
+
         }
+
+
+        .boton:hover {
+
+            transform: translateY(-2px);
+
+        }
+
 
         .boton-principal {
-            background: #2563eb;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7d1725,
+                    #a92d3d
+                );
 
             color: white;
+
+            box-shadow:
+                0 6px 15px rgba(125,23,37,0.15);
+
         }
+
 
         .boton-secundario {
+
             background: white;
 
-            color: #2563eb;
+            color: #8f1d2c;
 
-            border: 1px solid #dbeafe;
+            border: 1px solid #e4cdd2;
+
         }
 
-        /* =====================================================
+
+        .boton-secundario:hover {
+
+            background: #fbf3f4;
+
+        }
+
+
+        /* =========================================
            RESPONSIVE
-        ===================================================== */
+        ========================================= */
 
         @media (max-width: 800px) {
 
             .resultado {
+
                 grid-template-columns: 1fr;
 
                 text-align: center;
+
             }
+
 
             .habilidades {
+
                 grid-template-columns: 1fr;
+
             }
 
+
             .info-evaluacion {
+
                 grid-template-columns: 1fr;
+
             }
+
         }
+
 
         @media (max-width: 600px) {
 
             .contenedor {
-                padding: 18px 12px 40px;
+
+                padding:
+                    18px
+                    12px
+                    40px;
+
             }
+
 
             .cabecera {
+
                 padding: 23px;
+
             }
+
 
             .cabecera h1 {
+
                 font-size: 23px;
+
             }
+
 
             .resultado {
-                padding: 23px 18px;
+
+                padding:
+                    23px
+                    18px;
+
             }
+
 
             .resultado-texto h2 {
+
                 font-size: 24px;
+
             }
+
 
             .botones {
+
                 flex-direction: column;
+
             }
 
+
             .boton {
+
                 width: 100%;
+
             }
+
         }
 
     </style>
 
 </head>
 
+
 <body>
+
 
 <div class="contenedor">
 
-    <!-- VOLVER AL PERFIL -->
+
+    <!-- =========================================
+         VOLVER AL PERFIL
+    ========================================= -->
 
     <a
         class="volver"
         href="/estudiante/{{ estudiante.codigo }}"
     >
+
         ← Volver al perfil de {{ estudiante.nombre }}
+
     </a>
 
 
-    <!-- =====================================================
+    <!-- =========================================
          CABECERA
-    ====================================================== -->
+    ========================================= -->
 
     <header class="cabecera">
 
         <div class="cabecera-superior">
 
+
             <div class="avatar">
+
                 {{ estudiante.nombre[0]|upper }}
+
             </div>
+
 
             <div>
 
                 <h1>
+
                     {{ estudiante.nombre }}
+
                 </h1>
 
+
                 <p>
+
                     Detalle de evaluación
+
                 </p>
 
+
                 <div class="codigo">
+
                     Código: {{ estudiante.codigo }}
+
                 </div>
 
             </div>
+
 
         </div>
 
     </header>
 
 
-    <!-- =====================================================
+    <!-- =========================================
          INFORMACIÓN DE LA EVALUACIÓN
-    ====================================================== -->
+    ========================================= -->
 
     <section class="info-evaluacion">
 
+
         <div class="dato">
 
             <span class="etiqueta">
+
                 Evaluación
+
             </span>
 
+
             <span class="valor">
+
                 {{ evaluacion.tipo }}
+
             </span>
 
         </div>
@@ -715,11 +1079,16 @@
         <div class="dato">
 
             <span class="etiqueta">
+
                 Fecha
+
             </span>
 
+
             <span class="valor">
+
                 {{ evaluacion.fecha }}
+
             </span>
 
         </div>
@@ -728,70 +1097,102 @@
         <div class="dato">
 
             <span class="etiqueta">
+
                 Resultado
+
             </span>
 
+
             <span class="valor">
+
                 {{ evaluacion.porcentaje }} %
+
             </span>
 
         </div>
+
 
     </section>
 
 
-    <!-- =====================================================
+    <!-- =========================================
          RESULTADO GENERAL
-    ====================================================== -->
+    ========================================= -->
 
     <section class="resultado">
 
+
         <div>
+
 
             <div
                 class="circulo"
-                style="background: conic-gradient(#2563eb {{ evaluacion.porcentaje | safe }}%, #e8f0fe {{ evaluacion.porcentaje | safe }}% 100%);"
+                style="--porcentaje: {{ evaluacion.porcentaje }}%;"
             >
+
 
                 <div class="numero">
 
+
                     <strong>
+
                         {{ evaluacion.porcentaje }}%
+
                     </strong>
 
+
                     <span>
+
                         {{ evaluacion.puntuacion }} de 5
+
                     </span>
+
 
                 </div>
 
+
             </div>
+
 
         </div>
 
 
         <div class="resultado-texto">
 
+
             <div class="subtitulo">
+
                 Resultado general
+
             </div>
 
+
             <h2>
+
                 {{ evaluacion.tipo }}
+
             </h2>
 
 
             {% if evaluacion.porcentaje >= 80 %}
 
+
                 <span class="badge nivel-adecuado">
+
                     ✓ {{ evaluacion.nivel }}
+
                 </span>
+
 
             {% else %}
 
+
                 <span class="badge nivel-observar">
+
                     ! {{ evaluacion.nivel }}
+
                 </span>
+
 
             {% endif %}
 
@@ -804,347 +1205,509 @@
 
             </p>
 
+
         </div>
+
 
     </section>
 
 
-    <!-- =====================================================
+    <!-- =========================================
          ANÁLISIS
-    ====================================================== -->
+    ========================================= -->
 
     <section class="seccion">
 
+
         <div class="titulo-seccion">
 
+
             <h2>
+
                 📊 Análisis por habilidades
+
             </h2>
 
+
             <p>
+
                 Resultado obtenido en las habilidades evaluadas.
+
             </p>
+
 
         </div>
 
 
         <div class="habilidades">
 
+
             {% if evaluacion.porcentaje >= 80 %}
+
 
                 <div class="habilidad fortaleza">
 
+
                     <div class="icono">
+
                         ✓
+
                     </div>
+
 
                     <div>
 
+
                         <strong>
+
                             Desempeño general adecuado
+
                         </strong>
 
+
                         <p>
+
                             El estudiante mostró un desempeño
                             generalmente adecuado en la actividad
                             de comprensión lectora.
+
                         </p>
 
+
                     </div>
+
 
                 </div>
 
 
                 <div class="habilidad fortaleza">
 
+
                     <div class="icono">
+
                         ✓
+
                     </div>
+
 
                     <div>
 
+
                         <strong>
+
                             Comprensión del texto
+
                         </strong>
 
+
                         <p>
+
                             Se evidenció capacidad para comprender
                             información relevante presentada
                             durante la actividad.
+
                         </p>
+
 
                     </div>
 
+
                 </div>
+
 
             {% else %}
 
+
                 <div class="habilidad observar">
 
+
                     <div class="icono">
+
                         !
+
                     </div>
+
 
                     <div>
 
+
                         <strong>
+
                             Aspectos de comprensión lectora
+
                         </strong>
 
+
                         <p>
+
                             Algunas habilidades podrían beneficiarse
                             de actividades adicionales de fortalecimiento.
+
                         </p>
 
+
                     </div>
+
 
                 </div>
 
 
                 <div class="habilidad observar">
 
+
                     <div class="icono">
+
                         !
+
                     </div>
+
 
                     <div>
 
+
                         <strong>
+
                             Seguimiento del desempeño
+
                         </strong>
 
+
                         <p>
+
                             Se recomienda recopilar nuevas evidencias
                             mediante actividades adicionales.
+
                         </p>
+
 
                     </div>
 
+
                 </div>
 
+
             {% endif %}
+
 
         </div>
 
 
         <div class="resumen">
 
+
             <strong>
+
                 Resumen:
+
             </strong>
 
+
             {% if evaluacion.porcentaje >= 80 %}
+
 
                 El resultado obtenido indica un desempeño
                 generalmente adecuado. Se recomienda continuar
                 fortaleciendo las habilidades de comprensión lectora
                 mediante actividades de dificultad progresiva.
 
+
             {% else %}
+
 
                 El resultado permite identificar algunos aspectos
                 que podrían beneficiarse de actividades adicionales.
                 Se recomienda recopilar nuevas evidencias antes
                 de establecer conclusiones sobre el desempeño.
 
+
             {% endif %}
 
+
         </div>
+
 
     </section>
 
 
-    <!-- =====================================================
+    <!-- =========================================
          PLAN DE APOYO
-    ====================================================== -->
+    ========================================= -->
 
     <section class="seccion">
 
+
         <div class="titulo-seccion">
 
+
             <h2>
+
                 🎯 Plan de apoyo
+
             </h2>
 
+
             <p>
+
                 Recomendaciones educativas a partir del resultado.
+
             </p>
+
 
         </div>
 
 
         {% if evaluacion.porcentaje < 80 %}
 
+
             <div class="plan">
+
 
                 <div class="plan-header">
 
+
                     <div class="plan-numero">
+
                         1
+
                     </div>
+
 
                     <div>
 
+
                         <span>
+
                             ÁREA DE APOYO
+
                         </span>
 
+
                         <h3>
+
                             📚 Comprensión lectora
+
                         </h3>
 
+
                     </div>
+
 
                 </div>
 
 
                 <div class="plan-contenido">
 
+
                     <div class="bloque">
 
+
                         <span class="bloque-titulo">
+
                             🎯 Objetivo
+
                         </span>
 
+
                         <p>
+
                             Fortalecer progresivamente la capacidad
                             para comprender, relacionar e interpretar
                             información presente en diferentes textos.
+
                         </p>
+
 
                     </div>
 
 
                     <div class="bloque">
 
+
                         <span class="bloque-titulo">
+
                             ✏️ Actividad recomendada
+
                         </span>
 
+
                         <p>
+
                             Realizar lecturas breves acompañadas
                             de preguntas sobre información explícita,
                             ideas principales e inferencias.
+
                         </p>
+
 
                     </div>
 
 
                     <div class="bloque">
 
+
                         <span class="bloque-titulo">
+
                             💡 Estrategia
+
                         </span>
 
+
                         <p>
+
                             Pedir al estudiante que explique con sus
                             propias palabras la idea principal del texto
                             y que señale la información utilizada para
                             construir sus respuestas.
+
                         </p>
 
+
                     </div>
+
 
                 </div>
 
+
             </div>
+
 
         {% else %}
 
+
             <div class="plan">
+
 
                 <div class="plan-header">
 
+
                     <div class="plan-numero">
+
                         ✓
+
                     </div>
+
 
                     <div>
 
+
                         <span>
+
                             DESEMPEÑO ADECUADO
+
                         </span>
 
+
                         <h3>
+
                             🚀 Continuar fortaleciendo
+
                         </h3>
 
+
                     </div>
+
 
                 </div>
 
 
                 <div class="plan-contenido">
 
+
                     <div class="bloque">
 
+
                         <p>
+
                             El estudiante mostró un desempeño adecuado
                             en esta actividad.
+
                         </p>
+
 
                     </div>
 
 
                     <div class="bloque">
 
+
                         <span class="bloque-titulo">
+
                             💡 Recomendación
+
                         </span>
 
+
                         <p>
+
                             Continuar realizando actividades de
                             comprensión lectora con dificultad progresiva
                             para mantener y fortalecer las habilidades
                             observadas.
+
                         </p>
+
 
                     </div>
 
+
                 </div>
+
 
             </div>
 
+
         {% endif %}
+
 
     </section>
 
 
-    <!-- =====================================================
+    <!-- =========================================
          IMPORTANTE
-    ====================================================== -->
+    ========================================= -->
 
     <div class="importante">
 
+
         <strong>
+
             ℹ️ Importante
+
         </strong>
 
+
         <br><br>
+
 
         Este resultado constituye una orientación educativa
         inicial y no representa un diagnóstico clínico.
 
+
         <br><br>
+
 
         Las áreas señaladas como aspectos por observar requieren
         actividades adicionales y nuevas evidencias antes de
         establecer conclusiones sobre el desempeño del estudiante.
 
+
     </div>
 
 
-    <!-- =====================================================
+    <!-- =========================================
          BOTONES
-    ====================================================== -->
+    ========================================= -->
 
     <div class="botones">
+
 
         <a
             class="boton boton-secundario"
             href="/estudiante/{{ estudiante.codigo }}"
         >
+
             ← Volver al perfil
+
         </a>
 
 
@@ -1152,12 +1715,17 @@
             class="boton boton-principal"
             href="/tamizaje?codigo={{ estudiante.codigo }}"
         >
+
             🧠 Nueva evaluación
+
         </a>
+
 
     </div>
 
+
 </div>
+
 
 </body>
 

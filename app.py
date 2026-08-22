@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from google import genai
 from dotenv import load_dotenv
 import os
@@ -29,10 +29,13 @@ def conectar_db():
     conexion.row_factory = sqlite3.Row
     return conexion
 
-
 def inicializar_db():
 
     conexion = conectar_db()
+
+    # =====================================================
+    # CREAR TABLA ESTUDIANTES
+    # =====================================================
 
     conexion.execute("""
         CREATE TABLE IF NOT EXISTS estudiantes (
@@ -45,61 +48,175 @@ def inicializar_db():
         )
     """)
 
+
+    # =====================================================
+    # AGREGAR NUEVAS COLUMNAS A ESTUDIANTES
+    # =====================================================
+
+    columnas_estudiantes = {
+
+        "edad": "INTEGER",
+
+        "sexo": "TEXT",
+
+        "ciudad": "TEXT",
+
+        "grupo": "TEXT",
+
+        "tipo_minoria": "TEXT",
+
+        "otro_grupo": "TEXT",
+
+        "tipo_estudio": "TEXT",
+
+        "modalidad": "TEXT",
+
+        "universidad_anterior": "TEXT",
+
+        "consentimiento": "INTEGER DEFAULT 0"
+
+    }
+
+
+    columnas_existentes = [
+        columna["name"]
+        for columna in conexion.execute(
+            "PRAGMA table_info(estudiantes)"
+        ).fetchall()
+    ]
+
+
+    for nombre_columna, tipo_columna in columnas_estudiantes.items():
+
+        if nombre_columna not in columnas_existentes:
+
+            conexion.execute(
+                f"""
+                ALTER TABLE estudiantes
+                ADD COLUMN {nombre_columna} {tipo_columna}
+                """
+            )
+
+
+    # =====================================================
+    # CREAR TABLA EVALUACIONES
+    # =====================================================
+
     conexion.execute("""
         CREATE TABLE IF NOT EXISTS evaluaciones (
+
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+
             estudiante_id INTEGER NOT NULL,
+
             tipo TEXT NOT NULL,
+
             puntuacion INTEGER NOT NULL,
+
             porcentaje INTEGER NOT NULL,
+
             nivel TEXT NOT NULL,
+
             fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id)
+
+            FOREIGN KEY (estudiante_id)
+            REFERENCES estudiantes(id)
+
+        )
+    """)
+
+
+    # =====================================================
+    # ACTUALIZAR TABLA EVALUACIONES
+    # =====================================================
+
+    columnas_evaluaciones = [
+        columna["name"]
+        for columna in conexion.execute(
+            "PRAGMA table_info(evaluaciones)"
+        ).fetchall()
+    ]
+
+
+    nuevas_columnas_evaluaciones = {
+
+        "habilidades_adecuadas": "TEXT",
+
+        "habilidades_observar": "TEXT",
+
+        "resumen": "TEXT",
+
+        "mensaje": "TEXT"
+
+    }
+
+
+    for nombre_columna, tipo_columna in nuevas_columnas_evaluaciones.items():
+
+        if nombre_columna not in columnas_evaluaciones:
+
+            conexion.execute(
+                f"""
+                ALTER TABLE evaluaciones
+                ADD COLUMN {nombre_columna} {tipo_columna}
+                """
+            )
+
+                # =====================================================
+    # CREAR TABLA TAMIZAJES
+    # =====================================================
+
+    conexion.execute("""
+        CREATE TABLE IF NOT EXISTS tamizajes (
+
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            estudiante_id INTEGER NOT NULL,
+
+            respuestas TEXT NOT NULL,
+
+            fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+            FOREIGN KEY (estudiante_id)
+            REFERENCES estudiantes(id)
+
+        )
+    """)
+
+
+    # =====================================================
+    # CREAR TABLA COGNITIVAS
+    # =====================================================
+
+    conexion.execute("""
+        CREATE TABLE IF NOT EXISTS cognitivas (
+
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            estudiante_id INTEGER NOT NULL,
+
+            respuestas TEXT NOT NULL,
+
+            puntaje REAL DEFAULT 0,
+
+            porcentaje REAL DEFAULT 0,
+
+            resultado TEXT,
+
+            fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+            FOREIGN KEY (estudiante_id)
+            REFERENCES estudiantes(id)
+
         )
     """)
 
     # =====================================================
-    # ACTUALIZAR TABLA DE EVALUACIONES
+    # GUARDAR CAMBIOS
     # =====================================================
 
-    columnas = conexion.execute("""
-        PRAGMA table_info(evaluaciones)
-    """).fetchall()
-
-    nombres_columnas = [
-        columna["name"]
-        for columna in columnas
-    ]
-
-    if "habilidades_adecuadas" not in nombres_columnas:
-
-        conexion.execute("""
-            ALTER TABLE evaluaciones
-            ADD COLUMN habilidades_adecuadas TEXT
-        """)
-
-    if "habilidades_observar" not in nombres_columnas:
-
-        conexion.execute("""
-            ALTER TABLE evaluaciones
-            ADD COLUMN habilidades_observar TEXT
-        """)
-
-    if "resumen" not in nombres_columnas:
-
-        conexion.execute("""
-            ALTER TABLE evaluaciones
-            ADD COLUMN resumen TEXT
-        """)
-
-    if "mensaje" not in nombres_columnas:
-
-        conexion.execute("""
-            ALTER TABLE evaluaciones
-            ADD COLUMN mensaje TEXT
-        """)
-
     conexion.commit()
+
     conexion.close()
 
 
@@ -140,6 +257,256 @@ def tamizaje():
     )
 
 
+    # =========================================================
+# BIENVENIDA DEL ESTUDIANTE
+# =========================================================
+
+@app.route("/bienvenida")
+def bienvenida():
+
+    codigo = request.args.get("codigo")
+
+    return render_template(
+        "bienvenida.html",
+        codigo=codigo
+    )
+
+# =========================================================
+# CONOZCÁMONOS
+# =========================================================
+
+@app.route("/conozcamonos", methods=["GET", "POST"])
+def conozcamonos():
+
+    if request.method == "POST":
+
+        datos = request.get_json()
+
+        if not datos:
+            return jsonify({
+                "ok": False,
+                "mensaje": "No se recibieron datos."
+            }), 400
+
+        nombre = datos.get("nombre", "").strip()
+        identificacion = datos.get("identificacion", "").strip()
+        edad = datos.get("edad")
+        sexo = datos.get("sexo", "")
+        ciudad = datos.get("ciudad", "").strip()
+        grupo = datos.get("grupo", "").strip()
+
+        tipo_estudio = datos.get("tipo_estudio", "")
+        modalidad = datos.get("modalidad", "")
+        programa = datos.get("programa", "").strip()
+        semestre = datos.get("semestre", "").strip()
+
+        universidad_anterior = datos.get(
+            "universidad_anterior",
+            ""
+        )
+
+        consentimiento = datos.get(
+            "consentimiento",
+            0
+        )
+
+
+        # =====================================================
+        # VALIDAR CONSENTIMIENTO
+        # =====================================================
+
+        if not consentimiento:
+
+            return jsonify({
+                "ok": False,
+                "mensaje":
+                    "Debes aceptar el consentimiento para continuar."
+            }), 400
+
+
+        # =====================================================
+        # CONECTAR CON LA BASE DE DATOS
+        # =====================================================
+
+        conexion = conectar_db()
+
+
+        try:
+
+            # =================================================
+            # BUSCAR SI YA EXISTE EL ESTUDIANTE
+            # =================================================
+
+            estudiante = conexion.execute(
+                """
+                SELECT id, codigo
+                FROM estudiantes
+                WHERE identificacion = ?
+                """,
+                (identificacion,)
+            ).fetchone()
+
+
+            # =================================================
+            # SI YA EXISTE
+            # =================================================
+
+            if estudiante:
+
+                conexion.execute(
+                    """
+                    UPDATE estudiantes
+                    SET
+                        nombre = ?,
+                        edad = ?,
+                        sexo = ?,
+                        ciudad = ?,
+                        grupo = ?,
+                        tipo_estudio = ?,
+                        modalidad = ?,
+                        programa = ?,
+                        semestre = ?,
+                        universidad_anterior = ?,
+                        consentimiento = ?
+                    WHERE identificacion = ?
+                    """,
+                    (
+                        nombre,
+                        edad,
+                        sexo,
+                        ciudad,
+                        grupo,
+                        tipo_estudio,
+                        modalidad,
+                        programa,
+                        semestre,
+                        universidad_anterior,
+                        consentimiento,
+                        identificacion
+                    )
+                )
+
+                estudiante_id = estudiante["id"]
+
+                estudiante_codigo = estudiante["codigo"]
+
+
+            # =================================================
+            # SI NO EXISTE
+            # =================================================
+
+            else:
+
+                codigo = "LEO-" + identificacion
+
+                cursor = conexion.execute(
+                    """
+                    INSERT INTO estudiantes (
+                        codigo,
+                        nombre,
+                        identificacion,
+                        edad,
+                        sexo,
+                        ciudad,
+                        grupo,
+                        tipo_estudio,
+                        modalidad,
+                        programa,
+                        semestre,
+                        universidad_anterior,
+                        consentimiento
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        codigo,
+                        nombre,
+                        identificacion,
+                        edad,
+                        sexo,
+                        ciudad,
+                        grupo,
+                        tipo_estudio,
+                        modalidad,
+                        programa,
+                        semestre,
+                        universidad_anterior,
+                        consentimiento
+                    )
+                )
+
+                estudiante_id = cursor.lastrowid
+
+                estudiante_codigo = codigo
+
+
+            # =================================================
+            # GUARDAR CAMBIOS
+            # =================================================
+
+            conexion.commit()
+
+
+            print(
+                "CONOZCÁMONOS GUARDADO:",
+                estudiante_codigo,
+                nombre
+            )
+
+
+            # =================================================
+            # RESPUESTA
+            # =================================================
+
+            return jsonify({
+                "ok": True,
+                "estudiante_id": estudiante_id,
+                "codigo": estudiante_codigo,
+                "mensaje":
+                    "Información guardada correctamente."
+            })
+
+
+        except sqlite3.IntegrityError as error:
+
+            conexion.rollback()
+
+            print(
+                "ERROR DE INTEGRIDAD EN CONOZCÁMONOS:",
+                error
+            )
+
+            return jsonify({
+                "ok": False,
+                "mensaje":
+                    "Ya existe un estudiante con esos datos."
+            }), 400
+
+
+        except Exception as error:
+
+            conexion.rollback()
+
+            print(
+                "ERROR EN CONOZCÁMONOS:",
+                error
+            )
+
+            return jsonify({
+                "ok": False,
+                "mensaje":
+                    "Ocurrió un error al guardar la información."
+            }), 500
+
+
+        finally:
+
+            conexion.close()
+
+
+    return render_template(
+    "conozcamonos.html"
+)
 # =========================================================
 # ESTUDIANTES
 # =========================================================
@@ -168,108 +535,127 @@ def estudiantes_pagina():
     )
 
 # =========================================================
-# ACCESO DEL ESTUDIANTE
+# RESULTADOS PROFESIONALES
 # =========================================================
 
-@app.route("/acceso-estudiante", methods=["GET"])
-def acceso_estudiante():
+@app.route("/resultados")
+def resultados():
 
-    return render_template(
-        "acceso_estudiante.html"
-    )
-
-
-@app.route("/acceso-estudiante", methods=["POST"])
-def validar_acceso_estudiante():
-
-    datos = request.get_json()
-
-    if not datos:
-
-        return jsonify({
-            "ok": False,
-            "mensaje": "No se recibieron datos."
-        }), 400
-
-    codigo = datos.get(
-        "codigo",
-        ""
-    ).strip().upper()
-
-    if not codigo:
-
-        return jsonify({
-            "ok": False,
-            "mensaje": "Debes ingresar tu código de estudiante."
-        }), 400
+    codigo = request.args.get("codigo", "").strip()
 
     conexion = conectar_db()
 
-    estudiante = conexion.execute("""
-        SELECT *
-        FROM estudiantes
-        WHERE codigo = ?
-    """, (codigo,)).fetchone()
+    try:
 
-    conexion.close()
+        # =====================================================
+        # LISTA DE ESTUDIANTES
+        # =====================================================
 
-    if estudiante is None:
+        estudiantes_db = conexion.execute("""
+            SELECT *
+            FROM estudiantes
+            ORDER BY id DESC
+        """).fetchall()
 
-        return jsonify({
-            "ok": False,
-            "mensaje":
-                "No encontramos un estudiante con ese código."
-        }), 404
+        estudiantes = [
+            dict(estudiante)
+            for estudiante in estudiantes_db
+        ]
 
-    return jsonify({
-        "ok": True,
-        "mensaje": "Estudiante encontrado.",
-        "codigo": codigo
-    })
 
-# =========================================================
-# PERFIL INDIVIDUAL DEL ESTUDIANTE
-# =========================================================
+        # =====================================================
+        # SI NO SE HA SELECCIONADO ESTUDIANTE
+        # =====================================================
 
-@app.route("/estudiante/<codigo>")
-def perfil_estudiante(codigo):
+        if not codigo:
 
-    conexion = conectar_db()
+            return render_template(
+                "resultados.html",
+                estudiantes=estudiantes,
+                estudiante=None,
+                cognitiva=None
+            )
 
-    estudiante = conexion.execute("""
-        SELECT *
-        FROM estudiantes
-        WHERE codigo = ?
-    """, (codigo,)).fetchone()
 
-    if estudiante is None:
+        # =====================================================
+        # BUSCAR ESTUDIANTE SELECCIONADO
+        # =====================================================
+
+        estudiante_db = conexion.execute("""
+            SELECT *
+            FROM estudiantes
+            WHERE codigo = ?
+        """, (codigo,)).fetchone()
+
+
+        if estudiante_db is None:
+
+            return render_template(
+                "resultados.html",
+                estudiantes=estudiantes,
+                estudiante=None,
+                cognitiva=None
+            )
+
+
+        estudiante = dict(estudiante_db)
+
+
+        # =====================================================
+        # BUSCAR ÚLTIMA EVALUACIÓN COGNITIVA
+        # =====================================================
+
+        cognitiva_db = conexion.execute("""
+            SELECT *
+            FROM cognitivas
+            WHERE estudiante_id = ?
+            ORDER BY id DESC
+            LIMIT 1
+        """, (estudiante["id"],)).fetchone()
+
+
+        cognitiva = None
+
+
+        if cognitiva_db is not None:
+
+            cognitiva = dict(cognitiva_db)
+
+
+        # =====================================================
+        # MOSTRAR RESULTADOS
+        # =====================================================
+
+        return render_template(
+            "resultados.html",
+
+            estudiantes=estudiantes,
+
+            estudiante=estudiante,
+
+            cognitiva=cognitiva
+        )
+
+
+    except Exception as error:
+
+        print(
+            "ERROR EN RESULTADOS:",
+            error
+        )
+
+        return """
+        <h2>Error</h2>
+        <p>No fue posible cargar los resultados.</p>
+        <a href="/area-profesional">
+            Volver al área profesional
+        </a>
+        """, 500
+
+
+    finally:
+
         conexion.close()
-        return "Estudiante no encontrado", 404
-
-    evaluaciones_db = conexion.execute("""
-        SELECT *
-        FROM evaluaciones
-        WHERE estudiante_id = ?
-        ORDER BY fecha DESC
-    """, (estudiante["id"],)).fetchall()
-
-    conexion.close()
-
-    estudiante = dict(estudiante)
-
-    evaluaciones = []
-
-    for evaluacion in evaluaciones_db:
-
-        evaluacion = dict(evaluacion)
-
-        evaluaciones.append(evaluacion)
-
-    return render_template(
-        "perfil_estudiante.html",
-        estudiante=estudiante,
-        evaluaciones=evaluaciones
-    )
 
 # =========================================================
 # DETALLE DE UNA EVALUACIÓN
@@ -473,6 +859,998 @@ def comprension():
         codigo=codigo
     )
 
+# =========================================================
+# GUARDAR TAMIZAJE
+# =========================================================
+
+@app.route("/guardar-tamizaje", methods=["POST"])
+def guardar_tamizaje():
+
+    datos = request.get_json(silent=True)
+
+    if not datos:
+        return jsonify({
+            "ok": False,
+            "mensaje": "No se recibieron los datos del tamizaje."
+        }), 400
+
+    codigo = str(
+        datos.get("codigo", "")
+    ).strip()
+
+    if not codigo:
+        return jsonify({
+            "ok": False,
+            "mensaje": "No se recibió el código del estudiante."
+        }), 400
+
+    conexion = conectar_db()
+
+    try:
+
+        # =====================================================
+        # BUSCAR ESTUDIANTE
+        # =====================================================
+
+        estudiante = conexion.execute("""
+            SELECT *
+            FROM estudiantes
+            WHERE codigo = ?
+        """, (codigo,)).fetchone()
+
+        if estudiante is None:
+
+            return jsonify({
+                "ok": False,
+                "mensaje": "No se encontró el estudiante."
+            }), 404
+
+        # =====================================================
+        # GUARDAR RESPUESTAS
+        # =====================================================
+
+        respuestas = {}
+
+        for clave, valor in datos.items():
+
+            if clave != "codigo":
+
+                respuestas[clave] = valor
+
+        # =====================================================
+        # INSERTAR TAMIZAJE
+        # =====================================================
+
+        conexion.execute("""
+            INSERT INTO tamizajes
+            (
+                estudiante_id,
+                respuestas
+            )
+            VALUES (?, ?)
+        """, (
+            estudiante["id"],
+            json.dumps(
+                respuestas,
+                ensure_ascii=False
+            )
+        ))
+
+        conexion.commit()
+
+        print(
+            "TAMIZAJE GUARDADO:",
+            codigo
+        )
+
+        # =====================================================
+        # RESPUESTA AL JAVASCRIPT
+        # =====================================================
+
+        return jsonify({
+            "ok": True,
+            "mensaje": "Tamizaje guardado correctamente."
+        })
+
+    except Exception as error:
+
+        conexion.rollback()
+
+        print(
+            "ERROR AL GUARDAR TAMIZAJE:",
+            error
+        )
+
+        return jsonify({
+            "ok": False,
+            "mensaje":
+                "No fue posible guardar el tamizaje."
+        }), 500
+
+    finally:
+
+        conexion.close()
+
+# =========================================================
+# DIMENSIÓN COGNITIVA
+# =========================================================
+
+@app.route("/cognitiva")
+def cognitiva():
+
+    codigo = request.args.get("codigo", "").strip()
+
+    if not codigo:
+        return """
+        <h2>Error</h2>
+        <p>No se recibió el código del estudiante.</p>
+        <a href="/">Volver al inicio</a>
+        """, 400
+
+    conexion = conectar_db()
+
+    estudiante = conexion.execute("""
+        SELECT *
+        FROM estudiantes
+        WHERE codigo = ?
+    """, (codigo,)).fetchone()
+
+    conexion.close()
+
+    if estudiante is None:
+        return """
+        <h2>Error</h2>
+        <p>No se encontró el estudiante.</p>
+        <a href="/">Volver al inicio</a>
+        """, 404
+
+    return render_template(
+        "cognitiva.html",
+        codigo=codigo,
+        estudiante=dict(estudiante)
+    )
+
+
+# =========================================================
+# GUARDAR RESULTADO DE LA DIMENSIÓN COGNITIVA
+# =========================================================
+
+# =========================================================
+# RESULTADO DE LA DIMENSIÓN COGNITIVA
+# =========================================================
+
+# =========================================================
+# GUARDAR RESULTADO DE LA DIMENSIÓN COGNITIVA
+# =========================================================
+
+@app.route("/resultado-cognitiva", methods=["POST"])
+def resultado_cognitiva():
+
+    codigo = request.form.get("codigo", "").strip()
+
+    if not codigo:
+        return """
+        <h2>Error</h2>
+        <p>No se recibió el código del estudiante.</p>
+        <a href="/">Volver al inicio</a>
+        """, 400
+
+    conexion = conectar_db()
+
+    try:
+
+        # =====================================================
+        # BUSCAR ESTUDIANTE
+        # =====================================================
+
+        estudiante = conexion.execute("""
+            SELECT *
+            FROM estudiantes
+            WHERE codigo = ?
+        """, (codigo,)).fetchone()
+
+        if estudiante is None:
+            return """
+            <h2>Error</h2>
+            <p>No se encontró el estudiante.</p>
+            <a href="/">Volver al inicio</a>
+            """, 404
+
+        # =====================================================
+        # ESTRUCTURA OFICIAL DE LA DIMENSIÓN COGNITIVA
+        # =====================================================
+
+        subhabilidades = {
+
+            "memoria_trabajo": {
+                "nombre": "Memoria de trabajo",
+                "preguntas": [
+                    "c1", "c2", "c3", "c4", "c5"
+                ]
+            },
+
+            "atencion_concentracion": {
+                "nombre": "Atención/concentración",
+                "preguntas": [
+                    "c6", "c7", "c8", "c9", "c10"
+                ]
+            },
+
+            "planificacion": {
+                "nombre": "Planificación",
+                "preguntas": [
+                    "c11", "c12", "c13", "c14", "c15"
+                ]
+            },
+
+            "gestion_tiempo": {
+                "nombre": "Gestión del tiempo",
+                "preguntas": [
+                    "c16", "c17", "c18", "c19", "c20"
+                ]
+            },
+
+            "flexibilidad_cognitiva": {
+                "nombre": "Flexibilidad cognitiva",
+                "preguntas": [
+                    "c21", "c22", "c23", "c24", "c25"
+                ]
+            },
+
+            "velocidad_procesamiento": {
+                "nombre": "Velocidad de procesamiento",
+                "preguntas": [
+                    "c26", "c27", "c28", "c29", "c30"
+                ]
+            },
+
+            "organizacion": {
+                "nombre": "Organización",
+                "preguntas": [
+                    "c31", "c32", "c33", "c34", "c35"
+                ]
+            }
+        }
+
+        # =====================================================
+        # RECIBIR LAS 35 RESPUESTAS
+        # =====================================================
+
+        respuestas = {}
+
+        preguntas_faltantes = []
+
+        for numero in range(1, 36):
+
+            pregunta = f"c{numero}"
+
+            respuesta = request.form.get(
+                pregunta,
+                ""
+            ).strip()
+
+            if respuesta == "":
+
+                preguntas_faltantes.append(
+                    pregunta
+                )
+
+                continue
+
+            try:
+
+                valor = int(respuesta)
+
+            except ValueError:
+
+                return """
+                <h2>Error en la evaluación</h2>
+                <p>Se recibió una respuesta no válida.</p>
+                <a href="/">Volver al inicio</a>
+                """, 400
+
+            if valor not in [0, 1, 2, 3]:
+
+                return """
+                <h2>Error en la evaluación</h2>
+                <p>Una de las respuestas está fuera del rango permitido.</p>
+                <a href="/">Volver al inicio</a>
+                """, 400
+
+            respuestas[pregunta] = valor
+
+        # =====================================================
+        # VERIFICAR QUE ESTÉN LAS 35 RESPUESTAS
+        # =====================================================
+
+        if preguntas_faltantes:
+
+            return """
+            <h2>Evaluación incompleta</h2>
+
+            <p>
+                Debes responder todas las preguntas
+                de la dimensión cognitiva.
+            </p>
+
+            <br>
+
+            <a href="/cognitiva?codigo=""" + codigo + """">
+                Volver a la evaluación
+            </a>
+            """, 400
+
+        # =====================================================
+        # CALCULAR RESULTADOS POR SUBHABILIDAD
+        # =====================================================
+
+        resultados_subhabilidades = {}
+
+        puntaje_total = 0
+
+        for clave, datos in subhabilidades.items():
+
+            puntaje = sum(
+                respuestas[pregunta]
+                for pregunta in datos["preguntas"]
+            )
+
+            porcentaje = round(
+                (puntaje / 15) * 100
+            )
+
+            resultados_subhabilidades[clave] = {
+
+                "nombre": datos["nombre"],
+
+                "puntaje": puntaje,
+
+                "maximo": 15,
+
+                "porcentaje": porcentaje
+            }
+
+            puntaje_total += puntaje
+
+        # =====================================================
+        # PORCENTAJE GENERAL
+        #
+        # 35 preguntas × 3 puntos = 105 puntos
+        # =====================================================
+
+        porcentaje_total = round(
+            (puntaje_total / 105) * 100
+        )
+
+        # =====================================================
+        # CLASIFICACIÓN GENERAL
+        #
+        # IMPORTANTE:
+        # 0 = menor frecuencia de dificultad
+        # 3 = mayor frecuencia de dificultad
+        # =====================================================
+
+        if porcentaje_total <= 33:
+
+            nivel = "Indicadores favorables"
+
+        elif porcentaje_total <= 66:
+
+            nivel = "Aspectos por observar"
+
+        else:
+
+            nivel = "Requiere mayor observación"
+
+        # =====================================================
+        # CLASIFICAR SUBHABILIDADES
+        # =====================================================
+
+        fortalezas = []
+
+        areas_observar = []
+
+        for datos in resultados_subhabilidades.values():
+
+            porcentaje = datos["porcentaje"]
+
+            if porcentaje <= 33:
+
+                fortalezas.append(
+                    datos["nombre"]
+                )
+
+            else:
+
+                areas_observar.append(
+                    datos["nombre"]
+                )
+
+        # =====================================================
+        # GUARDAR RESULTADO EN LA BASE DE DATOS
+        # =====================================================
+
+        conexion.execute("""
+            INSERT INTO cognitivas
+            (
+                estudiante_id,
+                respuestas,
+                puntaje,
+                porcentaje,
+                resultado
+            )
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+
+            estudiante["id"],
+
+            json.dumps(
+                respuestas,
+                ensure_ascii=False
+            ),
+
+            puntaje_total,
+
+            porcentaje_total,
+
+            nivel
+        ))
+
+        conexion.commit()
+
+        # =====================================================
+        # REGISTRO EN TERMINAL
+        # =====================================================
+
+        print(
+            "=========================================="
+        )
+
+        print(
+            "COGNITIVA GUARDADA"
+        )
+
+        print(
+            "Estudiante:",
+            codigo
+        )
+
+        print(
+            "Puntaje:",
+            puntaje_total,
+            "/ 105"
+        )
+
+        print(
+            "Porcentaje:",
+            porcentaje_total,
+            "%"
+        )
+
+        print(
+            "Resultado:",
+            nivel
+        )
+
+        print(
+            "Subhabilidades:",
+            resultados_subhabilidades
+        )
+
+        print(
+            "=========================================="
+        )
+
+        # =====================================================
+        # NO MOSTRAR RESULTADOS AL ESTUDIANTE
+        # =====================================================
+
+        return f"""
+
+        <!DOCTYPE html>
+
+        <html lang="es">
+
+        <head>
+
+            <meta charset="UTF-8">
+
+            <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1.0"
+            >
+
+            <title>
+                Leo | Evaluación completada
+            </title>
+
+            <style>
+
+                * {{
+                    box-sizing: border-box;
+                    margin: 0;
+                    padding: 0;
+                }}
+
+                body {{
+
+                    font-family:
+                        -apple-system,
+                        BlinkMacSystemFont,
+                        "Segoe UI",
+                        Arial,
+                        sans-serif;
+
+                    min-height: 100vh;
+
+                    background:
+                        linear-gradient(
+                            135deg,
+                            #fff5f5,
+                            #ffffff,
+                            #fff8f8
+                        );
+
+                    display: flex;
+
+                    align-items: center;
+
+                    justify-content: center;
+
+                    padding: 20px;
+
+                    color: #263238;
+                }}
+
+                .contenedor {{
+
+                    width: 100%;
+
+                    max-width: 600px;
+
+                }}
+
+                .tarjeta {{
+
+                    background: white;
+
+                    border-radius: 24px;
+
+                    padding: 45px 35px;
+
+                    text-align: center;
+
+                    box-shadow:
+                        0 12px 35px
+                        rgba(120, 30, 30, 0.10);
+
+                    border:
+                        1px solid #f1dddd;
+                }}
+
+                .icono {{
+
+                    width: 75px;
+
+                    height: 75px;
+
+                    margin: 0 auto 22px;
+
+                    border-radius: 22px;
+
+                    background: #a6192e;
+
+                    color: white;
+
+                    display: flex;
+
+                    align-items: center;
+
+                    justify-content: center;
+
+                    font-size: 36px;
+
+                    box-shadow:
+                        0 8px 20px
+                        rgba(166, 25, 46, 0.20);
+                }}
+
+                h1 {{
+
+                    color: #8f1628;
+
+                    font-size: 28px;
+
+                    margin-bottom: 15px;
+                }}
+
+                .mensaje {{
+
+                    color: #64748b;
+
+                    font-size: 15px;
+
+                    line-height: 1.6;
+
+                    margin-bottom: 25px;
+                }}
+
+                .confirmacion {{
+
+                    background: #fff5f5;
+
+                    border:
+                        1px solid #f3d4d9;
+
+                    border-radius: 15px;
+
+                    padding: 17px;
+
+                    color: #7f1d2d;
+
+                    font-size: 14px;
+
+                    margin-bottom: 25px;
+                }}
+
+                .boton {{
+
+                    display: inline-block;
+
+                    text-decoration: none;
+
+                    background: #a6192e;
+
+                    color: white;
+
+                    padding: 14px 25px;
+
+                    border-radius: 12px;
+
+                    font-size: 14px;
+
+                    font-weight: 700;
+
+                    transition: .2s;
+                }}
+
+                .boton:hover {{
+
+                    background: #8f1628;
+
+                    transform:
+                        translateY(-1px);
+                }}
+
+                @media (max-width: 600px) {{
+
+                    .tarjeta {{
+
+                        padding:
+                            35px 22px;
+                    }}
+
+                    h1 {{
+
+                        font-size: 24px;
+                    }}
+
+                }}
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <div class="contenedor">
+
+                <div class="tarjeta">
+
+                    <div class="icono">
+                        ✓
+                    </div>
+
+                    <h1>
+                        Evaluación completada
+                    </h1>
+
+                    <p class="mensaje">
+
+                        Has completado correctamente
+                        la dimensión cognitiva.
+
+                    </p>
+
+                    <div class="confirmacion">
+
+                        ✓ Tus respuestas fueron registradas
+                        correctamente.
+
+                    </div>
+
+                    <a
+                        href="/"
+                        class="boton"
+                    >
+                        Continuar
+                    </a>
+
+                </div>
+
+            </div>
+
+        </body>
+
+        </html>
+
+        """
+
+    except Exception as error:
+
+        conexion.rollback()
+
+        print(
+            "ERROR AL GUARDAR COGNITIVA:",
+            error
+        )
+
+        return """
+        <h2>Error</h2>
+        <p>
+            Ocurrió un error al guardar
+            la evaluación cognitiva.
+        </p>
+        <a href="/">Volver al inicio</a>
+        """, 500
+
+    finally:
+
+        conexion.close()
+
+# =========================================================
+# RESULTADO COGNITIVO PARA EL PROFESIONAL
+# =========================================================
+
+@app.route("/profesional/cognitiva")
+def profesional_cognitiva():
+
+    codigo = request.args.get("codigo", "").strip()
+
+    if not codigo:
+        return """
+        <h2>Error</h2>
+        <p>No se recibió el código del estudiante.</p>
+        <a href="/">Volver al inicio</a>
+        """, 400
+
+    conexion = conectar_db()
+
+    try:
+
+        # =====================================================
+        # BUSCAR ESTUDIANTE
+        # =====================================================
+
+        estudiante = conexion.execute("""
+            SELECT *
+            FROM estudiantes
+            WHERE codigo = ?
+        """, (codigo,)).fetchone()
+
+        if estudiante is None:
+
+            return """
+            <h2>Error</h2>
+            <p>No se encontró el estudiante.</p>
+            <a href="/">Volver al inicio</a>
+            """, 404
+
+        # =====================================================
+        # BUSCAR ÚLTIMA EVALUACIÓN COGNITIVA
+        # =====================================================
+
+        resultado = conexion.execute("""
+            SELECT *
+            FROM cognitivas
+            WHERE estudiante_id = ?
+            ORDER BY id DESC
+            LIMIT 1
+        """, (estudiante["id"],)).fetchone()
+
+        if resultado is None:
+
+            return render_template(
+                "profesional_cognitiva.html",
+
+                estudiante=dict(estudiante),
+
+                codigo=codigo,
+
+                evaluacion=None
+            )
+
+        # =====================================================
+        # RECUPERAR RESPUESTAS
+        # =====================================================
+
+        respuestas = json.loads(
+            resultado["respuestas"]
+        )
+
+        # =====================================================
+        # ESTRUCTURA OFICIAL
+        # =====================================================
+
+        subhabilidades = {
+
+            "memoria_trabajo": {
+                "nombre": "Memoria de trabajo",
+                "preguntas": [
+                    "c1", "c2", "c3", "c4", "c5"
+                ]
+            },
+
+            "atencion_concentracion": {
+                "nombre": "Atención/concentración",
+                "preguntas": [
+                    "c6", "c7", "c8", "c9", "c10"
+                ]
+            },
+
+            "planificacion": {
+                "nombre": "Planificación",
+                "preguntas": [
+                    "c11", "c12", "c13", "c14", "c15"
+                ]
+            },
+
+            "gestion_tiempo": {
+                "nombre": "Gestión del tiempo",
+                "preguntas": [
+                    "c16", "c17", "c18", "c19", "c20"
+                ]
+            },
+
+            "flexibilidad_cognitiva": {
+                "nombre": "Flexibilidad cognitiva",
+                "preguntas": [
+                    "c21", "c22", "c23", "c24", "c25"
+                ]
+            },
+
+            "velocidad_procesamiento": {
+                "nombre": "Velocidad de procesamiento",
+                "preguntas": [
+                    "c26", "c27", "c28", "c29", "c30"
+                ]
+            },
+
+            "organizacion": {
+                "nombre": "Organización",
+                "preguntas": [
+                    "c31", "c32", "c33", "c34", "c35"
+                ]
+            }
+        }
+
+        # =====================================================
+        # CALCULAR RESULTADOS POR SUBHABILIDAD
+        # =====================================================
+
+        resultados_subhabilidades = {}
+
+        fortalezas = []
+
+        areas_observar = []
+
+        for clave, datos in subhabilidades.items():
+
+            puntaje = sum(
+                respuestas.get(pregunta, 0)
+                for pregunta in datos["preguntas"]
+            )
+
+            porcentaje = round(
+                (puntaje / 15) * 100
+            )
+
+            if porcentaje <= 33:
+
+                clasificacion = "Indicador favorable"
+
+                clase = "favorable"
+
+                fortalezas.append(
+                    datos["nombre"]
+                )
+
+            elif porcentaje <= 66:
+
+                clasificacion = "Aspectos por observar"
+
+                clase = "observacion"
+
+                areas_observar.append(
+                    datos["nombre"]
+                )
+
+            else:
+
+                clasificacion = "Mayor frecuencia de indicadores"
+
+                clase = "alerta"
+
+                areas_observar.append(
+                    datos["nombre"]
+                )
+
+            resultados_subhabilidades[clave] = {
+
+                "nombre": datos["nombre"],
+
+                "puntaje": puntaje,
+
+                "maximo": 15,
+
+                "porcentaje": porcentaje,
+
+                "clasificacion": clasificacion,
+
+                "clase": clase
+            }
+
+        # =====================================================
+        # DATOS GENERALES
+        # =====================================================
+
+        evaluacion = {
+
+            "puntaje": resultado["puntaje"],
+
+            "porcentaje": resultado["porcentaje"],
+
+            "resultado": resultado["resultado"],
+
+            "fecha": resultado["fecha"]
+            if "fecha" in resultado.keys()
+            else None
+        }
+
+        return render_template(
+            "profesional_cognitiva.html",
+
+            estudiante=dict(estudiante),
+
+            codigo=codigo,
+
+            evaluacion=evaluacion,
+
+            respuestas=respuestas,
+
+            subhabilidades=resultados_subhabilidades,
+
+            fortalezas=fortalezas,
+
+            areas_observar=areas_observar
+        )
+
+    except Exception as error:
+
+        print(
+            "ERROR AL CONSULTAR COGNITIVA:",
+            error
+        )
+
+        return """
+        <h2>Error</h2>
+        <p>No fue posible consultar el resultado cognitivo.</p>
+        <a href="/">Volver al inicio</a>
+        """, 500
+
+    finally:
+
+        conexion.close()
 
 # =========================================================
 # RESULTADO DE COMPRENSIÓN LECTORA
@@ -480,10 +1858,6 @@ def comprension():
 
 @app.route("/resultado-comprension", methods=["POST"])
 def resultado_comprension():
-
-    # =====================================================
-    # IDENTIFICAR AL ESTUDIANTE
-    # =====================================================
 
     codigo = request.form.get("codigo", "").strip()
 
@@ -512,633 +1886,79 @@ def resultado_comprension():
         """, 404
 
     # =====================================================
-    # RESPUESTAS CORRECTAS
+    # VARIABLES TEMPORALES
     # =====================================================
 
-    respuestas_correctas = {
-        "q1": "B",
-        "q2": "C",
-        "q3": "A",
-        "q4": "C",
-        "q5": "B"
-    }
+    progreso_html = ""
 
-    # =====================================================
-    # RESPUESTAS DEL ESTUDIANTE
-    # =====================================================
-
-    respuestas_usuario = {
-        "q1": request.form.get("q1"),
-        "q2": request.form.get("q2"),
-        "q3": request.form.get("q3"),
-        "q4": request.form.get("q4"),
-        "q5": request.form.get("q5")
-    }
-
-    print(
-        "RESPUESTAS RECIBIDAS:",
-        respuestas_usuario
-    )
-
-    # =====================================================
-    # CALIFICACIÓN
-    # =====================================================
-
+    porcentaje = 0
     puntuacion = 0
-
-    for pregunta in respuestas_correctas:
-
-        if (
-            respuestas_usuario.get(pregunta)
-            == respuestas_correctas[pregunta]
-        ):
-            puntuacion += 1
-
-    porcentaje = puntuacion * 20
-
-    # =====================================================
-    # HABILIDADES EVALUADAS
-    # =====================================================
-
-    habilidades = {
-
-        "idea_principal": {
-            "nombre": "Identificación de la idea principal",
-            "pregunta": "q1"
-        },
-
-        "informacion_explicita": {
-            "nombre": "Comprensión de información explícita",
-            "pregunta": "q2"
-        },
-
-        "inferencia": {
-            "nombre": "Inferencia",
-            "pregunta": "q3"
-        },
-
-        "relacion_informacion": {
-            "nombre": "Relación de información",
-            "pregunta": "q4"
-        },
-
-        "conclusion": {
-            "nombre": "Identificación de la conclusión",
-            "pregunta": "q5"
-        }
-    }
-
-    # =====================================================
-    # CLASIFICACIÓN DE HABILIDADES
-    # =====================================================
-
-    habilidades_adecuadas = []
-    habilidades_observar = []
-
-    for habilidad, datos in habilidades.items():
-
-        pregunta = datos["pregunta"]
-        nombre = datos["nombre"]
-
-        if (
-            respuestas_usuario.get(pregunta)
-            == respuestas_correctas[pregunta]
-        ):
-            habilidades_adecuadas.append(nombre)
-
-        else:
-            habilidades_observar.append(nombre)
-
-    # =====================================================
-    # INTERPRETACIÓN GENERAL
-    # =====================================================
-
-    if porcentaje == 100:
-
-        nivel = "Desempeño adecuado"
-        clase_nivel = "nivel-verde"
-
-        mensaje = (
-            "El estudiante mostró un desempeño adecuado en las "
-            "habilidades evaluadas durante esta actividad."
-        )
-
-        resumen_areas = (
-            "No se identificaron áreas prioritarias por observar "
-            "en esta actividad."
-        )
-
-    elif porcentaje >= 80:
-
-        nivel = "Desempeño adecuado"
-        clase_nivel = "nivel-verde"
-
-        mensaje = (
-            "El estudiante mostró un desempeño generalmente adecuado. "
-            "Se identificó un área que podría continuar fortaleciéndose "
-            "mediante actividades de práctica."
-        )
-
-        resumen_areas = (
-            "Se identificó un área que podría beneficiarse de "
-            "actividades adicionales de fortalecimiento."
-        )
-
-    elif porcentaje >= 60:
-
-        nivel = "Aspectos por observar"
-        clase_nivel = "nivel-naranja"
-
-        mensaje = (
-            "El resultado muestra algunos aspectos de la comprensión "
-            "lectora que podrían beneficiarse de actividades adicionales "
-            "de fortalecimiento."
-        )
-
-        resumen_areas = (
-            "Se identificaron algunas habilidades que podrían beneficiarse "
-            "de actividades adicionales y de la recopilación de nuevas "
-            "evidencias sobre el desempeño."
-        )
-
-    else:
-
-        nivel = "Requiere observación"
-        clase_nivel = "nivel-naranja"
-
-        mensaje = (
-            "El resultado sugiere que sería conveniente observar "
-            "con mayor detalle el desempeño del estudiante mediante "
-            "otras actividades y evidencias."
-        )
-
-        resumen_areas = (
-            "Se identificaron varias áreas que podrían beneficiarse "
-            "de una observación más detallada y actividades de apoyo."
-        )
-
-    # =====================================================
-    # GUARDAR RESULTADO EN LA BASE DE DATOS
-    # =====================================================
-
-    conexion = conectar_db()
-
-    try:
-
-        conexion.execute("""
-    INSERT INTO evaluaciones
-    (
-        estudiante_id,
-        tipo,
-        puntuacion,
-        porcentaje,
-        nivel,
-        habilidades_adecuadas,
-        habilidades_observar,
-        resumen,
-        mensaje
-    )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-""", (
-    estudiante["id"],
-    "Comprensión lectora",
-    puntuacion,
-    porcentaje,
-    nivel,
-    json.dumps(
-        habilidades_adecuadas,
-        ensure_ascii=False
-    ),
-    json.dumps(
-        habilidades_observar,
-        ensure_ascii=False
-    ),
-    resumen_areas,
-    mensaje
-))
-
-        conexion.commit()
-
-        print(
-            "EVALUACIÓN GUARDADA:",
-            codigo,
-            puntuacion,
-            porcentaje,
-            nivel
-        )
-
-    except Exception as error:
-
-        conexion.rollback()
-
-        print(
-            "ERROR AL GUARDAR EVALUACIÓN:",
-            error
-        )
-
-    finally:
-
-        conexion.close()
-
-    # =====================================================
-    # PLANES DE APOYO
-    # =====================================================
-
-    planes_apoyo = {
-
-        "Identificación de la idea principal": {
-
-            "objetivo": (
-                "Fortalecer la capacidad para reconocer la idea central "
-                "de un texto y diferenciarla de información secundaria."
-            ),
-
-            "actividad": (
-                "Leer textos breves y seleccionar entre varias opciones "
-                "la afirmación que resume mejor el contenido principal."
-            ),
-
-            "estrategia": (
-                "Después de cada lectura, pedir al estudiante que explique "
-                "en una o dos frases de qué trata principalmente el texto."
-            )
-        },
-
-        "Comprensión de información explícita": {
-
-            "objetivo": (
-                "Fortalecer la capacidad para localizar y recuperar "
-                "información presentada directamente en un texto."
-            ),
-
-            "actividad": (
-                "Realizar lecturas breves acompañadas de preguntas sobre "
-                "datos, hechos, personajes, lugares o información expresada "
-                "directamente."
-            ),
-
-            "estrategia": (
-                "Enseñar al estudiante a volver al texto y localizar "
-                "la información que sustenta cada respuesta."
-            )
-        },
-
-        "Inferencia": {
-
-            "objetivo": (
-                "Fortalecer la capacidad para deducir información "
-                "a partir de pistas presentes en el texto."
-            ),
-
-            "actividad": (
-                "Presentar pequeños textos y solicitar al estudiante "
-                "que determine qué puede deducirse aunque no aparezca "
-                "escrito de manera directa."
-            ),
-
-            "estrategia": (
-                "Pedir que explique qué información del texto utilizó "
-                "para llegar a cada conclusión."
-            )
-        },
-
-        "Relación de información": {
-
-            "objetivo": (
-                "Fortalecer la capacidad para relacionar información "
-                "presentada en diferentes partes de un texto."
-            ),
-
-            "actividad": (
-                "Utilizar textos breves en los que el estudiante deba "
-                "relacionar causas, consecuencias, hechos o ideas "
-                "presentadas en distintos párrafos."
-            ),
-
-            "estrategia": (
-                "Utilizar esquemas o mapas de ideas para conectar "
-                "informaciones relacionadas."
-            )
-        },
-
-        "Identificación de la conclusión": {
-
-            "objetivo": (
-                "Fortalecer la capacidad para reconocer la conclusión "
-                "o idea final derivada del contenido de un texto."
-            ),
-
-            "actividad": (
-                "Presentar textos breves y solicitar al estudiante "
-                "que identifique la afirmación que representa mejor "
-                "la conclusión."
-            ),
-
-            "estrategia": (
-                "Practicar la síntesis del texto en una frase final "
-                "que reúna sus ideas más importantes."
-            )
-        }
-    }
-
-    # =====================================================
-    # FORTALEZAS
-    # =====================================================
+    nivel = "Pendiente"
+    clase_nivel = "nivel-naranja"
+    mensaje = "Evaluación pendiente."
 
     fortalezas_html = ""
-
-    for habilidad in habilidades_adecuadas:
-
-        fortalezas_html += f"""
-        <div class="habilidad-card fortaleza">
-
-            <div class="habilidad-icono">
-                ✓
-            </div>
-
-            <div>
-                <strong>{habilidad}</strong>
-
-                <p>
-                    Se observó un desempeño adecuado durante esta actividad.
-                </p>
-            </div>
-
-        </div>
-        """
-
-    if not habilidades_adecuadas:
-
-        fortalezas_html = """
-        <div class="vacio">
-
-            En esta actividad no se identificaron habilidades con
-            desempeño adecuado suficiente para destacarlas como fortaleza.
-
-        </div>
-        """
-
-    # =====================================================
-    # ÁREAS POR OBSERVAR
-    # =====================================================
-
     areas_html = ""
-
-    for habilidad in habilidades_observar:
-
-        areas_html += f"""
-        <div class="habilidad-card observar">
-
-            <div class="habilidad-icono">
-                !
-            </div>
-
-            <div>
-                <strong>{habilidad}</strong>
-
-                <p>
-                    Área que puede beneficiarse de práctica adicional.
-                </p>
-            </div>
-
-        </div>
-        """
-
-    if not habilidades_observar:
-
-        areas_html = """
-        <div class="vacio">
-
-            No se identificaron áreas prioritarias por observar
-            en esta actividad.
-
-        </div>
-        """
-
-    # =====================================================
-    # PLAN DE APOYO PERSONALIZADO
-    # =====================================================
-
+    resumen_areas = ""
     plan_html = ""
 
-    if habilidades_observar:
+    # =====================================================
+    # HTML
+    # =====================================================
 
-        plan_html += """
-        <div class="plan-intro">
+    return f"""
+    <!DOCTYPE html>
 
-            <div class="plan-intro-icon">
-                🎯
-            </div>
+    <html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        >
+
+        <title>Leo | Resultados</title>
+    </head>
+
+    <body>
+
+        <div class="contenedor">
+
+            {progreso_html}
+
+            <h1>Resultado de comprensión lectora</h1>
+
+            <h2>{porcentaje}%</h2>
+
+            <p>{puntuacion} respuestas correctas</p>
+
+            <p>{nivel}</p>
+
+            <p>{mensaje}</p>
+
+            <h2>Análisis por habilidades</h2>
+
+            {fortalezas_html}
+
+            {areas_html}
 
             <div>
-
-                <strong>
-                    Leo preparó estas recomendaciones para ti.
-                </strong>
-
-                <p>
-                    A partir del desempeño obtenido, se identificaron
-                    algunas habilidades que pueden beneficiarse de
-                    actividades adicionales de fortalecimiento.
-                </p>
-
+                {resumen_areas}
             </div>
 
-        </div>
-        """
+            <h2>Plan de apoyo</h2>
 
-        for numero, habilidad in enumerate(
-            habilidades_observar,
-            1
-        ):
-
-            plan = planes_apoyo[habilidad]
-
-            plan_html += f"""
-            <div class="plan-card">
-
-                <div class="plan-header">
-
-                    <div class="plan-numero">
-                        {numero}
-                    </div>
-
-                    <div>
-
-                        <span class="plan-etiqueta">
-                            ÁREA DE APOYO
-                        </span>
-
-                        <h3>
-                            📚 {habilidad}
-                        </h3>
-
-                    </div>
-
-                </div>
-
-                <div class="plan-contenido">
-
-                    <div class="plan-bloque">
-
-                        <span class="bloque-titulo">
-                            🎯 Objetivo
-                        </span>
-
-                        <p>
-                            {plan["objetivo"]}
-                        </p>
-
-                    </div>
-
-                    <div class="plan-bloque">
-
-                        <span class="bloque-titulo">
-                            ✏️ Actividad recomendada
-                        </span>
-
-                        <p>
-                            {plan["actividad"]}
-                        </p>
-
-                    </div>
-
-                    <div class="plan-bloque">
-
-                        <span class="bloque-titulo">
-                            💡 Estrategia
-                        </span>
-
-                        <p>
-                            {plan["estrategia"]}
-                        </p>
-
-                    </div>
-
-                    <button
-                        class="boton-actividad"
-                        type="button"
-                    >
-                        ▶ Comenzar actividad
-                    </button>
-
-                </div>
-
-            </div>
-            """
-
-    else:
-
-        plan_html = """
-        <div class="plan-card plan-adecuado">
-
-            <div class="plan-header">
-
-                <div class="plan-numero">
-                    ✓
-                </div>
-
-                <div>
-
-                    <span class="plan-etiqueta">
-                        RESULTADO
-                    </span>
-
-                    <h3>
-                        Continúa fortaleciendo tus habilidades
-                    </h3>
-
-                </div>
-
-            </div>
-
-            <div class="plan-contenido">
-
-                <p>
-                    En esta actividad el estudiante mostró un desempeño
-                    adecuado en las habilidades evaluadas.
-                </p>
-
-                <p>
-                    Se recomienda continuar realizando actividades de
-                    comprensión lectora con dificultad progresiva para
-                    mantener y fortalecer estas habilidades.
-                </p>
-
-            </div>
-
-        </div>
-        """
-
-    # =====================================================
-    # INDICADOR DE PROGRESO
-    # =====================================================
-
-    progreso_html = """
-
-    <div class="progreso">
-
-        <div class="progreso-linea">
-
-            <div class="paso activo">
-
-                <div class="paso-circulo">
-                    ✓
-                </div>
-
-                <span>
-                    Evaluación
-                </span>
-
-            </div>
-
-            <div class="linea activa"></div>
-
-            <div class="paso activo">
-
-                <div class="paso-circulo">
-                    ✓
-                </div>
-
-                <span>
-                    Resultado
-                </span>
-
-            </div>
-
-            <div class="linea"></div>
-
-            <div class="paso actual">
-
-                <div class="paso-circulo">
-                    3
-                </div>
-
-                <span>
-                    Plan de apoyo
-                </span>
-
-            </div>
-
-            <div class="linea"></div>
-
-            <div class="paso">
-
-                <div class="paso-circulo">
-                    4
-                </div>
-
-                <span>
-                    Actividades
-                </span>
-
-            </div>
+            {plan_html}
 
         </div>
 
-    </div>
+    </body>
 
+    </html>
     """
+
 
     # =====================================================
     # HTML FINAL
@@ -1313,7 +2133,7 @@ def resultado_comprension():
             margin-bottom: 22px;
         }}
 
-        .resultado-circulo {
+        .resultado-circulo {{
     width: 190px;
     height: 190px;
     margin: auto;
@@ -1329,7 +2149,7 @@ def resultado_comprension():
     justify-content: center;
 
     position: relative;
-}
+}}
 
         .resultado-circulo::before {{
             content: "";
@@ -1854,66 +2674,6 @@ def resultado_comprension():
 
         <div class="resultado-circulo">
 
-            <div class="resultado-numero">
-
-                <strong>
-                    {porcentaje}%
-                </strong>
-
-                <span>
-                    {puntuacion} de 5 respuestas
-                </span>
-
-            </div>
-
-        </div>
-
-        <div class="hero-contenido">
-
-            <div class="subtitulo">
-                Resultado de tu evaluación
-            </div>
-
-            <h1>
-                Comprensión lectora
-            </h1>
-
-            <div class="badge {clase_nivel}">
-                {nivel}
-            </div>
-
-            <p>
-                {mensaje}
-            </p>
-
-        </div>
-
-    </section>
-
-    <section class="mensaje-leo">
-
-        <div class="leo-avatar">
-            🤖
-        </div>
-
-        <div>
-
-            <strong>
-                Leo dice:
-            </strong>
-
-            <p>
-                Tu resultado muestra habilidades que ya estás
-                desarrollando adecuadamente y otras que podemos
-                seguir fortaleciendo con práctica.
-            </p>
-
-        </div>
-
-    </section>
-
-    <section class="seccion">
-
         <div class="titulo-seccion">
 
             <h2>
@@ -2030,6 +2790,7 @@ def preguntar():
             "respuesta":
                 "Escribe una pregunta para que pueda ayudarte."
         }), 400
+
 
     # =====================================================
     # CONSTRUIR HISTORIAL
@@ -2411,6 +3172,7 @@ anteriores.
                 "la pregunta. Puedes intentarlo nuevamente."
             )
         }), 500
+    
 
 
 # =========================================================
@@ -2418,4 +3180,11 @@ anteriores.
 # =========================================================
 
 if __name__ == "__main__":
-    app.run()
+
+    inicializar_db()
+
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+        debug=True
+    )

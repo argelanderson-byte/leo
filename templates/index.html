@@ -17,6 +17,7 @@
             padding: 0;
         }
 
+
         body {
 
             font-family:
@@ -31,12 +32,12 @@
             background:
                 linear-gradient(
                     145deg,
-                    #eef5ff 0%,
-                    #f8fbff 50%,
-                    #edf4ff 100%
+                    #f8f1f2 0%,
+                    #ffffff 48%,
+                    #f5e9eb 100%
                 );
 
-            color: #1e293b;
+            color: #2d2527;
 
             display: flex;
 
@@ -51,9 +52,9 @@
 
             width: 100%;
 
-            max-width: 1000px;
+            max-width: 1050px;
 
-            padding: 30px 20px 45px;
+            padding: 35px 20px 45px;
 
         }
 
@@ -66,27 +67,22 @@
 
             text-align: center;
 
-            margin-bottom: 38px;
+            margin-bottom: 42px;
 
         }
 
 
         .logo {
 
-            width: 82px;
+            width: 125px;
 
-            height: 82px;
+            height: 125px;
 
-            margin: 0 auto 18px;
+            margin: 0 auto 20px;
 
-            border-radius: 25px;
+            border-radius: 30px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #2563eb,
-                    #4f46e5
-                );
+            background: #ffffff;
 
             display: flex;
 
@@ -94,41 +90,60 @@
 
             justify-content: center;
 
-            font-size: 42px;
+            overflow: hidden;
+
+            border: 1px solid #eadcdf;
 
             box-shadow:
-                0 14px 30px rgba(37,99,235,0.20);
+                0 15px 35px rgba(92, 34, 43, 0.15);
+
+        }
+
+
+        .logo img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+
+            display: block;
 
         }
 
 
         .cabecera h1 {
 
-            font-size: 38px;
+            font-size: 40px;
 
-            color: #1e293b;
+            font-weight: 800;
 
-            margin-bottom: 9px;
+            color: #302629;
+
+            margin-bottom: 10px;
+
+            letter-spacing: -0.7px;
 
         }
 
 
         .cabecera h1 span {
 
-            color: #2563eb;
+            color: #8f1d2c;
 
         }
 
 
         .cabecera p {
 
-            color: #64748b;
+            color: #6f6467;
 
             font-size: 15px;
 
-            line-height: 1.6;
+            line-height: 1.7;
 
-            max-width: 650px;
+            max-width: 690px;
 
             margin: auto;
 
@@ -143,23 +158,27 @@
 
             text-align: center;
 
-            margin-bottom: 20px;
+            margin-bottom: 22px;
 
         }
 
 
         .titulo-seccion h2 {
 
-            font-size: 22px;
+            font-size: 23px;
 
-            margin-bottom: 6px;
+            font-weight: 750;
+
+            color: #302629;
+
+            margin-bottom: 7px;
 
         }
 
 
         .titulo-seccion p {
 
-            color: #64748b;
+            color: #817578;
 
             font-size: 13px;
 
@@ -167,7 +186,7 @@
 
 
         /* =========================================
-           TARJETAS
+           OPCIONES
         ========================================= */
 
         .opciones {
@@ -177,57 +196,95 @@
             grid-template-columns:
                 repeat(2, minmax(0, 1fr));
 
-            gap: 20px;
+            gap: 22px;
 
         }
 
 
+        /* =========================================
+           TARJETAS
+        ========================================= */
+
         .tarjeta {
 
-            background: white;
+            position: relative;
+
+            background: rgba(255,255,255,0.96);
 
             border-radius: 25px;
 
-            padding: 30px;
+            padding: 32px;
 
-            border: 1px solid #e5edf7;
+            border: 1px solid #eadcdf;
 
             box-shadow:
-                0 9px 28px rgba(31,65,114,0.07);
+                0 10px 30px rgba(70, 35, 40, 0.07);
 
             text-decoration: none;
 
             color: inherit;
 
             transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease,
-                border-color 0.2s ease;
+                transform 0.22s ease,
+                box-shadow 0.22s ease,
+                border-color 0.22s ease;
+
+            overflow: hidden;
+
+        }
+
+
+        .tarjeta::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: 0;
+
+            right: 0;
+
+            height: 4px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #7d1725,
+                    #a92d3d
+                );
 
         }
 
 
         .tarjeta:hover {
 
-            transform: translateY(-5px);
+            transform: translateY(-6px);
 
-            border-color: #c7d2fe;
+            border-color: #d7b8bd;
 
             box-shadow:
-                0 17px 35px rgba(31,65,114,0.13);
+                0 18px 38px rgba(70, 35, 40, 0.13);
 
         }
 
 
+        /* =========================================
+           ICONOS
+        ========================================= */
+
         .icono {
 
-            width: 65px;
+            width: 68px;
 
-            height: 65px;
+            height: 68px;
 
             border-radius: 20px;
 
-            background: #eef2ff;
+            background: #f7e9eb;
+
+            border: 1px solid #ecd4d8;
 
             display: flex;
 
@@ -237,7 +294,7 @@
 
             font-size: 32px;
 
-            margin-bottom: 20px;
+            margin-bottom: 21px;
 
         }
 
@@ -246,20 +303,24 @@
 
             font-size: 21px;
 
-            margin-bottom: 9px;
+            font-weight: 750;
+
+            color: #302629;
+
+            margin-bottom: 10px;
 
         }
 
 
         .tarjeta p {
 
-            color: #64748b;
+            color: #6f6467;
 
             font-size: 13px;
 
-            line-height: 1.65;
+            line-height: 1.7;
 
-            margin-bottom: 22px;
+            margin-bottom: 23px;
 
         }
 
@@ -272,11 +333,24 @@
 
             gap: 7px;
 
-            color: #4f46e5;
+            color: #8f1d2c;
 
             font-size: 13px;
 
             font-weight: 800;
+
+            transition:
+                gap 0.2s ease,
+                color 0.2s ease;
+
+        }
+
+
+        .tarjeta:hover .enlace {
+
+            gap: 10px;
+
+            color: #6f1421;
 
         }
 
@@ -290,21 +364,31 @@
             margin-top: 25px;
 
             background:
-                rgba(255,255,255,0.75);
+                rgba(255,255,255,0.78);
 
-            border: 1px solid #e3eaf2;
+            border: 1px solid #eadcdf;
 
             border-radius: 19px;
 
-            padding: 18px 20px;
+            padding: 19px 22px;
 
             text-align: center;
 
-            color: #64748b;
+            color: #75696c;
 
             font-size: 12px;
 
-            line-height: 1.6;
+            line-height: 1.7;
+
+            box-shadow:
+                0 7px 22px rgba(70, 35, 40, 0.04);
+
+        }
+
+
+        .informacion strong {
+
+            color: #8f1d2c;
 
         }
 
@@ -319,7 +403,7 @@
 
             margin-top: 25px;
 
-            color: #94a3b8;
+            color: #9b8d90;
 
             font-size: 11px;
 
@@ -332,19 +416,40 @@
 
         @media (max-width: 700px) {
 
+            body {
+
+                align-items: flex-start;
+
+            }
+
+
             .contenedor {
 
                 padding:
-                    25px
+                    30px
                     15px
                     35px;
 
             }
 
 
+            .cabecera {
+
+                margin-bottom: 35px;
+
+            }
+
+
             .cabecera h1 {
 
-                font-size: 31px;
+                font-size: 32px;
+
+            }
+
+
+            .cabecera p {
+
+                font-size: 14px;
 
             }
 
@@ -353,12 +458,14 @@
 
                 grid-template-columns: 1fr;
 
+                gap: 18px;
+
             }
 
 
             .tarjeta {
 
-                padding: 25px;
+                padding: 27px;
 
             }
 
@@ -369,18 +476,18 @@
 
             .logo {
 
-                width: 70px;
+                width: 95px;
 
-                height: 70px;
+                height: 95px;
 
-                font-size: 36px;
+                border-radius: 25px;
 
             }
 
 
             .cabecera h1 {
 
-                font-size: 27px;
+                font-size: 28px;
 
             }
 
@@ -388,6 +495,20 @@
             .cabecera p {
 
                 font-size: 13px;
+
+            }
+
+
+            .titulo-seccion h2 {
+
+                font-size: 20px;
+
+            }
+
+
+            .tarjeta {
+
+                padding: 24px;
 
             }
 
@@ -413,7 +534,10 @@
 
         <div class="logo">
 
-            🤖
+            <img
+                src="{{ url_for('static', filename='images/logo-leo.png') }}"
+                alt="Logo de Leo"
+            >
 
         </div>
 
@@ -501,10 +625,10 @@
 
         <!-- ÁREA DEL ESTUDIANTE -->
 
-<a
-    href="/acceso-estudiante"
-    class="tarjeta"
->
+        <a
+            href="/acceso-estudiante"
+            class="tarjeta"
+        >
 
             <div class="icono">
 

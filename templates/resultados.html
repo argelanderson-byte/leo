@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Leo | Resultados</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #fff7f7 0%,
+                    #fffafa 50%,
+                    #fdf1f2 100%
+                );
+
+            color: #2b2024;
+        }
+
+
+        .contenedor {
+
+            width: 100%;
+
+            max-width: 1050px;
+
+            margin: auto;
+
+            padding: 25px 20px 45px;
+        }
+
+
+        .volver {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            text-decoration: none;
+
+            color: #7b6870;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            margin-bottom: 20px;
+        }
+
+
+        .volver:hover {
+
+            color: #a51c30;
+        }
+
+
+        .cabecera {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8f1629,
+                    #b32038
+                );
+
+            color: white;
+
+            border-radius: 28px;
+
+            padding: 30px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 15px 35px
+                rgba(143,22,41,0.20);
+        }
+
+
+        .cabecera h1 {
+
+            font-size: 28px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .cabecera p {
+
+            font-size: 14px;
+
+            opacity: 0.92;
+        }
+
+
+        /* =========================================
+           SELECTOR
+        ========================================= */
+
+        .filtros {
+
+            background: white;
+
+            border: 1px solid #f0dfe2;
+
+            border-radius: 20px;
+
+            padding: 20px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 8px 24px
+                rgba(91,39,50,0.06);
+        }
+
+
+        .filtros label {
+
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+
+        .filtros select {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border-radius: 12px;
+
+            border: 1px solid #e5d5d8;
+
+            background: white;
+
+            font-size: 14px;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================================
+           SIN SELECCIÓN
+        ========================================= */
+
+        .sin-resultados {
+
+            background: white;
+
+            border: 1px solid #f0dfe2;
+
+            border-radius: 22px;
+
+            padding: 45px 25px;
+
+            text-align: center;
+
+            box-shadow:
+                0 8px 24px
+                rgba(91,39,50,0.06);
+
+            color: #7b6870;
+        }
+
+
+        .sin-resultados .icono {
+
+            font-size: 42px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .sin-resultados h2 {
+
+            color: #302629;
+
+            margin-bottom: 8px;
+
+            font-size: 20px;
+        }
+
+
+        .sin-resultados p {
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           ESTUDIANTE
+        ========================================= */
+
+        .estudiante {
+
+            background: white;
+
+            border: 1px solid #f0dfe2;
+
+            border-radius: 22px;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 8px 24px
+                rgba(91,39,50,0.06);
+        }
+
+
+        .estudiante h2 {
+
+            font-size: 21px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .estudiante p {
+
+            color: #7b6870;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================
+           COGNITIVA
+        ========================================= */
+
+        .seccion {
+
+            background: white;
+
+            border: 1px solid #f0dfe2;
+
+            border-radius: 22px;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 8px 24px
+                rgba(91,39,50,0.06);
+        }
+
+
+        .seccion h2 {
+
+            font-size: 19px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .resumen {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0,1fr));
+
+            gap: 15px;
+        }
+
+
+        .dato {
+
+            padding: 18px;
+
+            border-radius: 16px;
+
+            background: #fff6f7;
+        }
+
+
+        .dato span {
+
+            display: block;
+
+            color: #8b777e;
+
+            font-size: 12px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .dato strong {
+
+            font-size: 22px;
+
+            color: #8f1629;
+        }
+
+
+        .resultado {
+
+            margin-top: 15px;
+
+            padding: 18px;
+
+            background: #fff8f8;
+
+            border: 1px solid #f0dfe2;
+
+            border-radius: 16px;
+        }
+
+
+        .resultado-titulo {
+
+            font-weight: 800;
+
+            font-size: 15px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .resultado p {
+
+            color: #7b6870;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        .boton {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            margin-top: 15px;
+
+            padding: 12px 16px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8f1629,
+                    #b32038
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 750;
+
+            font-size: 13px;
+        }
+
+
+        .boton:hover {
+
+            opacity: 0.92;
+        }
+
+
+        .sin-cognitiva {
+
+            background: #fff8f8;
+
+            border: 1px solid #f0dfe2;
+
+            border-radius: 16px;
+
+            padding: 18px;
+
+            color: #7b6870;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           AVISO
+        ========================================= */
+
+        .nota {
+
+            background: #fff8f8;
+
+            border: 1px solid #f0dfe2;
+
+            border-radius: 18px;
+
+            padding: 18px;
+
+            color: #7b6870;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            .contenedor {
+
+                padding:
+                    15px
+                    12px
+                    30px;
+            }
+
+
+            .cabecera {
+
+                border-radius: 22px;
+
+                padding: 25px 20px;
+            }
+
+
+            .cabecera h1 {
+
+                font-size: 24px;
+            }
+
+
+            .resumen {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="contenedor">
+
+
+    <!-- =========================================
+         VOLVER
+    ========================================= -->
+
+    <a
+        href="/area-profesional"
+        class="volver"
+    >
+
+        ← Volver al área profesional
+
+    </a>
+
+
+    <!-- =========================================
+         CABECERA
+    ========================================= -->
+
+    <header class="cabecera">
+
+        <h1>
+            📊 Resultados de evaluación
+        </h1>
+
+        <p>
+
+            Consulta profesional de los resultados
+            obtenidos durante el proceso de tamizaje educativo.
+
+        </p>
+
+    </header>
+
+
+    <!-- =========================================
+         SELECTOR DE ESTUDIANTE
+    ========================================= -->
+
+    <section class="filtros">
+
+        <label for="estudiante">
+
+            Seleccionar estudiante
+
+        </label>
+
+
+        <select
+            id="estudiante"
+            onchange="seleccionarEstudiante(this.value)"
+        >
+
+            <option value="">
+
+                Selecciona un estudiante
+
+            </option>
+
+
+            {% for est in estudiantes %}
+
+                <option
+    value="{{ est.codigo }}"
+    {% if estudiante and estudiante.codigo == est.codigo %}
+        selected
+    {% endif %}
+>
+    {{ est.nombre }} — {{ est.codigo }}
+</option>
+
+            {% endfor %}
+
+        </select>
+
+    </section>
+
+
+    <!-- =========================================
+         SI HAY ESTUDIANTE
+    ========================================= -->
+
+    {% if estudiante %}
+
+
+    <!-- =========================================
+         INFORMACIÓN DEL ESTUDIANTE
+    ========================================= -->
+
+    <section class="estudiante">
+
+        <h2>
+
+            {{ estudiante.nombre }}
+
+        </h2>
+
+
+        <p>
+
+            Código: {{ estudiante.codigo }}
+
+        </p>
+
+    </section>
+
+
+    <!-- =========================================
+         DIMENSIÓN COGNITIVA
+    ========================================= -->
+
+    <section class="seccion">
+
+        <h2>
+
+            🧠 Dimensión cognitiva
+
+        </h2>
+
+
+        {% if cognitiva %}
+
+
+        <div class="resumen">
+
+
+            <div class="dato">
+
+                <span>
+
+                    Puntaje obtenido
+
+                </span>
+
+                <strong>
+
+                    {{ cognitiva.puntaje }} / 105
+
+                </strong>
+
+            </div>
+
+
+            <div class="dato">
+
+                <span>
+
+                    Porcentaje
+
+                </span>
+
+                <strong>
+
+                    {{ cognitiva.porcentaje }}%
+
+                </strong>
+
+            </div>
+
+
+            <div class="dato">
+
+                <span>
+
+                    Resultado
+
+                </span>
+
+                <strong style="font-size:16px;">
+
+                    {{ cognitiva.resultado }}
+
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="resultado">
+
+            <div class="resultado-titulo">
+
+                Evaluación cognitiva registrada
+
+            </div>
+
+
+            <p>
+
+                Esta evaluación puede ser consultada
+                con mayor detalle desde el panel profesional.
+
+            </p>
+
+
+            {% if estudiante %}
+
+            <a
+                href="/profesional/cognitiva?codigo={{ estudiante.codigo }}"
+                class="boton"
+            >
+
+                🧠 Ver resultado cognitivo
+
+            </a>
+
+            {% endif %}
+
+        </div>
+
+
+        {% else %}
+
+
+        <div class="sin-cognitiva">
+
+            Este estudiante todavía no tiene registrada
+            una evaluación de la dimensión cognitiva.
+
+            <br><br>
+
+            Puedes iniciar una nueva evaluación cognitiva
+            desde el perfil del estudiante.
+
+        </div>
+
+
+        <a
+            href="/tamizaje?codigo={{ estudiante.codigo }}"
+            class="boton"
+        >
+
+            🧠 Realizar evaluación cognitiva
+
+        </a>
+
+
+        {% endif %}
+
+    </section>
+
+
+    {% else %}
+
+
+    <!-- =========================================
+         SIN ESTUDIANTE SELECCIONADO
+    ========================================= -->
+
+    <section class="sin-resultados">
+
+        <div class="icono">
+
+            👤
+
+        </div>
+
+
+        <h2>
+
+            Consulta de resultados
+
+        </h2>
+
+
+        <p>
+
+            Selecciona un estudiante de la lista superior
+            para consultar sus evaluaciones y resultados.
+
+        </p>
+
+    </section>
+
+
+    {% endif %}
+
+
+    <!-- =========================================
+         AVISO
+    ========================================= -->
+
+    <div class="nota">
+
+        <strong>
+
+            Importante:
+
+        </strong>
+
+        Los resultados presentados por Leo corresponden
+        a un proceso de orientación y tamizaje educativo.
+
+        No constituyen un diagnóstico clínico y deben ser
+        interpretados por el profesional responsable dentro
+        del contexto particular del estudiante.
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+function seleccionarEstudiante(codigo) {
+
+    if (!codigo) {
+
+        window.location.href = "/resultados";
+
+        return;
+
+    }
+
+
+    window.location.href =
+        "/resultados?codigo="
+        + encodeURIComponent(codigo);
+
+}
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Leo | Conozcámonos</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4f8ff 0%,
+                    #f8fbff 50%,
+                    #eef5ff 100%
+                );
+
+            min-height: 100vh;
+
+            color: #263238;
+
+            padding: 30px 18px;
+        }
+
+
+        /* =================================================
+           CONTENEDOR
+        ================================================= */
+
+        .contenedor {
+
+            width: 100%;
+
+            max-width: 900px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =================================================
+           ENCABEZADO
+        ================================================= */
+
+        .header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .logo-icono {
+
+            width: 52px;
+
+            height: 52px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #ffffff;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 5px 18px rgba(180, 30, 45, 0.15);
+        }
+
+
+        .logo-icono img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+
+            display: block;
+        }
+
+
+        .logo-texto h2 {
+
+            color: #B41E2D;
+
+            font-size: 22px;
+
+            margin-bottom: 2px;
+        }
+
+
+        .logo-texto span {
+
+            color: #718096;
+
+            font-size: 13px;
+        }
+
+
+        /* =================================================
+           TARJETA PRINCIPAL
+        ================================================= */
+
+        .tarjeta {
+
+            background: white;
+
+            border-radius: 24px;
+
+            padding: 38px;
+
+            box-shadow:
+                0 12px 35px rgba(31, 65, 114, 0.08);
+        }
+
+
+        /* =================================================
+           ENCABEZADO DE LA SECCIÓN
+        ================================================= */
+
+        .titulo {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .titulo-icono {
+
+            width: 64px;
+
+            height: 64px;
+
+            margin: 0 auto 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #fbecee;
+
+            border-radius: 20px;
+
+            font-size: 30px;
+        }
+
+
+        .titulo h1 {
+
+            color: #1e293b;
+
+            font-size: 30px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .titulo p {
+
+            color: #718096;
+
+            line-height: 1.6;
+
+            max-width: 600px;
+
+            margin: 0 auto;
+        }
+
+
+        /* =================================================
+           PROGRESO
+        ================================================= */
+
+        .progreso {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 35px;
+        }
+
+
+        .paso {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #a0aec0;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        .circulo {
+
+            width: 34px;
+
+            height: 34px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #edf2f7;
+
+            color: #718096;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .paso.activo {
+
+            color: #B41E2D;
+        }
+
+
+        .paso.activo .circulo {
+
+            background: #B41E2D;
+
+            color: white;
+        }
+
+
+        .paso.completado .circulo {
+
+            background: #B41E2D;
+
+            color: white;
+        }
+
+
+        .linea {
+
+            width: 70px;
+
+            height: 2px;
+
+            background: #e2e8f0;
+
+            margin: 0 12px;
+        }
+
+
+        .linea.activa {
+
+            background: #B41E2D;
+        }
+
+
+        /* =================================================
+           SECCIONES
+        ================================================= */
+
+        .seccion {
+
+            display: none;
+        }
+
+
+        .seccion.activa {
+
+            display: block;
+        }
+
+
+        .seccion-titulo {
+
+            margin-bottom: 25px;
+        }
+
+
+        .seccion-titulo h2 {
+
+            font-size: 21px;
+
+            color: #1e293b;
+
+            margin-bottom: 6px;
+        }
+
+
+        .seccion-titulo p {
+
+            color: #718096;
+
+            font-size: 14px;
+        }
+
+
+        /* =================================================
+           FORMULARIO
+        ================================================= */
+
+        .grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 20px;
+        }
+
+
+        .campo {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+
+        .campo.completo {
+
+            grid-column: 1 / -1;
+        }
+
+
+        .campo label {
+
+            color: #334155;
+
+            font-size: 14px;
+
+            font-weight: 700;
+        }
+
+
+        .campo label span {
+
+            color: #e53e3e;
+        }
+
+
+        .campo input,
+        .campo select {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #dbe3ee;
+
+            border-radius: 11px;
+
+            background: #ffffff;
+
+            color: #263238;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+
+        .campo input:focus,
+        .campo select:focus {
+
+            border-color: #B41E2D;
+
+            box-shadow:
+                0 0 0 3px rgba(180, 30, 45, 0.10);
+        }
+
+
+        .ayuda {
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+            line-height: 1.4;
+        }
+
+
+        /* =================================================
+           CONSENTIMIENTO
+        ================================================= */
+
+        .consentimiento {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f7fbff,
+                    #eef6ff
+                );
+
+            border: 1px solid #dbeafe;
+
+            border-radius: 17px;
+
+            padding: 22px;
+
+            line-height: 1.65;
+
+            color: #526277;
+
+            font-size: 14px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .consentimiento strong {
+
+            color: #941B29;
+        }
+
+
+        .checkbox {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 12px;
+
+            padding: 17px;
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 13px;
+
+            cursor: pointer;
+        }
+
+
+        .checkbox input {
+
+            width: 18px;
+
+            height: 18px;
+
+            margin-top: 2px;
+
+            accent-color: #B41E2D;
+
+            flex-shrink: 0;
+        }
+
+
+        .checkbox span {
+
+            color: #475569;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =================================================
+           BOTONES
+        ================================================= */
+
+        .botones {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-top: 32px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid #edf2f7;
+        }
+
+
+        .boton {
+
+            border: none;
+
+            padding: 13px 22px;
+
+            border-radius: 11px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .boton:hover {
+
+            transform: translateY(-1px);
+        }
+
+
+        .boton-atras {
+
+            background: white;
+
+            color: #B41E2D;
+
+            border: 1px solid #dbeafe;
+        }
+
+
+        .boton-continuar {
+
+            background: #B41E2D;
+
+            color: white;
+        }
+
+
+        .boton-continuar:hover {
+
+            background: #941B29;
+        }
+
+
+        /* =================================================
+           MENSAJE LEO
+        ================================================= */
+
+        .mensaje-leo {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 12px;
+
+            background: #f8fbff;
+
+            border: 1px solid #e5efff;
+
+            border-radius: 15px;
+
+            padding: 16px;
+
+            margin-top: 25px;
+        }
+
+
+        .leo-avatar {
+
+            width: 42px;
+
+            height: 42px;
+
+            border-radius: 12px;
+
+            background: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            overflow: hidden;
+
+            border: 1px solid #f0d5d9;
+        }
+
+
+        .leo-avatar img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+
+            display: block;
+        }
+
+
+        .mensaje-leo strong {
+
+            display: block;
+
+            color: #941B29;
+
+            margin-bottom: 3px;
+
+            font-size: 13px;
+        }
+
+
+        .mensaje-leo p {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (max-width: 700px) {
+
+            body {
+
+                padding: 15px 10px;
+            }
+
+
+            .tarjeta {
+
+                padding: 25px 18px;
+
+                border-radius: 20px;
+            }
+
+
+            .grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .campo.completo {
+
+                grid-column: auto;
+            }
+
+
+            .titulo h1 {
+
+                font-size: 25px;
+            }
+
+
+            .progreso {
+
+                overflow-x: auto;
+
+                justify-content: flex-start;
+
+                padding-bottom: 5px;
+            }
+
+
+            .paso {
+
+                font-size: 11px;
+            }
+
+
+            .linea {
+
+                width: 35px;
+
+                margin: 0 7px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="contenedor">
+
+
+    <!-- =================================================
+         ENCABEZADO
+    ================================================= -->
+
+    <header class="header">
+
+        <div class="logo-icono">
+
+            <img
+                src="{{ url_for('static', filename='images/logo-leo.png') }}"
+                alt="Logo de Leo"
+            >
+
+        </div>
+
+
+        <div class="logo-texto">
+
+            <h2>
+                Leo
+            </h2>
+
+            <span>
+                Tu asistente de aprendizaje
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         TARJETA
+    ================================================= -->
+
+    <main class="tarjeta">
+
+
+        <!-- =================================================
+             TÍTULO
+        ================================================= -->
+
+        <div class="titulo">
+
+            <div class="titulo-icono">
+                👋
+            </div>
+
+            <h1>
+                Conozcámonos
+            </h1>
+
+            <p>
+                Queremos conocer un poco sobre ti para que Leo
+                pueda ofrecerte una experiencia de aprendizaje
+                más personalizada.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             PROGRESO
+        ================================================= -->
+
+        <div class="progreso">
+
+            <div
+                class="paso activo"
+                id="paso1"
+            >
+
+                <div class="circulo">
+                    1
+                </div>
+
+                <span>
+                    Sobre ti
+                </span>
+
+            </div>
+
+
+            <div
+                class="linea"
+                id="linea1"
+            ></div>
+
+
+            <div
+                class="paso"
+                id="paso2"
+            >
+
+                <div class="circulo">
+                    2
+                </div>
+
+                <span>
+                    Estudios
+                </span>
+
+            </div>
+
+
+            <div
+                class="linea"
+                id="linea2"
+            ></div>
+
+
+            <div
+                class="paso"
+                id="paso3"
+            >
+
+                <div class="circulo">
+                    3
+                </div>
+
+                <span>
+                    Consentimiento
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PASO 1
+        ================================================= -->
+
+        <section
+            class="seccion activa"
+            id="seccion1"
+        >
+
+            <div class="seccion-titulo">
+
+                <h2>
+                    👤 Sobre ti
+                </h2>
+
+                <p>
+                    Cuéntanos algunos datos básicos para conocerte mejor.
+                </p>
+
+            </div>
+
+
+            <div class="grid">
+
+
+                <div class="campo completo">
+
+                    <label>
+                        Nombre completo <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nombre"
+                        placeholder="Escribe tu nombre completo"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>
+                        Número de identificación <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="identificacion"
+                        placeholder="Número de identificación"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>
+                        Edad <span>*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        id="edad"
+                        min="15"
+                        max="100"
+                        placeholder="Ej. 24"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>
+                        Sexo <span>*</span>
+                    </label>
+
+                    <select id="sexo">
+
+                        <option value="">
+                            Selecciona una opción
+                        </option>
+
+                        <option value="Femenino">
+                            Femenino
+                        </option>
+
+                        <option value="Masculino">
+                            Masculino
+                        </option>
+
+                        <option value="Otro">
+                            Otro
+                        </option>
+
+                        <option value="Prefiero no responder">
+                            Prefiero no responder
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>
+                        Ciudad/municipio de residencia <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="ciudad"
+                        placeholder="Ej. Barranquilla"
+                    >
+
+                    <span class="ayuda">
+                        Próximamente podremos convertir este campo
+                        en una búsqueda de ciudades.
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="mensaje-leo">
+
+                <div class="leo-avatar">
+
+                    <img
+                        src="{{ url_for('static', filename='images/logo-leo.png') }}"
+                        alt="Leo"
+                    >
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Leo
+                    </strong>
+
+                    <p>
+                        Estos datos nos ayudarán a conocerte mejor.
+                        No te preocupes, todavía no estamos realizando
+                        ninguna evaluación.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="botones">
+
+                <div></div>
+
+                <button
+                    class="boton boton-continuar"
+                    type="button"
+                    onclick="siguiente(2)"
+                >
+                    Continuar →
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PASO 2
+        ================================================= -->
+
+        <section
+            class="seccion"
+            id="seccion2"
+        >
+
+            <div class="seccion-titulo">
+
+                <h2>
+                    🎓 Sobre tus estudios
+                </h2>
+
+                <p>
+                    Cuéntanos sobre tu formación académica actual.
+                </p>
+
+            </div>
+
+
+            <div class="grid">
+
+
+                <div class="campo">
+
+                    <label>
+                        Tipo de estudio de posgrado <span>*</span>
+                    </label>
+
+                    <select id="tipo_estudio">
+
+                        <option value="">
+                            Selecciona una opción
+                        </option>
+
+                        <option value="Especialización">
+                            Especialización
+                        </option>
+
+                        <option value="Maestría">
+                            Maestría
+                        </option>
+
+                        <option value="Doctorado">
+                            Doctorado
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>
+                        Modalidad <span>*</span>
+                    </label>
+
+                    <select id="modalidad">
+
+                        <option value="">
+                            Selecciona una opción
+                        </option>
+
+                        <option value="Presencial">
+                            Presencial
+                        </option>
+
+                        <option value="Virtual">
+                            Virtual
+                        </option>
+
+                        <option value="Híbrida">
+                            Híbrida
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="campo completo">
+
+                    <label>
+                        Programa académico de posgrado <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="programa"
+                        placeholder="Ej. Neuropsicopedagogía"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>
+                        Semestre/período académico actual <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="semestre"
+                        placeholder="Ej. Segundo semestre"
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label>
+                        ¿Estudiaste anteriormente en esta Universidad? <span>*</span>
+                    </label>
+
+                    <select id="universidad_anterior">
+
+                        <option value="">
+                            Selecciona una opción
+                        </option>
+
+                        <option value="Sí">
+                            Sí
+                        </option>
+
+                        <option value="No">
+                            No
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="mensaje-leo">
+
+                <div class="leo-avatar">
+
+                    <img
+                        src="{{ url_for('static', filename='images/logo-leo.png') }}"
+                        alt="Leo"
+                    >
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Leo
+                    </strong>
+
+                    <p>
+                        Conocer tu contexto académico permitirá que
+                        podamos adaptar mejor algunas experiencias
+                        dentro de Leo.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="botones">
+
+                <button
+                    class="boton boton-atras"
+                    type="button"
+                    onclick="siguiente(1)"
+                >
+                    ← Atrás
+                </button>
+
+
+                <button
+                    class="boton boton-continuar"
+                    type="button"
+                    onclick="siguiente(3)"
+                >
+                    Continuar →
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PASO 3
+        ================================================= -->
+
+        <section
+            class="seccion"
+            id="seccion3"
+        >
+
+            <div class="seccion-titulo">
+
+                <h2>
+                    🔐 Consentimiento
+                </h2>
+
+                <p>
+                    Antes de continuar necesitamos tu autorización.
+                </p>
+
+            </div>
+
+
+            <div class="consentimiento">
+
+                <strong>
+                    Tratamiento de datos personales
+                </strong>
+
+                <br><br>
+
+                Declaro que la información suministrada es
+                voluntaria y autorizo el tratamiento de mis datos
+                personales de acuerdo con las condiciones y
+                finalidades establecidas por la institución.
+
+                <br><br>
+
+                La información será utilizada dentro de Leo para
+                apoyar los procesos de caracterización,
+                acompañamiento y orientación educativa.
+
+                <br><br>
+
+                <strong>
+                    Importante:
+                </strong>
+
+                La información recopilada será tratada de acuerdo
+                con las políticas institucionales aplicables.
+
+            </div>
+
+
+            <label class="checkbox">
+
+                <input
+                    type="checkbox"
+                    id="consentimiento"
+                >
+
+                <span>
+                    Declaro que he leído la información anterior
+                    y autorizo voluntariamente el tratamiento de
+                    mis datos personales.
+                </span>
+
+            </label>
+
+
+            <div class="mensaje-leo">
+
+                <div class="leo-avatar">
+
+                    <img
+                        src="{{ url_for('static', filename='images/logo-leo.png') }}"
+                        alt="Leo"
+                    >
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Ya casi terminamos
+                    </strong>
+
+                    <p>
+                        Cuando confirmes tu consentimiento podremos
+                        guardar tu información y continuar con tu
+                        experiencia en Leo.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="botones">
+
+                <button
+                    class="boton boton-atras"
+                    type="button"
+                    onclick="siguiente(2)"
+                >
+                    ← Atrás
+                </button>
+
+
+                <button
+                    class="boton boton-continuar"
+                    type="button"
+                    onclick="guardar()"
+                >
+                    Guardar y continuar →
+                </button>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<script>
+
+
+    /* =====================================================
+       CAMBIAR DE PASO
+    ===================================================== */
+
+    function siguiente(numero) {
+
+
+        // =====================================================
+        // VALIDAR PASO 1
+        // =====================================================
+
+        if (numero === 2) {
+
+            const nombre =
+                document.getElementById("nombre").value.trim();
+
+            const identificacion =
+                document.getElementById("identificacion").value.trim();
+
+            const edad =
+                document.getElementById("edad").value.trim();
+
+            const sexo =
+                document.getElementById("sexo").value;
+
+            const ciudad =
+                document.getElementById("ciudad").value.trim();
+
+
+            if (!nombre) {
+
+                alert(
+                    "Por favor, escribe tu nombre completo."
+                );
+
+                document
+                    .getElementById("nombre")
+                    .focus();
+
+                return;
+            }
+
+
+            if (!identificacion) {
+
+                alert(
+                    "Por favor, escribe tu número de identificación."
+                );
+
+                document
+                    .getElementById("identificacion")
+                    .focus();
+
+                return;
+            }
+
+
+            if (!edad) {
+
+                alert(
+                    "Por favor, indica tu edad."
+                );
+
+                document
+                    .getElementById("edad")
+                    .focus();
+
+                return;
+            }
+
+
+            if (!sexo) {
+
+                alert(
+                    "Por favor, selecciona una opción en Sexo."
+                );
+
+                document
+                    .getElementById("sexo")
+                    .focus();
+
+                return;
+            }
+
+
+            if (!ciudad) {
+
+                alert(
+                    "Por favor, indica tu ciudad o municipio de residencia."
+                );
+
+                document
+                    .getElementById("ciudad")
+                    .focus();
+
+                return;
+            }
+
+        }
+
+
+        // =====================================================
+        // VALIDAR PASO 2
+        // =====================================================
+
+        if (numero === 3) {
+
+            const tipoEstudio =
+                document.getElementById("tipo_estudio").value;
+
+            const programa =
+                document.getElementById("programa").value.trim();
+
+            const modalidad =
+                document.getElementById("modalidad").value;
+
+            const semestre =
+                document.getElementById("semestre").value.trim();
+
+            const universidadAnterior =
+                document.getElementById("universidad_anterior").value;
+
+
+            if (!tipoEstudio) {
+
+                alert(
+                    "Por favor, selecciona el tipo de estudio de posgrado."
+                );
+
+                document
+                    .getElementById("tipo_estudio")
+                    .focus();
+
+                return;
+            }
+
+
+            if (!programa) {
+
+                alert(
+                    "Por favor, escribe tu programa académico."
+                );
+
+                document
+                    .getElementById("programa")
+                    .focus();
+
+                return;
+            }
+
+
+            if (!modalidad) {
+
+                alert(
+                    "Por favor, selecciona la modalidad."
+                );
+
+                document
+                    .getElementById("modalidad")
+                    .focus();
+
+                return;
+            }
+
+
+            if (!semestre) {
+
+                alert(
+                    "Por favor, indica tu semestre o período académico."
+                );
+
+                document
+                    .getElementById("semestre")
+                    .focus();
+
+                return;
+            }
+
+
+            if (!universidadAnterior) {
+
+                alert(
+                    "Por favor, indica si estudiaste anteriormente en esta Universidad."
+                );
+
+                document
+                    .getElementById("universidad_anterior")
+                    .focus();
+
+                return;
+            }
+
+        }
+
+
+        // =====================================================
+        // CAMBIAR DE SECCIÓN
+        // =====================================================
+
+        document
+            .querySelectorAll(".seccion")
+            .forEach(function(seccion) {
+
+                seccion.classList.remove("activa");
+
+            });
+
+
+        document
+            .getElementById("seccion" + numero)
+            .classList.add("activa");
+
+
+        actualizarProgreso(numero);
+
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+    }
+
+
+    /* =====================================================
+       ACTUALIZAR PROGRESO
+    ===================================================== */
+
+    function actualizarProgreso(numero) {
+
+        const pasos = [
+
+            document.getElementById("paso1"),
+
+            document.getElementById("paso2"),
+
+            document.getElementById("paso3")
+
+        ];
+
+
+        const lineas = [
+
+            document.getElementById("linea1"),
+
+            document.getElementById("linea2")
+
+        ];
+
+
+        pasos.forEach(function(paso, indice) {
+
+            paso.classList.remove("activo");
+
+            paso.classList.remove("completado");
+
+
+            if (indice + 1 < numero) {
+
+                paso.classList.add("completado");
+
+            }
+
+            else if (indice + 1 === numero) {
+
+                paso.classList.add("activo");
+
+            }
+
+        });
+
+
+        lineas.forEach(function(linea, indice) {
+
+            linea.classList.remove("activa");
+
+
+            if (indice + 1 < numero) {
+
+                linea.classList.add("activa");
+
+            }
+
+        });
+
+    }
+
+
+    /* =====================================================
+       GUARDAR
+    ===================================================== */
+
+    async function guardar() {
+
+
+        const consentimiento =
+            document
+                .getElementById("consentimiento")
+                .checked;
+
+
+        if (!consentimiento) {
+
+            alert(
+                "Debes aceptar el consentimiento para continuar."
+            );
+
+            return;
+        }
+
+
+        const datos = {
+
+
+            nombre:
+                document
+                    .getElementById("nombre")
+                    .value
+                    .trim(),
+
+
+            identificacion:
+                document
+                    .getElementById("identificacion")
+                    .value
+                    .trim(),
+
+
+            edad:
+                document
+                    .getElementById("edad")
+                    .value,
+
+
+            sexo:
+                document
+                    .getElementById("sexo")
+                    .value,
+
+
+            ciudad:
+                document
+                    .getElementById("ciudad")
+                    .value
+                    .trim(),
+
+
+            tipo_estudio:
+                document
+                    .getElementById("tipo_estudio")
+                    .value,
+
+
+            modalidad:
+                document
+                    .getElementById("modalidad")
+                    .value,
+
+
+            programa:
+                document
+                    .getElementById("programa")
+                    .value
+                    .trim(),
+
+
+            semestre:
+                document
+                    .getElementById("semestre")
+                    .value
+                    .trim(),
+
+
+            universidad_anterior:
+                document
+                    .getElementById("universidad_anterior")
+                    .value,
+
+
+            consentimiento: 1
+
+        };
+
+
+        try {
+
+
+            const respuesta =
+                await fetch(
+                    "/conozcamonos",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify(datos)
+
+                    }
+                );
+
+
+            const resultado =
+                await respuesta.json();
+
+
+            if (resultado.ok) {
+
+
+                /*
+                 * Guardamos temporalmente
+                 * el código y nombre.
+                 */
+
+                sessionStorage.setItem(
+                    "leo_codigo",
+                    resultado.codigo
+                );
+
+
+                sessionStorage.setItem(
+                    "leo_nombre",
+                    datos.nombre
+                );
+
+
+                /*
+                 * Continuamos con Leo.
+                 */
+
+                window.location.href =
+                    "/bienvenida?codigo="
+                    +
+                    encodeURIComponent(
+                        resultado.codigo
+                    );
+
+            }
+
+
+            else {
+
+                alert(
+                    resultado.mensaje ||
+                    "Ocurrió un error al guardar la información."
+                );
+
+            }
+
+        }
+
+
+        catch (error) {
+
+
+            console.error(
+                "ERROR AL GUARDAR:",
+                error
+            );
+
+
+            alert(
+                "No fue posible conectar con el servidor."
+            );
+
+        }
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

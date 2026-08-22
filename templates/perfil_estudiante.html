@@ -3,238 +3,710 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>
-    Leo | Perfil del estudiante
-</title>
+    <title>
+        Leo | Perfil del estudiante
+    </title>
 
-<style>
 
-*{
-    box-sizing:border-box;
-}
+    <style>
 
-body{
-    margin:0;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    background:
-        linear-gradient(
-            145deg,
-            #eef5ff,
-            #f8fbff,
-            #edf4ff
-        );
 
-    min-height:100vh;
-    color:#1e293b;
-}
+        body {
 
-.contenedor{
-    width:100%;
-    max-width:950px;
-    margin:auto;
-    padding:25px 20px 45px;
-}
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
 
-.volver{
-    display:inline-block;
-    margin-bottom:20px;
-    color:#64748b;
-    text-decoration:none;
-    font-weight:600;
-}
+            min-height: 100vh;
 
-.cabecera{
-    background:
-        linear-gradient(
-            135deg,
-            #2563eb,
-            #4f46e5
-        );
+            background:
+                linear-gradient(
+                    145deg,
+                    #f8f1f2 0%,
+                    #ffffff 48%,
+                    #f5e9eb 100%
+                );
 
-    color:white;
-    border-radius:25px;
-    padding:30px;
-    margin-bottom:20px;
-}
+            color: #302629;
 
-.perfil{
-    display:flex;
-    align-items:center;
-    gap:20px;
-}
+        }
 
-.avatar{
-    width:75px;
-    height:75px;
-    border-radius:22px;
-    background:white;
-    color:#2563eb;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+        .contenedor {
 
-    font-size:32px;
-    font-weight:800;
-}
+            width: 100%;
 
-h1{
-    margin:0 0 6px;
-}
+            max-width: 1050px;
 
-.codigo{
-    opacity:.9;
-}
+            margin: auto;
 
-.grid{
-    display:grid;
-    grid-template-columns:
-        repeat(2,minmax(0,1fr));
+            padding: 25px 20px 45px;
 
-    gap:15px;
-}
+        }
 
-.card{
-    background:white;
-    border-radius:18px;
-    padding:22px;
 
-    border:1px solid #e5edf7;
+        /* =========================================
+           VOLVER
+        ========================================= */
 
-    box-shadow:
-        0 7px 22px rgba(31,65,114,.06);
-}
+        .volver {
 
-.card h2{
-    margin-top:0;
-    font-size:18px;
-}
+            display: inline-flex;
 
-.dato{
-    margin:13px 0;
-}
+            align-items: center;
 
-.etiqueta{
-    display:block;
-    color:#64748b;
-    font-size:12px;
-    margin-bottom:4px;
-}
+            gap: 7px;
 
-.valor{
-    font-weight:700;
-}
+            margin-bottom: 20px;
 
-.pendiente{
-    margin-top:15px;
-    padding:15px;
-    border-radius:12px;
+            color: #75696c;
 
-    background:#f8fbff;
-    color:#64748b;
+            text-decoration: none;
 
-    line-height:1.5;
-}
+            font-size: 14px;
 
-.evaluacion{
-    background:#f8fbff;
-    border:1px solid #e5edf7;
+            font-weight: 650;
 
-    padding:17px;
-    border-radius:15px;
+            transition:
+                color 0.2s ease,
+                transform 0.2s ease;
 
-    margin-top:14px;
-}
+        }
 
-.evaluacion-titulo{
-    font-size:16px;
-    font-weight:800;
-    color:#1e293b;
-    margin-bottom:12px;
-}
 
-.resultado{
-    font-size:25px;
-    font-weight:800;
-    color:#2563eb;
-}
+        .volver:hover {
 
-.nivel{
-    display:inline-block;
-    margin-top:7px;
+            color: #8f1d2c;
 
-    padding:6px 10px;
-    border-radius:999px;
+            transform: translateX(-2px);
 
-    background:#e9f8ef;
-    color:#16803c;
+        }
 
-    font-size:12px;
-    font-weight:700;
-}
 
-.fecha{
-    margin-top:10px;
-    color:#718096;
-    font-size:12px;
-}
+        /* =========================================
+           CABECERA DEL PERFIL
+        ========================================= */
 
-.boton{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
+        .cabecera {
 
-    margin-top:15px;
-    padding:11px 15px;
+            position: relative;
 
-    border-radius:10px;
+            overflow: hidden;
 
-    background:#2563eb;
-    color:white;
+            background:
+                linear-gradient(
+                    135deg,
+                    #7d1725,
+                    #a92d3d
+                );
 
-    text-decoration:none;
-    font-weight:700;
+            color: white;
 
-    font-size:13px;
-}
+            border-radius: 27px;
 
-.boton-secundario{
-    background:#eef4ff;
-    color:#2563eb;
-}
+            padding: 31px;
 
-@media(max-width:700px){
+            margin-bottom: 22px;
 
-    .grid{
-        grid-template-columns:1fr;
-    }
+            box-shadow:
+                0 15px 35px rgba(92,34,43,0.20);
 
-    .perfil{
-        align-items:flex-start;
-    }
+        }
 
-}
 
-</style>
+        .cabecera::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 260px;
+
+            height: 260px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            right: -90px;
+
+            top: -130px;
+
+        }
+
+
+        .cabecera::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 120px;
+
+            height: 120px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            left: -50px;
+
+            bottom: -65px;
+
+        }
+
+
+        .perfil {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+
+        /* =========================================
+           AVATAR
+        ========================================= */
+
+        .avatar {
+
+            width: 78px;
+
+            height: 78px;
+
+            border-radius: 24px;
+
+            background: white;
+
+            color: #8f1d2c;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 32px;
+
+            font-weight: 850;
+
+            flex-shrink: 0;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.12);
+
+        }
+
+
+        .cabecera h1 {
+
+            font-size: 29px;
+
+            font-weight: 800;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .codigo {
+
+            opacity: 0.91;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================================
+           GRID
+        ========================================= */
+
+        .grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0,1fr));
+
+            gap: 18px;
+
+        }
+
+
+        /* =========================================
+           TARJETAS
+        ========================================= */
+
+        .card {
+
+            position: relative;
+
+            background:
+                rgba(255,255,255,0.96);
+
+            border-radius: 23px;
+
+            padding: 24px;
+
+            border: 1px solid #eadcdf;
+
+            box-shadow:
+                0 8px 25px rgba(70,35,40,0.06);
+
+            overflow: hidden;
+
+        }
+
+
+        .card h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 18px;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            color: #302629;
+
+        }
+
+
+        /* =========================================
+           DATOS
+        ========================================= */
+
+        .dato {
+
+            margin: 14px 0;
+
+            padding-bottom: 13px;
+
+            border-bottom: 1px solid #f0e7e9;
+
+        }
+
+
+        .dato:last-child {
+
+            border-bottom: none;
+
+            padding-bottom: 0;
+
+        }
+
+
+        .etiqueta {
+
+            display: block;
+
+            color: #8a7c80;
+
+            font-size: 12px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .valor {
+
+            font-weight: 750;
+
+            color: #3b3134;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =========================================
+           EVALUACIÓN
+        ========================================= */
+
+        .evaluacion {
+
+            background: #fbf5f6;
+
+            border: 1px solid #eadcdf;
+
+            padding: 18px;
+
+            border-radius: 16px;
+
+            margin-top: 14px;
+
+        }
+
+
+        .evaluacion-titulo {
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            color: #302629;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .evaluacion-titulo a {
+
+            color: #8f1d2c;
+
+            text-decoration: none;
+
+            font-weight: 800;
+
+        }
+
+
+        .evaluacion-titulo a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        .resultado {
+
+            font-size: 27px;
+
+            font-weight: 850;
+
+            color: #8f1d2c;
+
+            margin-top: 3px;
+
+        }
+
+
+        .nivel {
+
+            display: inline-block;
+
+            margin-top: 7px;
+
+            padding: 6px 11px;
+
+            border-radius: 999px;
+
+            background: #f1e8df;
+
+            color: #7a5b2f;
+
+            font-size: 12px;
+
+            font-weight: 750;
+
+        }
+
+
+        .fecha {
+
+            margin-top: 10px;
+
+            color: #8a7c80;
+
+            font-size: 12px;
+
+        }
+
+
+        /* =========================================
+           ESTADO SIN EVALUACIONES
+        ========================================= */
+
+        .pendiente {
+
+            margin-top: 15px;
+
+            padding: 16px;
+
+            border-radius: 13px;
+
+            background: #fbf5f6;
+
+            border: 1px solid #eadcdf;
+
+            color: #75696c;
+
+            line-height: 1.6;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================================
+           BOTONES
+        ========================================= */
+
+        .boton {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            margin-top: 15px;
+
+            padding: 11px 15px;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7d1725,
+                    #a92d3d
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: 750;
+
+            font-size: 13px;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .boton:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 17px rgba(125,23,37,0.18);
+
+        }
+
+
+        .boton-secundario {
+
+            background: #f7e9eb;
+
+            color: #8f1d2c;
+
+            border: 1px solid #ecd4d8;
+
+        }
+
+
+        .boton-secundario:hover {
+
+            box-shadow: none;
+
+            background: #f0dce0;
+
+        }
+
+        
+
+        /* =========================================
+           SEGUIMIENTO
+        ========================================= */
+
+        .seguimiento {
+
+            grid-column: 1 / -1;
+
+        }
+
+
+        .seguimiento .pendiente {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 12px;
+
+        }
+
+
+        .seguimiento-icono {
+
+            width: 42px;
+
+            height: 42px;
+
+            flex-shrink: 0;
+
+            border-radius: 13px;
+
+            background: #f7e9eb;
+
+            border: 1px solid #ecd4d8;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 21px;
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            .contenedor {
+
+                padding:
+                    15px
+                    12px
+                    30px;
+
+            }
+
+
+            .grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .seguimiento {
+
+                grid-column: auto;
+
+            }
+
+
+            .cabecera {
+
+                border-radius: 22px;
+
+                padding: 25px 20px;
+
+            }
+
+
+            .perfil {
+
+                align-items: flex-start;
+
+            }
+
+
+            .avatar {
+
+                width: 62px;
+
+                height: 62px;
+
+                border-radius: 19px;
+
+                font-size: 26px;
+
+            }
+
+
+            .cabecera h1 {
+
+                font-size: 24px;
+
+            }
+
+        }
+
+
+        @media (max-width: 420px) {
+
+            .perfil {
+
+                gap: 13px;
+
+            }
+
+
+            .avatar {
+
+                width: 55px;
+
+                height: 55px;
+
+                font-size: 23px;
+
+            }
+
+
+            .cabecera h1 {
+
+                font-size: 21px;
+
+            }
+
+
+            .codigo {
+
+                font-size: 12px;
+
+            }
+
+
+            .card {
+
+                padding: 21px;
+
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
+
 <div class="contenedor">
+
 
 <a
     href="/estudiantes"
@@ -243,27 +715,43 @@ h1{
     ← Volver a estudiantes
 </a>
 
+
 {% if estudiante %}
+
+
+<!-- =========================================
+     CABECERA
+========================================= -->
 
 <header class="cabecera">
 
     <div class="perfil">
 
+
         <div class="avatar">
+
             {{ estudiante.nombre[0]|upper }}
+
         </div>
+
 
         <div>
 
             <h1>
+
                 {{ estudiante.nombre }}
+
             </h1>
 
+
             <div class="codigo">
+
                 Código: {{ estudiante.codigo }}
+
             </div>
 
         </div>
+
 
     </div>
 
@@ -273,15 +761,16 @@ h1{
 <div class="grid">
 
 
-<!-- =====================================================
+<!-- =========================================
      INFORMACIÓN PERSONAL
-===================================================== -->
+========================================= -->
 
 <section class="card">
 
     <h2>
         👤 Información personal
     </h2>
+
 
     <div class="dato">
 
@@ -295,6 +784,7 @@ h1{
 
     </div>
 
+
     <div class="dato">
 
         <span class="etiqueta">
@@ -306,6 +796,7 @@ h1{
         </span>
 
     </div>
+
 
     <div class="dato">
 
@@ -322,15 +813,16 @@ h1{
 </section>
 
 
-<!-- =====================================================
+<!-- =========================================
      INFORMACIÓN ACADÉMICA
-===================================================== -->
+========================================= -->
 
 <section class="card">
 
     <h2>
         🎓 Información académica
     </h2>
+
 
     <div class="dato">
 
@@ -343,6 +835,7 @@ h1{
         </span>
 
     </div>
+
 
     <div class="dato">
 
@@ -358,116 +851,127 @@ h1{
 
 </section>
 
-
-<!-- =====================================================
-     EVALUACIONES
-===================================================== -->
+<!-- =========================================
+     DIMENSIÓN COGNITIVA
+========================================= -->
 
 <section class="card">
 
     <h2>
-        🧠 Evaluaciones
+        🧠 Dimensión cognitiva
     </h2>
 
-
-    {% if evaluaciones %}
-
-        {% for evaluacion in evaluaciones %}
+    {% if cognitiva %}
 
         <div class="evaluacion">
 
             <div class="evaluacion-titulo">
 
-                <a
-    href="/estudiante/{{ estudiante.codigo }}/evaluacion/{{ evaluacion.id }}"
-    style="color:#2563eb;text-decoration:none;font-weight:800;"
->
-    {{ evaluacion.tipo }}
-</a>
+                Evaluación cognitiva
+
+            </div>
+
+            <span class="etiqueta">
+                Puntaje obtenido
+            </span>
+
+            <div class="resultado">
+
+                {{ cognitiva.puntaje }} / 105
 
             </div>
 
 
             <span class="etiqueta">
-                Resultado
+
+                Porcentaje
+
             </span>
 
             <div class="resultado">
 
-                {{ evaluacion.porcentaje }} %
+                {{ cognitiva.porcentaje }}%
 
             </div>
 
 
             <span class="nivel">
 
-                {{ evaluacion.nivel }}
+                {{ cognitiva.resultado }}
 
             </span>
 
 
             <div class="fecha">
 
-                📅 {{ evaluacion.fecha }}
+                📅 {{ cognitiva.fecha }}
 
             </div>
 
 
-            <!-- =================================================
-                 BOTÓN DETALLE
-            ================================================== -->
-
             <a
-                href="/estudiante/{{ estudiante.codigo }}/evaluacion/{{ evaluacion.id }}"
+                href="/profesional/cognitiva?codigo={{ estudiante.codigo }}"
                 class="boton"
             >
-                📋 Ver detalle
+
+                🧠 Ver resultado cognitivo
+
             </a>
 
         </div>
-
-        {% endfor %}
 
     {% else %}
 
         <div class="pendiente">
 
-            Este estudiante aún no tiene evaluaciones registradas.
-
-            <br><br>
-
-            Puedes iniciar una nueva evaluación desde este perfil.
+            Este estudiante todavía no tiene registrada
+            una evaluación de la dimensión cognitiva.
 
         </div>
 
+
+        <a
+            href="/tamizaje?codigo={{ estudiante.codigo }}"
+            class="boton boton-secundario"
+        >
+
+            🧠 Realizar evaluación cognitiva
+
+        </a>
+
     {% endif %}
-
-
-    <a
-        href="/tamizaje?codigo={{ estudiante.codigo }}"
-        class="boton boton-secundario"
-    >
-        🧠 Realizar evaluación
-    </a>
 
 </section>
 
-
-<!-- =====================================================
+<!-- =========================================
      SEGUIMIENTO
-===================================================== -->
+========================================= -->
 
-<section class="card">
+<section class="card seguimiento">
 
     <h2>
-        🤖 Seguimiento con Leo
+        🦁 Seguimiento con Leo
     </h2>
+
 
     <div class="pendiente">
 
-        El seguimiento personalizado de Leo se conectará
-        posteriormente con el perfil, los resultados y las
-        áreas por observar del estudiante.
+
+        <div class="seguimiento-icono">
+
+            🦁
+
+        </div>
+
+
+        <div>
+
+            El seguimiento personalizado de Leo se conectará
+            posteriormente con el perfil, los resultados y las
+            áreas por observar del estudiante.
+
+        </div>
+
 
     </div>
 
@@ -479,6 +983,7 @@ h1{
 
 {% else %}
 
+
 <div
     class="card"
     style="text-align:center;margin-top:50px"
@@ -488,15 +993,21 @@ h1{
         Estudiante no encontrado
     </h1>
 
-    <p>
+
+    <p style="margin-top:10px;color:#75696c;">
+
         No existe un estudiante con ese código.
+
     </p>
 
 </div>
 
+
 {% endif %}
 
+
 </div>
+
 
 </body>
 

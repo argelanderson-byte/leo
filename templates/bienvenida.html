@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Leo | Bienvenido</title>
+
+
+    <style>
+
+        /* =====================================================
+           CONFIGURACIÓN GENERAL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff5f5 0%,
+                    #ffffff 50%,
+                    #fff8f8 100%
+                );
+
+            color: #263238;
+
+        }
+
+
+        /* =====================================================
+           CONTENEDOR
+        ===================================================== */
+
+        .contenedor {
+
+            width: 100%;
+
+            max-width: 760px;
+
+        }
+
+
+        /* =====================================================
+           TARJETA PRINCIPAL
+        ===================================================== */
+
+        .tarjeta {
+
+            position: relative;
+
+            background: #ffffff;
+
+            border-radius: 28px;
+
+            padding: 48px 45px;
+
+            text-align: center;
+
+            border: 1px solid #f1dddd;
+
+            box-shadow:
+                0 18px 50px rgba(180, 30, 45, 0.10);
+
+            overflow: hidden;
+
+        }
+
+
+        /* Línea roja superior */
+
+        .tarjeta::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+            right: 0;
+
+            height: 6px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #b5122b,
+                    #d6283f,
+                    #b5122b
+                );
+
+        }
+
+
+        /* =====================================================
+           LOGO DE LEO
+        ===================================================== */
+
+        .logo {
+
+            width: 115px;
+            height: 115px;
+
+            margin: 5px auto 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        .logo img {
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: contain;
+
+        }
+
+
+        /* =====================================================
+           IDENTIFICADOR
+        ===================================================== */
+
+        .etiqueta {
+
+            color: #b5122b;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.4px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        /* =====================================================
+           SEPARADOR
+        ===================================================== */
+
+        .decoracion {
+
+            width: 55px;
+
+            height: 4px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #b5122b,
+                    #df5264
+                );
+
+            margin: 0 auto 25px;
+
+        }
+
+
+        /* =====================================================
+           TITULO
+        ===================================================== */
+
+        h1 {
+
+            color: #252525;
+
+            font-size: 35px;
+
+            font-weight: 750;
+
+            margin-bottom: 17px;
+
+            line-height: 1.2;
+
+        }
+
+
+        /* =====================================================
+           DESCRIPCIÓN
+        ===================================================== */
+
+        .descripcion {
+
+            color: #626b73;
+
+            font-size: 16px;
+
+            line-height: 1.75;
+
+            max-width: 570px;
+
+            margin: 0 auto 26px;
+
+        }
+
+
+        /* =====================================================
+           CÓDIGO DEL ESTUDIANTE
+        ===================================================== */
+
+        .codigo {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            background: #fff5f6;
+
+            border: 1px solid #f2d5d9;
+
+            color: #68717a;
+
+            padding: 11px 20px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .codigo strong {
+
+            color: #b5122b;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =====================================================
+           BOTÓN PRINCIPAL
+        ===================================================== */
+
+        .boton {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            padding: 15px 32px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #b5122b,
+                    #d6283f
+                );
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            box-shadow:
+                0 8px 22px rgba(181, 18, 43, 0.24);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+
+        }
+
+
+        .boton:hover {
+
+            transform: translateY(-2px);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #9f0f25,
+                    #c51f36
+                );
+
+            box-shadow:
+                0 12px 28px rgba(181, 18, 43, 0.30);
+
+        }
+
+
+        .boton:active {
+
+            transform: translateY(0);
+
+        }
+
+
+        /* =====================================================
+           TEXTO INFORMATIVO
+        ===================================================== */
+
+        .nota {
+
+            margin-top: 22px;
+
+            color: #98a0a8;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =====================================================
+           PEQUEÑO DETALLE INFERIOR
+        ===================================================== */
+
+        .detalle {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 28px;
+
+            color: #9b5962;
+
+            font-size: 12px;
+
+        }
+
+
+        .detalle-punto {
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #b5122b;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+
+            body {
+
+                padding: 15px;
+
+            }
+
+
+            .tarjeta {
+
+                padding: 40px 22px;
+
+                border-radius: 23px;
+
+            }
+
+
+            .logo {
+
+                width: 95px;
+                height: 95px;
+
+                margin-bottom: 22px;
+
+            }
+
+
+            .etiqueta {
+
+                font-size: 12px;
+
+            }
+
+
+            h1 {
+
+                font-size: 28px;
+
+            }
+
+
+            .descripcion {
+
+                font-size: 15px;
+
+                line-height: 1.65;
+
+            }
+
+
+            .codigo {
+
+                font-size: 13px;
+
+            }
+
+
+            .boton {
+
+                width: 100%;
+
+                padding: 14px 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="contenedor">
+
+
+        <div class="tarjeta">
+
+
+            <!-- =================================================
+                 LOGO
+            ================================================== -->
+
+            <div class="logo">
+
+                <img
+                    src="{{ url_for('static', filename='images/logo-leo.png') }}"
+                    alt="Logo de Leo"
+                >
+
+            </div>
+
+
+            <!-- =================================================
+                 ENCABEZADO
+            ================================================== -->
+
+            <div class="etiqueta">
+
+                BIENVENIDO A LEO
+
+            </div>
+
+
+            <div class="decoracion"></div>
+
+
+            <!-- =================================================
+                 SALUDO
+            ================================================== -->
+
+            <h1>
+
+                ¡Hola! 👋
+
+            </h1>
+
+
+            <p class="descripcion">
+
+                Soy Leo, tu asistente de aprendizaje.
+
+                <br><br>
+
+                Te acompañaré durante este proceso para
+                conocer tus habilidades, identificar tus
+                fortalezas y descubrir qué aspectos podemos
+                seguir fortaleciendo.
+
+            </p>
+
+
+            <!-- =================================================
+                 CÓDIGO
+            ================================================== -->
+
+            <div class="codigo">
+
+                Código de estudiante:
+
+                <strong>
+                    {{ codigo }}
+                </strong>
+
+            </div>
+
+
+            <br>
+
+
+            <!-- =================================================
+                 BOTÓN
+            ================================================== -->
+
+            <a
+                href="/tamizaje?codigo={{ codigo }}"
+                class="boton"
+            >
+
+                Comenzar evaluación →
+
+            </a>
+
+
+            <!-- =================================================
+                 NOTA
+            ================================================== -->
+
+            <p class="nota">
+
+                Este proceso tiene un propósito educativo
+                y de orientación inicial.
+
+            </p>
+
+
+            <!-- =================================================
+                 DETALLE INFERIOR
+            ================================================== -->
+
+            <div class="detalle">
+
+                <span class="detalle-punto"></span>
+
+                <span>
+                    Tu proceso comienza aquí
+                </span>
+
+                <span class="detalle-punto"></span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

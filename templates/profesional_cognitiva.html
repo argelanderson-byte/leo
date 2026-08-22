@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Leo | Panel profesional</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f8f8f8;
+
+            color: #263238;
+
+            padding: 25px 15px;
+        }
+
+        .contenedor {
+
+            width: 100%;
+
+            max-width: 1000px;
+
+            margin: auto;
+        }
+
+        .header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+        }
+
+        .logo {
+
+            width: 55px;
+
+            height: 55px;
+
+            background: white;
+
+            border-radius: 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0,0,0,.08);
+        }
+
+        .logo img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: contain;
+        }
+
+        .header h1 {
+
+            color: #b51e2b;
+
+            font-size: 24px;
+        }
+
+        .header p {
+
+            color: #718096;
+
+            font-size: 13px;
+        }
+
+        .card {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            border: 1px solid #eadfe0;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,.05);
+        }
+
+        h2 {
+
+            color: #8f1823;
+
+            margin-bottom: 15px;
+        }
+
+        h3 {
+
+            color: #8f1823;
+
+            margin-bottom: 18px;
+        }
+
+        .estudiante {
+
+            background: #fff1f2;
+
+            border: 1px solid #fecdd3;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            color: #881337;
+
+            line-height: 1.8;
+        }
+
+        .resumen {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .dato {
+
+            background: #fafafa;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            border: 1px solid #eeeeee;
+        }
+
+        .dato p {
+
+            color: #718096;
+
+            font-size: 13px;
+
+            margin-bottom: 7px;
+        }
+
+        .dato strong {
+
+            color: #b51e2b;
+
+            font-size: 23px;
+        }
+
+        .habilidad {
+
+            margin-bottom: 22px;
+        }
+
+        .habilidad:last-child {
+
+            margin-bottom: 0;
+        }
+
+        .fila {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 8px;
+        }
+
+        .nombre {
+
+            font-weight: 700;
+        }
+
+        .puntaje {
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+        .barra {
+
+            width: 100%;
+
+            height: 10px;
+
+            background: #eeeeee;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .progreso {
+
+            height: 100%;
+
+            background: #b51e2b;
+
+            border-radius: 20px;
+        }
+
+        .etiqueta {
+
+            display: inline-block;
+
+            margin-top: 8px;
+
+            padding: 5px 9px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: bold;
+        }
+
+        .favorable {
+
+            background: #dcfce7;
+
+            color: #166534;
+        }
+
+        .observacion {
+
+            background: #ffedd5;
+
+            color: #9a3412;
+        }
+
+        .alerta {
+
+            background: #ffe4e6;
+
+            color: #be123c;
+        }
+
+        .columnas {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 20px;
+        }
+
+        .bloque {
+
+            padding: 20px;
+
+            border-radius: 14px;
+        }
+
+        .bloque h3 {
+
+            margin-bottom: 12px;
+        }
+
+        .bloque ul {
+
+            padding-left: 20px;
+        }
+
+        .bloque li {
+
+            margin-bottom: 8px;
+        }
+
+        .fortalezas {
+
+            background: #f0fdf4;
+
+            border: 1px solid #bbf7d0;
+        }
+
+        .areas {
+
+            background: #fff7ed;
+
+            border: 1px solid #fed7aa;
+        }
+
+        .aviso {
+
+            background: #fff7ed;
+
+            border: 1px solid #fed7aa;
+
+            padding: 18px;
+
+            border-radius: 14px;
+
+            color: #7c2d12;
+
+            line-height: 1.6;
+
+            font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+
+            .resumen {
+
+                grid-template-columns: 1fr;
+            }
+
+            .columnas {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="contenedor">
+
+
+    <!-- =========================
+         ENCABEZADO
+    ========================= -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            <img
+                src="{{ url_for('static', filename='images/logo-leo.png') }}"
+                alt="Leo"
+            >
+
+        </div>
+
+        <div>
+
+            <h1>Leo</h1>
+
+            <p>
+                Panel profesional
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         ESTUDIANTE
+    ========================= -->
+
+    <section class="card">
+
+        <h2>
+            🧠 Resultado de la dimensión cognitiva
+        </h2>
+
+        <div class="estudiante">
+
+            <strong>Estudiante:</strong>
+
+            {{ estudiante["nombre"] }}
+
+            <br>
+
+            <strong>Código:</strong>
+
+            {{ codigo }}
+
+        </div>
+
+    </section>
+
+
+    {% if evaluacion %}
+
+
+    <!-- =========================
+         RESUMEN
+    ========================= -->
+
+    <section class="card">
+
+        <h3>
+            Resumen general
+        </h3>
+
+        <div class="resumen">
+
+            <div class="dato">
+
+                <p>
+                    Puntaje obtenido
+                </p>
+
+                <strong>
+
+                    {{ evaluacion["puntaje"] }}
+
+                    / 105
+
+                </strong>
+
+            </div>
+
+
+            <div class="dato">
+
+                <p>
+                    Porcentaje
+                </p>
+
+                <strong>
+
+                    {{ evaluacion["porcentaje"] }}%
+
+                </strong>
+
+            </div>
+
+
+            <div class="dato">
+
+                <p>
+                    Resultado
+                </p>
+
+                <strong style="font-size:16px;">
+
+                    {{ evaluacion["resultado"] }}
+
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SUBHABILIDADES
+    ========================= -->
+
+    <section class="card">
+
+        <h3>
+            Procesos cognitivos explorados
+        </h3>
+
+
+        {% for clave, habilidad in subhabilidades.items() %}
+
+        <div class="habilidad">
+
+            <div class="fila">
+
+                <span class="nombre">
+
+                    {{ habilidad["nombre"] }}
+
+                </span>
+
+                <span class="puntaje">
+
+                    {{ habilidad["puntaje"] }} / 15
+
+                    ·
+
+                    {{ habilidad["porcentaje"] }}%
+
+                </span>
+
+            </div>
+
+
+            <div class="barra">
+
+                <div
+    class="progreso"
+    data-porcentaje="{{ habilidad['porcentaje'] }}"
+></div>
+
+            </div>
+
+
+            <span
+                class="etiqueta {{ habilidad['clase'] }}"
+            >
+
+                {{ habilidad["clasificacion"] }}
+
+            </span>
+
+        </div>
+
+        {% endfor %}
+
+    </section>
+
+
+    <!-- =========================
+         FORTALEZAS Y ÁREAS
+    ========================= -->
+
+    <section class="card">
+
+        <h3>
+            Síntesis para el profesional
+        </h3>
+
+        <div class="columnas">
+
+
+            <div class="bloque fortalezas">
+
+                <h3>
+                    ✓ Indicadores favorables
+                </h3>
+
+                {% if fortalezas %}
+
+                <ul>
+
+                    {% for fortaleza in fortalezas %}
+
+                    <li>
+
+                        {{ fortaleza }}
+
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+                {% else %}
+
+                <p>
+                    No se identificaron subhabilidades
+                    con indicadores favorables.
+                </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="bloque areas">
+
+                <h3>
+                    ⚠ Áreas por observar
+                </h3>
+
+                {% if areas_observar %}
+
+                <ul>
+
+                    {% for area in areas_observar %}
+
+                    <li>
+
+                        {{ area }}
+
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+                {% else %}
+
+                <p>
+                    No se identificaron áreas por observar.
+                </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         AVISO
+    ========================= -->
+
+    <section class="card">
+
+        <div class="aviso">
+
+            <strong>
+                Importante
+            </strong>
+
+            <br><br>
+
+            Estos resultados corresponden a un
+            tamizaje educativo y exploratorio.
+            No constituyen un diagnóstico clínico.
+
+            La interpretación debe realizarse considerando
+            el contexto académico del estudiante, otras
+            evidencias disponibles y el criterio profesional.
+
+        </div>
+
+    </section>
+
+
+    {% else %}
+
+
+    <!-- =========================
+         SIN RESULTADO
+    ========================= -->
+
+    <section class="card">
+
+        <h3>
+            Sin evaluación registrada
+        </h3>
+
+        <p>
+            Este estudiante todavía no cuenta con
+            una evaluación cognitiva registrada.
+        </p>
+
+    </section>
+
+
+    {% endif %}
+
+
+</div>
+
+<script>
+document.querySelectorAll(".progreso").forEach(function(barra) {
+
+    const porcentaje = barra.dataset.porcentaje;
+
+    barra.style.width = porcentaje + "%";
+
+});
+</script>
+
+</body>
+
+</html>

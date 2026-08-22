@@ -1,101 +1,1504 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
 <title>Leo | Estudiantes</title>
+
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;min-height:100vh;background:linear-gradient(145deg,#eef5ff,#f8fbff,#edf4ff);color:#1e293b}
-.contenedor{width:100%;max-width:1050px;margin:auto;padding:25px 20px 45px}
-.volver{display:inline-block;margin-bottom:20px;text-decoration:none;color:#64748b;font-size:14px;font-weight:600}
-.cabecera{background:linear-gradient(135deg,#2563eb,#4f46e5);color:white;border-radius:25px;padding:30px;margin-bottom:25px;box-shadow:0 15px 35px rgba(37,99,235,.20)}
-.cabecera-contenido{display:flex;align-items:center;gap:18px}
-.icono-cabecera{width:65px;height:65px;border-radius:20px;background:white;display:flex;align-items:center;justify-content:center;font-size:32px}
-.cabecera h1{font-size:28px;margin:0 0 5px}.cabecera p{margin:0;font-size:14px;line-height:1.6;opacity:.92}
-.barra{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}.barra h2{font-size:22px;margin:0}
-.boton-agregar,.boton{border:none;cursor:pointer;text-decoration:none;font-weight:700;border-radius:11px;padding:11px 15px;display:inline-flex;align-items:center;justify-content:center}
-.boton-agregar{background:#2563eb;color:white}
-.buscador{background:white;border:1px solid #e5edf7;border-radius:16px;padding:14px 17px;margin-bottom:20px}
-.buscador input{width:100%;border:none;outline:none;font-size:14px}
-.estudiante{background:white;border:1px solid #e5edf7;border-radius:19px;padding:20px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:20px;box-shadow:0 7px 22px rgba(31,65,114,.06)}
-.estudiante-info{display:flex;align-items:center;gap:14px}.avatar{width:48px;height:48px;border-radius:15px;background:#eaf2ff;color:#2563eb;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:800}
-.estudiante-info h3{margin:0 0 4px;font-size:16px}.estudiante-info p{margin:3px 0;color:#718096;font-size:12px}
-.acciones{display:flex;gap:8px;flex-wrap:wrap}.boton-ver{background:#eff6ff;color:#2563eb}.boton-evaluar{background:#2563eb;color:white}
-.vacio{background:white;border:1px dashed #cbd5e0;border-radius:18px;padding:40px 25px;text-align:center;color:#718096}
-.informacion{margin-top:25px;padding:18px;border-radius:16px;background:#f8fbff;border:1px solid #dbeafe;color:#64748b;font-size:12px;line-height:1.6}
-.modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);justify-content:center;align-items:center;padding:20px}
-.modal-contenido{background:white;width:100%;max-width:500px;border-radius:16px;padding:25px}.modal-contenido h2{margin-top:0}
-.campo{margin-bottom:15px}.campo label{display:block;margin-bottom:6px;font-weight:700;font-size:14px}.campo input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px}
-.botones-modal{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}.cancelar{background:#e2e8f0;color:#1e293b}.guardar{background:#2563eb;color:white}
-.mensaje{display:none;padding:12px;border-radius:8px;margin-bottom:15px}.mensaje.error{display:block;background:#fee2e2;color:#991b1b}
-@media(max-width:650px){.barra,.estudiante{align-items:flex-start;flex-direction:column}.boton-agregar{width:100%}.acciones{width:100%}.acciones .boton{flex:1}}
+
+/* =====================================================
+   CONFIGURACIÓN GENERAL
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f4f5f5,
+            #ffffff,
+            #eef1f2
+        );
+
+    color: #404f56;
+}
+
+
+/* =====================================================
+   CONTENEDOR
+===================================================== */
+
+.contenedor {
+
+    width: 100%;
+
+    max-width: 1050px;
+
+    margin: auto;
+
+    padding:
+        25px
+        20px
+        45px;
+
+}
+
+
+/* =====================================================
+   VOLVER
+===================================================== */
+
+.volver {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    text-decoration: none;
+
+    color: #69777d;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    margin-bottom: 20px;
+
+    transition: .2s;
+
+}
+
+.volver:hover {
+
+    color: #c59d33;
+
+}
+
+
+/* =====================================================
+   CABECERA
+===================================================== */
+
+.cabecera {
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #404f56,
+            #526269
+        );
+
+    color: white;
+
+    border-radius: 25px;
+
+    padding: 32px;
+
+    margin-bottom: 27px;
+
+    box-shadow:
+        0 15px 35px rgba(64,79,86,.18);
+
+}
+
+
+/* Detalle dorado */
+
+.cabecera::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+
+    height: 220px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(197,157,51,.16);
+
+    right: -80px;
+
+    top: -110px;
+
+}
+
+
+.cabecera-contenido {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+}
+
+
+.icono-cabecera {
+
+    width: 65px;
+
+    height: 65px;
+
+    border-radius: 20px;
+
+    background: #ffffff;
+
+    color: #404f56;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 32px;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.10);
+
+}
+
+
+.cabecera h1 {
+
+    font-size: 28px;
+
+    margin:
+        0
+        0
+        5px;
+
+}
+
+
+.cabecera p {
+
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    opacity: .92;
+
+}
+
+
+/* =====================================================
+   BARRA
+===================================================== */
+
+.barra {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.barra h2 {
+
+    font-size: 22px;
+
+    margin: 0;
+
+    color: #404f56;
+
+}
+
+
+/* =====================================================
+   BOTÓN AGREGAR
+===================================================== */
+
+.boton-agregar {
+
+    border: none;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    font-weight: 800;
+
+    border-radius: 11px;
+
+    padding:
+        11px
+        17px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #c59d33;
+
+    color: white;
+
+    transition: .2s;
+
+}
+
+
+.boton-agregar:hover {
+
+    background: #ae8929;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 17px rgba(197,157,51,.25);
+
+}
+
+
+/* =====================================================
+   BUSCADOR
+===================================================== */
+
+.buscador {
+
+    background: white;
+
+    border:
+        1px solid
+        #dfe4e6;
+
+    border-radius: 16px;
+
+    padding:
+        14px
+        17px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 5px 16px rgba(64,79,86,.04);
+
+}
+
+
+.buscador input {
+
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    font-size: 14px;
+
+    color: #404f56;
+
+}
+
+
+.buscador input::placeholder {
+
+    color: #8b969b;
+
+}
+
+
+/* =====================================================
+   ESTUDIANTE
+===================================================== */
+
+.estudiante {
+
+    background: white;
+
+    border:
+        1px solid
+        #e0e5e7;
+
+    border-radius: 19px;
+
+    padding: 20px;
+
+    margin-bottom: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    box-shadow:
+        0 7px 22px rgba(64,79,86,.06);
+
+    transition: .2s;
+
+}
+
+
+.estudiante:hover {
+
+    border-color: #d4bd78;
+
+    box-shadow:
+        0 10px 25px rgba(64,79,86,.09);
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =====================================================
+   INFORMACIÓN ESTUDIANTE
+===================================================== */
+
+.estudiante-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+}
+
+
+.avatar {
+
+    width: 48px;
+
+    height: 48px;
+
+    border-radius: 15px;
+
+    background: #f7f0dc;
+
+    color: #9b7924;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    flex-shrink: 0;
+
+}
+
+
+.estudiante-info h3 {
+
+    margin:
+        0
+        0
+        4px;
+
+    font-size: 16px;
+
+    color: #404f56;
+
+}
+
+
+.estudiante-info p {
+
+    margin:
+        3px
+        0;
+
+    color: #7b878c;
+
+    font-size: 12px;
+
+}
+
+
+/* =====================================================
+   ACCIONES
+===================================================== */
+
+.acciones {
+
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+}
+
+
+.boton {
+
+    border: none;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    border-radius: 11px;
+
+    padding:
+        10px
+        14px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 13px;
+
+    transition: .2s;
+
+}
+
+
+/* Ver perfil */
+
+.boton-ver {
+
+    background: #f2f4f5;
+
+    color: #404f56;
+
+}
+
+
+.boton-ver:hover {
+
+    background: #e4e8e9;
+
+}
+
+
+/* Evaluar */
+
+.boton-evaluar {
+
+    background: #c59d33;
+
+    color: white;
+
+}
+
+
+.boton-evaluar:hover {
+
+    background: #ae8929;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 14px rgba(197,157,51,.20);
+
+}
+
+
+/* =====================================================
+   VACÍO
+===================================================== */
+
+.vacio {
+
+    background: white;
+
+    border:
+        1px dashed
+        #c8d0d3;
+
+    border-radius: 18px;
+
+    padding:
+        40px
+        25px;
+
+    text-align: center;
+
+    color: #718087;
+
+}
+
+
+.vacio div {
+
+    margin-bottom: 10px;
+
+}
+
+
+/* =====================================================
+   INFORMACIÓN
+===================================================== */
+
+.informacion {
+
+    margin-top: 25px;
+
+    padding: 19px;
+
+    border-radius: 16px;
+
+    background: #faf9f5;
+
+    border:
+        1px solid
+        #eadfbf;
+
+    color: #69777d;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+}
+
+
+.informacion strong {
+
+    color: #404f56;
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(38,47,51,.58);
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+
+    z-index: 1000;
+
+}
+
+
+.modal-contenido {
+
+    background: white;
+
+    width: 100%;
+
+    max-width: 500px;
+
+    border-radius: 18px;
+
+    padding: 27px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.20);
+
+}
+
+
+.modal-contenido h2 {
+
+    margin-top: 0;
+
+    color: #404f56;
+
+}
+
+
+/* =====================================================
+   CAMPOS
+===================================================== */
+
+.campo {
+
+    margin-bottom: 15px;
+
+}
+
+
+.campo label {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-weight: 700;
+
+    font-size: 14px;
+
+    color: #404f56;
+
+}
+
+
+.campo input {
+
+    width: 100%;
+
+    padding: 11px;
+
+    border:
+        1px solid
+        #cbd3d6;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    color: #404f56;
+
+}
+
+
+.campo input:focus {
+
+    border-color: #c59d33;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(197,157,51,.12);
+
+}
+
+
+/* =====================================================
+   BOTONES MODAL
+===================================================== */
+
+.botones-modal {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+}
+
+
+.cancelar {
+
+    background: #e8ecee;
+
+    color: #404f56;
+
+}
+
+
+.cancelar:hover {
+
+    background: #dce2e4;
+
+}
+
+
+.guardar {
+
+    background: #c59d33;
+
+    color: white;
+
+}
+
+
+.guardar:hover {
+
+    background: #ae8929;
+
+}
+
+
+/* =====================================================
+   MENSAJES
+===================================================== */
+
+.mensaje {
+
+    display: none;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.mensaje.error {
+
+    display: block;
+
+    background: #fee2e2;
+
+    color: #991b1b;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 650px) {
+
+    .barra,
+    .estudiante {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+
+    .boton-agregar {
+
+        width: 100%;
+
+    }
+
+
+    .acciones {
+
+        width: 100%;
+
+    }
+
+
+    .acciones .boton {
+
+        flex: 1;
+
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .contenedor {
+
+        padding:
+            18px
+            12px
+            35px;
+
+    }
+
+
+    .cabecera {
+
+        padding: 24px 20px;
+
+    }
+
+
+    .cabecera h1 {
+
+        font-size: 23px;
+
+    }
+
+
+    .cabecera p {
+
+        font-size: 12px;
+
+    }
+
+}
+
 </style>
+
 </head>
+
+
 <body>
+
+
 <div class="contenedor">
-<a href="/profesional" class="volver">← Volver al área profesional</a>
-<header class="cabecera"><div class="cabecera-contenido"><div class="icono-cabecera">👥</div><div><h1>Estudiantes</h1><p>Gestiona y consulta la información de los estudiantes acompañados por Leo.</p></div></div></header>
-<div class="barra"><h2>Estudiantes registrados</h2><button class="boton-agregar" type="button" onclick="abrirModal()">+ Registrar estudiante</button></div>
-<div class="buscador"><input type="text" id="buscador" placeholder="🔎 Buscar estudiante..." onkeyup="buscarEstudiante()"></div>
-<div id="lista-estudiantes">
-{% if estudiantes %}
-{% for estudiante in estudiantes %}
-<div class="estudiante" data-nombre="{{ estudiante.nombre|lower }}">
-<div class="estudiante-info">
-<div class="avatar">{{ estudiante.nombre[0]|upper }}</div>
-<div>
-<h3>{{ estudiante.nombre }}</h3>
-<p>ID: {{ estudiante.codigo }}</p>
-{% if estudiante.identificacion %}<p>Identificación: {{ estudiante.identificacion }}</p>{% endif %}
-{% if estudiante.programa %}<p>Programa: {{ estudiante.programa }}{% if estudiante.semestre %} · Semestre {{ estudiante.semestre }}{% endif %}</p>{% endif %}
-</div>
-</div>
-<div class="acciones">
-<a href="/estudiante/{{ estudiante.codigo }}" class="boton boton-ver">👤 Ver perfil</a>
-<a href="/tamizaje?codigo={{ estudiante.codigo }}" class="boton boton-evaluar">
-    🧠 Evaluar
+
+
+<!-- =====================================================
+     VOLVER
+===================================================== -->
+
+<a
+    href="/profesional"
+    class="volver"
+>
+
+    ← Volver al área profesional
+
 </a>
-</div>
-</div>
-{% endfor %}
-{% else %}
-<div class="vacio"><div style="font-size:40px">👨‍🎓</div><h3>No hay estudiantes registrados</h3><p>Usa el botón "Registrar estudiante" para agregar el primero.</p></div>
-{% endif %}
-</div>
-<div class="informacion"><strong>ℹ️ Información</strong><br><br>Los estudiantes quedan almacenados en la base de datos de Leo. Desde su perfil podremos conectar posteriormente las evaluaciones, resultados, áreas por observar y seguimiento personalizado.</div>
+
+
+<!-- =====================================================
+     CABECERA
+===================================================== -->
+
+<header class="cabecera">
+
+    <div class="cabecera-contenido">
+
+        <div class="icono-cabecera">
+            👥
+        </div>
+
+        <div>
+
+            <h1>
+                Estudiantes
+            </h1>
+
+            <p>
+                Gestiona y consulta la información
+                de los estudiantes acompañados por Leo.
+            </p>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     BARRA
+===================================================== -->
+
+<div class="barra">
+
+    <h2>
+        Estudiantes registrados
+    </h2>
+
+
+    <button
+        class="boton-agregar"
+        type="button"
+        onclick="abrirModal()"
+    >
+
+        + Registrar estudiante
+
+    </button>
+
 </div>
 
-<div id="modalRegistro" class="modal">
+
+<!-- =====================================================
+     BUSCADOR
+===================================================== -->
+
+<div class="buscador">
+
+    <input
+        type="text"
+        id="buscador"
+        placeholder="🔎 Buscar estudiante..."
+        onkeyup="buscarEstudiante()"
+    >
+
+</div>
+
+
+<!-- =====================================================
+     LISTA
+===================================================== -->
+
+<div id="lista-estudiantes">
+
+
+{% if estudiantes %}
+
+
+{% for estudiante in estudiantes %}
+
+
+<div
+    class="estudiante"
+    data-nombre="{{ estudiante.nombre|lower }}"
+>
+
+
+    <div class="estudiante-info">
+
+
+        <div class="avatar">
+
+            {{ estudiante.nombre[0]|upper }}
+
+        </div>
+
+
+        <div>
+
+            <h3>
+
+                {{ estudiante.nombre }}
+
+            </h3>
+
+
+            <p>
+
+                ID:
+                {{ estudiante.codigo }}
+
+            </p>
+
+
+            {% if estudiante.identificacion %}
+
+            <p>
+
+                Identificación:
+                {{ estudiante.identificacion }}
+
+            </p>
+
+            {% endif %}
+
+
+            {% if estudiante.programa %}
+
+            <p>
+
+                Programa:
+                {{ estudiante.programa }}
+
+                {% if estudiante.semestre %}
+
+                · Semestre
+                {{ estudiante.semestre }}
+
+                {% endif %}
+
+            </p>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="acciones">
+
+
+        <a
+            href="/estudiante/{{ estudiante.codigo }}"
+            class="boton boton-ver"
+        >
+
+            👤 Ver perfil
+
+        </a>
+
+
+        <a
+            href="/tamizaje?codigo={{ estudiante.codigo }}"
+            class="boton boton-evaluar"
+        >
+
+            🧠 Evaluar
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+{% endfor %}
+
+
+{% else %}
+
+
+<div class="vacio">
+
+    <div style="font-size:40px">
+        👨‍🎓
+    </div>
+
+    <h3>
+        No hay estudiantes registrados
+    </h3>
+
+    <p>
+        Usa el botón "Registrar estudiante"
+        para agregar el primero.
+    </p>
+
+</div>
+
+
+{% endif %}
+
+
+</div>
+
+
+<!-- =====================================================
+     INFORMACIÓN
+===================================================== -->
+
+<div class="informacion">
+
+    <strong>
+        ℹ️ Información
+    </strong>
+
+    <br><br>
+
+    Los estudiantes quedan almacenados en la base de datos
+    de Leo. Desde su perfil podremos conectar posteriormente
+    las evaluaciones, resultados, áreas por observar y
+    seguimiento personalizado.
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     MODAL REGISTRO
+===================================================== -->
+
+<div
+    id="modalRegistro"
+    class="modal"
+>
+
+
 <div class="modal-contenido">
-<h2>➕ Registrar estudiante</h2><div id="mensajeError" class="mensaje"></div>
-<form id="formularioEstudiante">
-<div class="campo"><label for="nombre">Nombre completo *</label><input type="text" id="nombre" required placeholder="Ej. Juan Pérez"></div>
-<div class="campo"><label for="identificacion">Identificación</label><input type="text" id="identificacion" placeholder="Ej. 100000001"></div>
-<div class="campo"><label for="programa">Programa académico</label><input type="text" id="programa" placeholder="Ej. Psicología"></div>
-<div class="campo"><label for="semestre">Semestre</label><input type="text" id="semestre" placeholder="Ej. 4"></div>
-<div class="botones-modal"><button type="button" class="boton cancelar" onclick="cerrarModal()">Cancelar</button><button type="submit" class="boton guardar">💾 Guardar estudiante</button></div>
-</form>
-</div></div>
+
+
+    <h2>
+        ➕ Registrar estudiante
+    </h2>
+
+
+    <div
+        id="mensajeError"
+        class="mensaje"
+    ></div>
+
+
+    <form id="formularioEstudiante">
+
+
+        <div class="campo">
+
+            <label for="nombre">
+                Nombre completo *
+            </label>
+
+            <input
+                type="text"
+                id="nombre"
+                required
+                placeholder="Ej. Juan Pérez"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label for="identificacion">
+                Identificación
+            </label>
+
+            <input
+                type="text"
+                id="identificacion"
+                placeholder="Ej. 100000001"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label for="programa">
+                Programa académico
+            </label>
+
+            <input
+                type="text"
+                id="programa"
+                placeholder="Ej. Psicología"
+            >
+
+        </div>
+
+
+        <div class="campo">
+
+            <label for="semestre">
+                Semestre
+            </label>
+
+            <input
+                type="text"
+                id="semestre"
+                placeholder="Ej. 4"
+            >
+
+        </div>
+
+
+        <div class="botones-modal">
+
+
+            <button
+                type="button"
+                class="boton cancelar"
+                onclick="cerrarModal()"
+            >
+
+                Cancelar
+
+            </button>
+
+
+            <button
+                type="submit"
+                class="boton guardar"
+            >
+
+                💾 Guardar estudiante
+
+            </button>
+
+
+        </div>
+
+
+    </form>
+
+
+</div>
+
+</div>
+
 
 <script>
-function abrirModal(){document.getElementById("modalRegistro").style.display="flex";document.getElementById("nombre").focus()}
-function cerrarModal(){document.getElementById("modalRegistro").style.display="none";document.getElementById("formularioEstudiante").reset();ocultarError()}
-function mostrarError(mensaje){const e=document.getElementById("mensajeError");e.textContent=mensaje;e.className="mensaje error"}
-function ocultarError(){const e=document.getElementById("mensajeError");e.textContent="";e.className="mensaje"}
-document.getElementById("formularioEstudiante").addEventListener("submit",async function(event){
-event.preventDefault();ocultarError();
-const datos={nombre:document.getElementById("nombre").value.trim(),identificacion:document.getElementById("identificacion").value.trim(),programa:document.getElementById("programa").value.trim(),semestre:document.getElementById("semestre").value.trim()};
-if(!datos.nombre){mostrarError("Debes escribir el nombre del estudiante.");return}
-try{
-const respuesta=await fetch("/registrar-estudiante",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(datos)});
-const resultado=await respuesta.json();
-if(!resultado.ok){mostrarError(resultado.mensaje||"No fue posible registrar el estudiante.");return}
-alert(resultado.mensaje||"Estudiante registrado correctamente.");cerrarModal();window.location.reload();
-}catch(error){console.error(error);mostrarError("No se pudo conectar con el servidor de Leo.")}
-});
-function buscarEstudiante(){const texto=document.getElementById("buscador").value.toLowerCase().trim();document.querySelectorAll(".estudiante").forEach(e=>{const nombre=e.getAttribute("data-nombre").toLowerCase();e.style.display=nombre.includes(texto)?"flex":"none"})}
-window.onclick=function(event){const modal=document.getElementById("modalRegistro");if(event.target===modal)cerrarModal()}
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function abrirModal() {
+
+    document
+        .getElementById("modalRegistro")
+        .style.display = "flex";
+
+    document
+        .getElementById("nombre")
+        .focus();
+
+}
+
+
+function cerrarModal() {
+
+    document
+        .getElementById("modalRegistro")
+        .style.display = "none";
+
+    document
+        .getElementById("formularioEstudiante")
+        .reset();
+
+    ocultarError();
+
+}
+
+
+/* =====================================================
+   MENSAJES
+===================================================== */
+
+function mostrarError(mensaje) {
+
+    const e =
+        document.getElementById("mensajeError");
+
+    e.textContent = mensaje;
+
+    e.className =
+        "mensaje error";
+
+}
+
+
+function ocultarError() {
+
+    const e =
+        document.getElementById("mensajeError");
+
+    e.textContent = "";
+
+    e.className =
+        "mensaje";
+
+}
+
+
+/* =====================================================
+   REGISTRAR ESTUDIANTE
+===================================================== */
+
+document
+    .getElementById("formularioEstudiante")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+            ocultarError();
+
+
+            const datos = {
+
+                nombre:
+                    document
+                        .getElementById("nombre")
+                        .value
+                        .trim(),
+
+                identificacion:
+                    document
+                        .getElementById("identificacion")
+                        .value
+                        .trim(),
+
+                programa:
+                    document
+                        .getElementById("programa")
+                        .value
+                        .trim(),
+
+                semestre:
+                    document
+                        .getElementById("semestre")
+                        .value
+                        .trim()
+
+            };
+
+
+            if (!datos.nombre) {
+
+                mostrarError(
+                    "Debes escribir el nombre del estudiante."
+                );
+
+                return;
+
+            }
+
+
+            try {
+
+                const respuesta =
+                    await fetch(
+                        "/registrar-estudiante",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(datos)
+
+                        }
+                    );
+
+
+                const resultado =
+                    await respuesta.json();
+
+
+                if (!resultado.ok) {
+
+                    mostrarError(
+                        resultado.mensaje ||
+                        "No fue posible registrar el estudiante."
+                    );
+
+                    return;
+
+                }
+
+
+                alert(
+                    resultado.mensaje ||
+                    "Estudiante registrado correctamente."
+                );
+
+
+                cerrarModal();
+
+
+                window.location.reload();
+
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+                mostrarError(
+                    "No se pudo conectar con el servidor de Leo."
+                );
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   BUSCADOR
+===================================================== */
+
+function buscarEstudiante() {
+
+    const texto =
+        document
+            .getElementById("buscador")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    document
+        .querySelectorAll(".estudiante")
+        .forEach(
+            function(e) {
+
+                const nombre =
+                    e
+                        .getAttribute("data-nombre")
+                        .toLowerCase();
+
+
+                e.style.display =
+                    nombre.includes(texto)
+                    ? "flex"
+                    : "none";
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   CERRAR MODAL AL HACER CLICK AFUERA
+===================================================== */
+
+window.onclick =
+    function(event) {
+
+        const modal =
+            document.getElementById(
+                "modalRegistro"
+            );
+
+
+        if (event.target === modal) {
+
+            cerrarModal();
+
+        }
+
+    };
+
 </script>
+
+
 </body>
+
 </html>
