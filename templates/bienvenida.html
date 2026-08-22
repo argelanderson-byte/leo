@@ -551,14 +551,25 @@
                  BOTÓN
             ================================================== -->
 
-            <a
-                href="/tamizaje?codigo={{ codigo }}"
-                class="boton"
-            >
+            {% if codigo %}
 
-                Comenzar evaluación →
+<a
+    href="/tamizaje?codigo={{ codigo }}"
+    class="boton"
+>
+    Comenzar evaluación →
+</a>
 
-            </a>
+{% else %}
+
+<a
+    href="/conozcamonos"
+    class="boton"
+>
+    Comenzar ahora →
+</a>
+
+{% endif %}
 
 
             <!-- =================================================

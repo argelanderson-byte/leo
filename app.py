@@ -256,6 +256,222 @@ def tamizaje():
         codigo=codigo
     )
 
+# =========================================================
+# CONTINUAR COMO ESTUDIANTE REGISTRADO
+# =========================================================
+
+@app.route("/continuar-estudiante")
+def continuar_estudiante():
+
+    codigo = request.args.get("codigo", "").strip()
+
+    if not codigo:
+        return """
+        <h2>Código requerido</h2>
+        <p>Debes ingresar tu código de estudiante.</p>
+        <a href="/estudiante">Volver al área de estudiantes</a>
+        """, 400
+
+    conexion = conectar_db()
+
+    try:
+
+        # =================================================
+        # BUSCAR ESTUDIANTE
+        # =================================================
+
+        estudiante = conexion.execute("""
+            SELECT *
+            FROM estudiantes
+            WHERE codigo = ?
+        """, (codigo,)).fetchone()
+
+
+        # =================================================
+        # SI NO EXISTE
+        # =================================================
+
+        if estudiante is None:
+
+            return """
+            <!DOCTYPE html>
+
+            <html lang="es">
+
+            <head>
+
+                <meta charset="UTF-8">
+
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1.0"
+                >
+
+                <title>Leo | Código no encontrado</title>
+
+                <style>
+
+                    body {
+                        font-family:
+                            -apple-system,
+                            BlinkMacSystemFont,
+                            "Segoe UI",
+                            Arial,
+                            sans-serif;
+
+                        min-height: 100vh;
+
+                        display: flex;
+
+                        align-items: center;
+
+                        justify-content: center;
+
+                        background: #fff7f8;
+
+                        padding: 20px;
+                    }
+
+                    .tarjeta {
+
+                        max-width: 500px;
+
+                        width: 100%;
+
+                        background: white;
+
+                        padding: 40px 30px;
+
+                        border-radius: 22px;
+
+                        text-align: center;
+
+                        border: 1px solid #eadcdf;
+
+                        box-shadow:
+                            0 12px 30px
+                            rgba(70, 35, 40, 0.08);
+                    }
+
+                    .icono {
+
+                        font-size: 45px;
+
+                        margin-bottom: 15px;
+                    }
+
+                    h1 {
+
+                        color: #8f1628;
+
+                        margin-bottom: 12px;
+                    }
+
+                    p {
+
+                        color: #75696c;
+
+                        line-height: 1.6;
+
+                        margin-bottom: 25px;
+                    }
+
+                    a {
+
+                        display: inline-block;
+
+                        padding: 13px 22px;
+
+                        background: #a6192e;
+
+                        color: white;
+
+                        text-decoration: none;
+
+                        border-radius: 11px;
+
+                        font-weight: 700;
+                    }
+
+                </style>
+
+            </head>
+
+            <body>
+
+                <div class="tarjeta">
+
+                    <div class="icono">
+                        🔎
+                    </div>
+
+                    <h1>
+                        Código no encontrado
+                    </h1>
+
+                    <p>
+                        No encontramos un estudiante registrado
+                        con ese código.
+                    </p>
+
+                    <a href="/estudiante">
+                        Volver
+                    </a>
+
+                </div>
+
+            </body>
+
+            </html>
+            """, 404
+
+
+        # =================================================
+        # ESTUDIANTE ENCONTRADO
+        # =================================================
+
+        print(
+            "ESTUDIANTE ENCONTRADO:",
+            estudiante["codigo"],
+            estudiante["nombre"]
+        )
+
+
+        # =================================================
+        # CONTINUAR AL PROCESO
+        # =================================================
+
+        return redirect(
+            url_for(
+                "tamizaje",
+                codigo=estudiante["codigo"]
+            )
+        )
+
+
+    except Exception as error:
+
+        print(
+            "ERROR AL BUSCAR ESTUDIANTE:",
+            error
+        )
+
+        return """
+        <h2>Error</h2>
+
+        <p>
+            Ocurrió un error al buscar el estudiante.
+        </p>
+
+        <a href="/estudiante">
+            Volver
+        </a>
+        """, 500
+
+
+    finally:
+
+        conexion.close()
 
     # =========================================================
 # BIENVENIDA DEL ESTUDIANTE
